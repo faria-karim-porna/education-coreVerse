@@ -160,8 +160,7 @@ export function HomePage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
-              className="position-relative"
-              style={{ maxWidth: '400px' }}
+              className="position-relative tilt-card-container"
             >
               <div className="card shadow-lg border-0 p-4 transform-rotate-3 hover-transform-rotate-0 transition-all">
                 <div className="row g-3">

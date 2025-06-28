@@ -84,6 +84,33 @@ $btn-border-radius-lg: 0.75rem;
   }
 }
 
+// Tilt effect styles
+.transform-rotate-3 {
+  transform: rotate(3deg);
+  transition: all 0.3s ease;
+}
+
+.hover-transform-rotate-0:hover {
+  transform: rotate(0deg) !important;
+}
+
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+// Tilt card container responsive width
+.tilt-card-container {
+  max-width: 400px;
+  
+  @media (min-width: 768px) {
+    max-width: 80vw;
+  }
+  
+  @media (min-width: 1200px) {
+    max-width: 60vw;
+  }
+}
+
 .btn-custom-primary {
   background-color: $primary-red;
   border-color: $primary-red;
