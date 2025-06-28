@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Users, Beaker, Calculator, Globe, MessageCircle, Award, ArrowRight, Play, CheckCircle } from 'lucide-react';
+import { BookOpen, Users, Beaker, Calculator, Globe, MessageCircle, Award, ArrowRight, Play, CheckCircle, Atom, Microscope, Brain, Code, Palette, Music, Languages, History, TrendingUp, Star, Clock, Shield } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 
@@ -44,24 +44,94 @@ export function HomePage() {
     }
   ];
 
+  const subjects = [
+    {
+      icon: Beaker,
+      title: 'Physics',
+      description: 'Explore mechanics, thermodynamics, electromagnetism, and quantum physics',
+      features: ['Circuit Simulators', 'Motion Analysis', 'Wave Properties', 'Quantum Mechanics'],
+      color: 'bg-primary-red',
+      gradient: 'from-red-400 to-red-600'
+    },
+    {
+      icon: Atom,
+      title: 'Chemistry',
+      description: 'Dive into molecular structures, reactions, and chemical properties',
+      features: ['Reaction Simulator', 'Periodic Table', 'Molecular Modeling', 'Lab Safety'],
+      color: 'bg-accent-red',
+      gradient: 'from-orange-400 to-red-500'
+    },
+    {
+      icon: Microscope,
+      title: 'Biology',
+      description: 'Study life sciences from cellular level to ecosystems',
+      features: ['Cell Viewer', 'DNA Sequencing', 'Ecosystem Models', 'Human Anatomy'],
+      color: 'bg-success',
+      gradient: 'from-green-400 to-green-600'
+    },
+    {
+      icon: Calculator,
+      title: 'Mathematics',
+      description: 'Master algebra, calculus, statistics, and advanced mathematics',
+      features: ['Graphing Tools', 'Equation Solver', 'Statistics Lab', 'Geometry Builder'],
+      color: 'bg-info',
+      gradient: 'from-blue-400 to-blue-600'
+    },
+    {
+      icon: Code,
+      title: 'Computer Science',
+      description: 'Learn programming, algorithms, and computational thinking',
+      features: ['Code Editor', 'Algorithm Visualizer', 'Project Builder', 'Debug Tools'],
+      color: 'bg-warning',
+      gradient: 'from-purple-400 to-purple-600'
+    },
+    {
+      icon: Languages,
+      title: 'Languages',
+      description: 'Practice speaking, writing, and comprehension skills',
+      features: ['Speech Practice', 'Grammar Check', 'Cultural Context', 'Conversation AI'],
+      color: 'bg-info',
+      gradient: 'from-teal-400 to-teal-600'
+    },
+    {
+      icon: History,
+      title: 'History & Social Studies',
+      description: 'Explore civilizations, cultures, and historical events',
+      features: ['Timeline Explorer', 'Map Interactions', 'Document Analysis', 'Virtual Tours'],
+      color: 'bg-warning',
+      gradient: 'from-amber-400 to-amber-600'
+    },
+    {
+      icon: Palette,
+      title: 'Arts & Design',
+      description: 'Express creativity through digital art and design tools',
+      features: ['Digital Canvas', 'Design Principles', 'Color Theory', 'Portfolio Builder'],
+      color: 'bg-danger',
+      gradient: 'from-pink-400 to-pink-600'
+    }
+  ];
+
   const testimonials = [
     {
       name: 'Dr. Sarah Chen',
       role: 'Physics Professor',
       content: 'CoreVerse has transformed how I teach complex concepts. The lab simulators make abstract physics tangible for my students.',
-      avatar: 'https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2'
+      avatar: 'https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
+      rating: 5
     },
     {
       name: 'Alice Johnson',
       role: 'University Student',
       content: 'The interactive tools and progress tracking keep me motivated. I\'ve improved my understanding significantly.',
-      avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2'
+      avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
+      rating: 5
     },
     {
       name: 'Prof. Michael Rodriguez',
       role: 'Chemistry Department',
       content: 'The virtual lab experiments are incredibly detailed. Students can practice safely before real lab work.',
-      avatar: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2'
+      avatar: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
+      rating: 5
     }
   ];
 
@@ -70,6 +140,53 @@ export function HomePage() {
     { number: '2K+', label: 'Educators' },
     { number: '100+', label: 'Lab Simulations' },
     { number: '95%', label: 'Success Rate' }
+  ];
+
+  const benefits = [
+    {
+      icon: Clock,
+      title: '24/7 Access',
+      description: 'Learn at your own pace, anytime, anywhere'
+    },
+    {
+      icon: Shield,
+      title: 'Safe Learning',
+      description: 'Risk-free virtual experiments and simulations'
+    },
+    {
+      icon: TrendingUp,
+      title: 'Proven Results',
+      description: '95% improvement in student performance'
+    },
+    {
+      icon: Users,
+      title: 'Collaborative',
+      description: 'Work together with peers and instructors'
+    }
+  ];
+
+  const pricingPlans = [
+    {
+      name: 'Student',
+      price: 'Free',
+      description: 'Perfect for individual learners',
+      features: ['Access to basic simulations', 'Progress tracking', 'Community support', 'Mobile app access'],
+      popular: false
+    },
+    {
+      name: 'Educator',
+      price: '$29/month',
+      description: 'Ideal for teachers and instructors',
+      features: ['All student features', 'Classroom management', 'Assignment creation', 'Advanced analytics', 'Priority support'],
+      popular: true
+    },
+    {
+      name: 'Institution',
+      price: 'Custom',
+      description: 'For schools and universities',
+      features: ['All educator features', 'Unlimited users', 'Custom branding', 'API access', 'Dedicated support'],
+      popular: false
+    }
   ];
 
   return (
@@ -91,8 +208,9 @@ export function HomePage() {
           
           <div className="d-none d-md-flex align-items-center gap-4">
             <a href="#features" className="nav-link text-deep-red">Features</a>
-            <a href="#about" className="nav-link text-deep-red">About</a>
+            <a href="#subjects" className="nav-link text-deep-red">Subjects</a>
             <a href="#testimonials" className="nav-link text-deep-red">Reviews</a>
+            <a href="#pricing" className="nav-link text-deep-red">Pricing</a>
             <Button variant="secondary" className="me-2">Sign In</Button>
             <Button>Get Started</Button>
           </div>
@@ -195,6 +313,103 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* Subject-wise Section */}
+      <section id="subjects" className="py-5 bg-white">
+        <div className="container-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-5"
+          >
+            <h2 className="display-4 fw-bold text-deep-red mb-4">
+              Master Every Subject
+            </h2>
+            <p className="lead text-muted mx-auto" style={{ maxWidth: '700px' }}>
+              Comprehensive learning tools across all major academic disciplines. 
+              From STEM to humanities, we've got you covered with interactive content and real-world applications.
+            </p>
+          </motion.div>
+
+          <div className="row g-4">
+            {subjects.map((subject, index) => (
+              <div key={subject.title} className="col-md-6 col-lg-3">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="h-100"
+                >
+                  <Card hover className="h-100 overflow-hidden">
+                    <div className={`p-4 text-white bg-gradient-to-br ${subject.gradient}`}>
+                      <div className="d-flex align-items-center justify-content-between mb-3">
+                        <subject.icon size={32} />
+                        <span className="badge bg-white bg-opacity-20 text-white">
+                          {subject.features.length} Tools
+                        </span>
+                      </div>
+                      <h4 className="fw-bold mb-2">{subject.title}</h4>
+                      <p className="opacity-90 small">{subject.description}</p>
+                    </div>
+                    <div className="card-body p-4">
+                      <h6 className="fw-semibold text-deep-red mb-3">Key Features:</h6>
+                      <ul className="list-unstyled">
+                        {subject.features.map((feature, idx) => (
+                          <li key={idx} className="d-flex align-items-center mb-2">
+                            <CheckCircle className="text-success me-2" size={16} />
+                            <span className="small text-muted">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <Button variant="secondary" size="sm" className="w-100 mt-3">
+                        Explore {subject.title}
+                      </Button>
+                    </div>
+                  </Card>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-5 bg-light-bg">
+        <div className="container-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-5"
+          >
+            <h2 className="display-4 fw-bold text-deep-red mb-4">
+              Why Choose CoreVerse?
+            </h2>
+            <p className="lead text-muted">
+              Experience the future of education with our innovative platform
+            </p>
+          </motion.div>
+
+          <div className="row g-4">
+            {benefits.map((benefit, index) => (
+              <div key={benefit.title} className="col-md-6 col-lg-3">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="text-center"
+                >
+                  <div className="bg-primary-red bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
+                       style={{ width: '80px', height: '80px' }}>
+                    <benefit.icon className="text-primary-red" size={40} />
+                  </div>
+                  <h4 className="fw-bold text-deep-red mb-3">{benefit.title}</h4>
+                  <p className="text-muted">{benefit.description}</p>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section id="features" className="py-5 bg-white">
         <div className="container-lg">
@@ -265,7 +480,13 @@ export function HomePage() {
                 >
                   <Card className="h-100">
                     <div className="card-body p-4">
-                      <div className="d-flex align-items-center mb-4">
+                      <div className="d-flex align-items-center mb-3">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star key={i} className="text-warning" size={16} fill="currentColor" />
+                        ))}
+                      </div>
+                      <p className="text-muted fst-italic lh-base mb-4">"{testimonial.content}"</p>
+                      <div className="d-flex align-items-center">
                         <img
                           src={testimonial.avatar}
                           alt={testimonial.name}
@@ -277,7 +498,69 @@ export function HomePage() {
                           <small className="text-muted">{testimonial.role}</small>
                         </div>
                       </div>
-                      <p className="text-muted fst-italic lh-base">"{testimonial.content}"</p>
+                    </div>
+                  </Card>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-5 bg-white">
+        <div className="container-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-5"
+          >
+            <h2 className="display-4 fw-bold text-deep-red mb-4">
+              Choose Your Plan
+            </h2>
+            <p className="lead text-muted">
+              Flexible pricing options for every learning need
+            </p>
+          </motion.div>
+
+          <div className="row g-4 justify-content-center">
+            {pricingPlans.map((plan, index) => (
+              <div key={plan.name} className="col-md-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="h-100"
+                >
+                  <Card className={`h-100 position-relative ${plan.popular ? 'border-primary-red' : ''}`}>
+                    {plan.popular && (
+                      <div className="position-absolute top-0 start-50 translate-middle">
+                        <span className="badge bg-primary-red text-white px-3 py-2">Most Popular</span>
+                      </div>
+                    )}
+                    <div className="card-body p-4 text-center">
+                      <h3 className="fw-bold text-deep-red mb-2">{plan.name}</h3>
+                      <div className="mb-3">
+                        <span className="display-4 fw-bold text-primary-red">{plan.price}</span>
+                        {plan.price !== 'Free' && plan.price !== 'Custom' && (
+                          <span className="text-muted">/month</span>
+                        )}
+                      </div>
+                      <p className="text-muted mb-4">{plan.description}</p>
+                      <ul className="list-unstyled text-start mb-4">
+                        {plan.features.map((feature, idx) => (
+                          <li key={idx} className="d-flex align-items-center mb-2">
+                            <CheckCircle className="text-success me-2" size={16} />
+                            <span className="small">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <Button 
+                        variant={plan.popular ? 'primary' : 'secondary'} 
+                        className="w-100"
+                      >
+                        {plan.price === 'Custom' ? 'Contact Sales' : 'Get Started'}
+                      </Button>
                     </div>
                   </Card>
                 </motion.div>
