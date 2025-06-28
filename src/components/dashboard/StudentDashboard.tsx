@@ -11,11 +11,11 @@ export function StudentDashboard() {
   const recentClasses = mockClasses.slice(0, 4);
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid blob-background">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-primary text-white p-4 p-md-5 rounded-4 mb-4"
+        className="bg-gradient-primary text-white p-4 p-md-5 rounded-4 mb-4 position-relative"
       >
         <h1 className="display-5 fw-bold mb-2">Welcome back, Alice!</h1>
         <p className="lead opacity-75">Ready to continue your learning journey?</p>
@@ -71,7 +71,7 @@ export function StudentDashboard() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <Card>
+            <div className="card-blob">
               <div className="card-body p-4">
                 <div className="d-flex align-items-center justify-content-between mb-4">
                   <h3 className="h4 fw-bold text-deep-red mb-0">Upcoming Assignments</h3>
@@ -100,7 +100,7 @@ export function StudentDashboard() {
                   ))}
                 </div>
               </div>
-            </Card>
+            </div>
           </motion.div>
         </div>
 
@@ -110,7 +110,7 @@ export function StudentDashboard() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <Card>
+            <div className="card-blob">
               <div className="card-body p-4">
                 <div className="d-flex align-items-center justify-content-between mb-4">
                   <h3 className="h4 fw-bold text-deep-red mb-0">Recent Classes</h3>
@@ -139,7 +139,7 @@ export function StudentDashboard() {
                   ))}
                 </div>
               </div>
-            </Card>
+            </div>
           </motion.div>
         </div>
       </div>
@@ -149,7 +149,7 @@ export function StudentDashboard() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
       >
-        <Card>
+        <div className="card-blob">
           <div className="card-body p-4">
             <h3 className="h4 fw-bold text-deep-red mb-4">Quick Actions</h3>
             <div className="row g-3">
@@ -175,7 +175,7 @@ export function StudentDashboard() {
               </div>
             </div>
           </div>
-        </Card>
+        </div>
       </motion.div>
     </div>
   );

@@ -10,13 +10,17 @@ export function ProgressTracker() {
   const COLORS = ['#ff7474', '#c64242', '#F97316', '#EF4444'];
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid blob-background">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-primary text-white p-4 p-md-5 rounded-4 mb-4"
+        className="text-white p-4 p-md-5 rounded-4 mb-4 position-relative"
         style={{ background: 'linear-gradient(135deg, #22c55e, #ff7474)' }}
       >
+        <div className="floating-blobs">
+          <div className="blob blob-2"></div>
+          <div className="blob blob-4"></div>
+        </div>
         <h1 className="display-5 fw-bold mb-2">Progress Tracker</h1>
         <p className="lead opacity-75">Monitor your learning journey and achievements</p>
       </motion.div>
@@ -72,7 +76,7 @@ export function ProgressTracker() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <Card>
+            <div className="card-blob">
               <div className="card-body p-4">
                 <h3 className="h4 fw-bold text-deep-red mb-4">Weekly Activity</h3>
                 <div style={{ width: '100%', height: '300px' }}>
@@ -87,7 +91,7 @@ export function ProgressTracker() {
                   </ResponsiveContainer>
                 </div>
               </div>
-            </Card>
+            </div>
           </motion.div>
         </div>
 
@@ -97,7 +101,7 @@ export function ProgressTracker() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <Card>
+            <div className="card-blob">
               <div className="card-body p-4">
                 <h3 className="h4 fw-bold text-deep-red mb-4">Subject Progress</h3>
                 <div style={{ width: '100%', height: '300px' }}>
@@ -122,7 +126,7 @@ export function ProgressTracker() {
                   </ResponsiveContainer>
                 </div>
               </div>
-            </Card>
+            </div>
           </motion.div>
         </div>
       </div>
@@ -132,7 +136,7 @@ export function ProgressTracker() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
       >
-        <Card>
+        <div className="card-blob">
           <div className="card-body p-4">
             <h3 className="h4 fw-bold text-deep-red mb-4">Achievements & Badges</h3>
             <div className="row g-4">
@@ -155,7 +159,7 @@ export function ProgressTracker() {
               ))}
             </div>
           </div>
-        </Card>
+        </div>
       </motion.div>
     </div>
   );

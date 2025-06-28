@@ -32,11 +32,11 @@ export function LabSimulators() {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid blob-background">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-secondary text-white p-4 p-md-5 rounded-4 mb-4"
+        className="bg-gradient-secondary text-white p-4 p-md-5 rounded-4 mb-4 position-relative"
       >
         <h1 className="display-5 fw-bold mb-2">STEM Lab Simulators</h1>
         <p className="lead opacity-75">Explore interactive science simulations</p>
@@ -77,7 +77,7 @@ export function LabSimulators() {
                 transition={{ delay: 0.3 + index * 0.1 }}
                 className="h-100"
               >
-                <Card hover className="h-100" onClick={() => setSelectedSim(sim.id)}>
+                <div className="card-blob h-100" onClick={() => setSelectedSim(sim.id)} style={{ cursor: 'pointer' }}>
                   <div className="card-body p-4">
                     <div className="d-flex align-items-start justify-content-between mb-3">
                       <div className={`p-3 rounded-3 ${getTypeColor(sim.type)}`}>
@@ -100,7 +100,7 @@ export function LabSimulators() {
                       </Button>
                     </div>
                   </div>
-                </Card>
+                </div>
               </motion.div>
             </div>
           );
@@ -115,7 +115,7 @@ export function LabSimulators() {
           style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}
           onClick={() => setSelectedSim(null)}
         >
-          <Card className="w-100 overflow-auto" style={{ maxWidth: '800px', maxHeight: '90vh' }} onClick={(e) => e.stopPropagation()}>
+          <div className="card-blob w-100 overflow-auto" style={{ maxWidth: '800px', maxHeight: '90vh' }} onClick={(e) => e.stopPropagation()}>
             <div className="card-body p-4">
               <div className="d-flex align-items-center justify-content-between mb-4">
                 <h2 className="h3 fw-bold text-deep-red mb-0">
@@ -140,7 +140,7 @@ export function LabSimulators() {
                 </p>
               </div>
             </div>
-          </Card>
+          </div>
         </motion.div>
       )}
     </div>

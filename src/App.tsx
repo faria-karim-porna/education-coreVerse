@@ -36,14 +36,14 @@ function MainApp() {
         return <ProgressTracker />;
       case 'classes':
         return (
-          <div className="p-4">
+          <div className="p-4 blob-background">
             <h1 className="display-5 fw-bold text-deep-red mb-4">My Classes</h1>
             <p className="text-muted">Classes content coming soon...</p>
           </div>
         );
       case 'tools':
         return (
-          <div className="p-4">
+          <div className="p-4 blob-background">
             <h1 className="display-5 fw-bold text-deep-red mb-4">Study Tools</h1>
             <p className="text-muted">Tools content coming soon...</p>
           </div>

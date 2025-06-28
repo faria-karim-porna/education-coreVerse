@@ -73,7 +73,7 @@ export function HomePage() {
   ];
 
   return (
-    <div className="min-vh-100 bg-light-bg">
+    <div className="min-vh-100 blob-background">
       {/* Navigation */}
       <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
         <div className="container-lg">
@@ -100,7 +100,13 @@ export function HomePage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="position-relative overflow-hidden bg-gradient-light py-5">
+      <section className="position-relative overflow-hidden blob-background-hero py-5">
+        <div className="floating-blobs">
+          <div className="blob blob-1"></div>
+          <div className="blob blob-2"></div>
+          <div className="blob blob-3"></div>
+          <div className="blob blob-4"></div>
+        </div>
         <div className="container-lg py-5">
           <div className="text-center">
             <motion.div
@@ -132,7 +138,11 @@ export function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-5 bg-white">
+      <section className="py-5 bg-white position-relative">
+        <div className="floating-blobs">
+          <div className="blob blob-2"></div>
+          <div className="blob blob-4"></div>
+        </div>
         <div className="container-lg">
           <div className="row g-4">
             {stats.map((stat, index) => (
@@ -153,7 +163,7 @@ export function HomePage() {
       </section>
 
       {/* Interactive Tilt Card Section */}
-      <section className="py-5 bg-light-bg">
+      <section className="py-5 blob-background-alt">
         <div className="container-lg">
           <div className="d-flex justify-content-center">
             <motion.div
@@ -162,7 +172,7 @@ export function HomePage() {
               transition={{ duration: 0.8 }}
               className="position-relative tilt-card-container"
             >
-              <div className="card shadow-lg border-0 p-4 transform-rotate-3 hover-transform-rotate-0 transition-all">
+              <div className="card-blob shadow-lg border-0 p-4 transform-rotate-3 hover-transform-rotate-0 transition-all">
                 <div className="row g-3">
                   <div className="col-6">
                     <div className="bg-light-bg p-3 rounded-3 text-center">
@@ -196,7 +206,11 @@ export function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-5 bg-white">
+      <section id="features" className="py-5 bg-white position-relative">
+        <div className="floating-blobs">
+          <div className="blob blob-1"></div>
+          <div className="blob blob-3"></div>
+        </div>
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -221,7 +235,7 @@ export function HomePage() {
                   transition={{ delay: index * 0.1 }}
                   className="h-100"
                 >
-                  <Card hover className="h-100">
+                  <div className="card-blob h-100 shadow-sm">
                     <div className="card-body p-4">
                       <div className={`${feature.color} rounded-4 d-inline-flex align-items-center justify-content-center mb-4`}
                            style={{ width: '64px', height: '64px' }}>
@@ -230,7 +244,7 @@ export function HomePage() {
                       <h4 className="fw-bold text-deep-red mb-3">{feature.title}</h4>
                       <p className="text-muted lh-base">{feature.description}</p>
                     </div>
-                  </Card>
+                  </div>
                 </motion.div>
               </div>
             ))}
@@ -239,7 +253,7 @@ export function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="py-5 bg-light-bg">
+      <section id="testimonials" className="py-5 blob-background-alt">
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -263,7 +277,7 @@ export function HomePage() {
                   transition={{ delay: index * 0.2 }}
                   className="h-100"
                 >
-                  <Card className="h-100">
+                  <div className="card-blob h-100">
                     <div className="card-body p-4">
                       <div className="d-flex align-items-center mb-4">
                         <img
@@ -279,7 +293,7 @@ export function HomePage() {
                       </div>
                       <p className="text-muted fst-italic lh-base">"{testimonial.content}"</p>
                     </div>
-                  </Card>
+                  </div>
                 </motion.div>
               </div>
             ))}
@@ -288,7 +302,7 @@ export function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-5 bg-gradient-primary text-white">
+      <section className="py-5 bg-gradient-primary text-white position-relative">
         <div className="container-lg text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -314,7 +328,11 @@ export function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-deep-red text-white py-5">
+      <footer className="bg-deep-red text-white py-5 position-relative">
+        <div className="floating-blobs">
+          <div className="blob blob-2"></div>
+          <div className="blob blob-4"></div>
+        </div>
         <div className="container-lg">
           <div className="row g-4">
             <div className="col-lg-3">
