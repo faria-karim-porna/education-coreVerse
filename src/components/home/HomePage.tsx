@@ -1,15 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Users, Beaker, Calculator, Globe, MessageCircle, Award, ArrowRight, Play, CheckCircle, Star, TrendingUp, Calendar, MapPin, ExternalLink } from 'lucide-react';
+import { BookOpen, Users, Beaker, Calculator, Globe, MessageCircle, Award, ArrowRight, Play, CheckCircle, Atom, Microscope, Brain, Code, Palette, Music, Languages, History, TrendingUp, Star, Clock, Shield, Zap, Target, Lightbulb, Rocket, Heart, Monitor, Smartphone, Tablet, ChevronRight, Building, GraduationCap, Briefcase, MapPin, Calendar, Mail, Phone } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { ThemeToggle } from '../ui/ThemeToggle';
 
-interface HomePageProps {
-  onNavigate: (view: string) => void;
-}
-
-export function HomePage({ onNavigate }: HomePageProps) {
+export function HomePage() {
   const features = [
     {
       icon: Beaker,
@@ -51,60 +47,84 @@ export function HomePage({ onNavigate }: HomePageProps) {
 
   const subjects = [
     {
-      name: 'Physics',
+      icon: Beaker,
+      title: 'Physics',
       description: 'Explore the fundamental laws of nature through interactive simulations',
-      image: 'https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=2',
-      students: '45,000+',
-      gradient: 'from-blue-500 to-purple-600'
+      features: ['Circuit Simulators', 'Motion Analysis', 'Wave Properties', 'Quantum Mechanics'],
+      color: 'from-blue-500 to-purple-600',
+      bgPattern: 'physics-pattern',
+      students: '12.5K',
+      image: 'https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     },
     {
-      name: 'Chemistry',
-      description: 'Discover molecular interactions and chemical reactions safely',
-      image: 'https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=2',
-      students: '38,000+',
-      gradient: 'from-green-500 to-teal-600'
+      icon: Atom,
+      title: 'Chemistry',
+      description: 'Dive into molecular structures and chemical reactions safely',
+      features: ['Reaction Simulator', 'Periodic Table', 'Molecular Modeling', 'Lab Safety'],
+      color: 'from-green-500 to-teal-600',
+      bgPattern: 'chemistry-pattern',
+      students: '9.8K',
+      image: 'https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     },
     {
-      name: 'Biology',
-      description: 'Study life sciences from cellular level to ecosystems',
-      image: 'https://images.pexels.com/photos/2280568/pexels-photo-2280568.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=2',
-      students: '52,000+',
-      gradient: 'from-emerald-500 to-green-600'
+      icon: Microscope,
+      title: 'Biology',
+      description: 'Study life sciences from cellular level to complex ecosystems',
+      features: ['Cell Viewer', 'DNA Sequencing', 'Ecosystem Models', 'Human Anatomy'],
+      color: 'from-emerald-500 to-green-600',
+      bgPattern: 'biology-pattern',
+      students: '15.2K',
+      image: 'https://images.pexels.com/photos/2280568/pexels-photo-2280568.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     },
     {
-      name: 'Mathematics',
-      description: 'Master mathematical concepts with visual problem solving',
-      image: 'https://images.pexels.com/photos/6238297/pexels-photo-6238297.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=2',
-      students: '67,000+',
-      gradient: 'from-orange-500 to-red-600'
+      icon: Calculator,
+      title: 'Mathematics',
+      description: 'Master mathematical concepts with visual and interactive tools',
+      features: ['Graphing Tools', 'Equation Solver', 'Statistics Lab', 'Geometry Builder'],
+      color: 'from-orange-500 to-red-600',
+      bgPattern: 'math-pattern',
+      students: '18.7K',
+      image: 'https://images.pexels.com/photos/6238050/pexels-photo-6238050.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     },
     {
-      name: 'Computer Science',
-      description: 'Learn programming and computational thinking interactively',
-      image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=2',
-      students: '73,000+',
-      gradient: 'from-purple-500 to-indigo-600'
+      icon: Code,
+      title: 'Computer Science',
+      description: 'Learn programming and computational thinking step by step',
+      features: ['Code Editor', 'Algorithm Visualizer', 'Project Builder', 'Debug Tools'],
+      color: 'from-purple-500 to-indigo-600',
+      bgPattern: 'cs-pattern',
+      students: '22.1K',
+      image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     },
     {
-      name: 'Engineering',
-      description: 'Design and build solutions to real-world problems',
-      image: 'https://images.pexels.com/photos/3862132/pexels-photo-3862132.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=2',
-      students: '41,000+',
-      gradient: 'from-pink-500 to-rose-600'
+      icon: Languages,
+      title: 'Languages',
+      description: 'Practice speaking, writing, and comprehension with AI tutors',
+      features: ['Speech Practice', 'Grammar Check', 'Cultural Context', 'Conversation AI'],
+      color: 'from-pink-500 to-rose-600',
+      bgPattern: 'lang-pattern',
+      students: '8.9K',
+      image: 'https://images.pexels.com/photos/267669/pexels-photo-267669.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     },
     {
-      name: 'Environmental Science',
-      description: 'Understand our planet and environmental challenges',
-      image: 'https://images.pexels.com/photos/1108572/pexels-photo-1108572.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=2',
-      students: '29,000+',
-      gradient: 'from-amber-500 to-orange-600'
+      icon: History,
+      title: 'History',
+      description: 'Explore civilizations and historical events through immersive experiences',
+      features: ['Timeline Explorer', 'Map Interactions', 'Document Analysis', 'Virtual Tours'],
+      color: 'from-amber-500 to-orange-600',
+      bgPattern: 'history-pattern',
+      students: '6.4K',
+      image: 'https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     },
     {
-      name: 'Astronomy',
-      description: 'Explore the cosmos and celestial phenomena',
-      image: 'https://images.pexels.com/photos/1169754/pexels-photo-1169754.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=2',
-      students: '34,000+',
-      gradient: 'from-violet-500 to-purple-600'
+      icon: Palette,
+      title: 'Arts & Design',
+      description: 'Express creativity through digital art and design principles',
+      features: ['Digital Canvas', 'Design Principles', 'Color Theory', 'Portfolio Builder'],
+      color: 'from-violet-500 to-purple-600',
+      bgPattern: 'art-pattern',
+      students: '4.7K',
+      image: 'https://images.pexels.com/photos/1053687/pexels-photo-1053687.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     }
   ];
 
@@ -139,117 +159,246 @@ export function HomePage({ onNavigate }: HomePageProps) {
     { number: '95%', label: 'Success Rate' }
   ];
 
-  const globalStats = [
-    { number: '150+', label: 'Countries Served', icon: Globe },
-    { number: '5,000+', label: 'Educational Institutions', icon: Users },
-    { number: '2M+', label: 'Courses Completed', icon: BookOpen },
-    { number: '98%', label: 'Completion Rate', icon: TrendingUp }
-  ];
-
-  const careerPaths = [
+  const benefits = [
     {
-      title: 'Research Scientist',
-      description: 'Lead groundbreaking research in your field of expertise',
-      image: 'https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2',
-      salary: '$85K - $150K',
-      growth: '+15%',
-      skills: ['Research Methods', 'Data Analysis', 'Scientific Writing', 'Lab Techniques']
+      icon: Clock,
+      title: '24/7 Access',
+      description: 'Learn at your own pace, anytime, anywhere'
     },
     {
-      title: 'Software Engineer',
-      description: 'Build innovative software solutions and applications',
-      image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2',
-      salary: '$95K - $180K',
-      growth: '+22%',
-      skills: ['Programming', 'Problem Solving', 'System Design', 'Collaboration']
+      icon: Shield,
+      title: 'Safe Learning',
+      description: 'Risk-free virtual experiments and simulations'
     },
     {
-      title: 'Healthcare Professional',
-      description: 'Make a difference in people\'s lives through medical care',
-      image: 'https://images.pexels.com/photos/2280568/pexels-photo-2280568.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2',
-      salary: '$75K - $200K',
-      growth: '+7%',
-      skills: ['Medical Knowledge', 'Patient Care', 'Communication', 'Critical Thinking']
+      icon: TrendingUp,
+      title: 'Proven Results',
+      description: '95% improvement in student performance'
     },
     {
-      title: 'Business Analyst',
-      description: 'Drive business decisions through data-driven insights',
-      image: 'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2',
-      salary: '$70K - $130K',
-      growth: '+11%',
-      skills: ['Data Analysis', 'Business Strategy', 'Communication', 'Project Management']
+      icon: Users,
+      title: 'Collaborative',
+      description: 'Work together with peers and instructors'
     }
   ];
 
+  const howItWorks = [
+    {
+      step: '01',
+      title: 'Sign Up & Explore',
+      description: 'Create your account and browse our extensive library of interactive content',
+      icon: Rocket
+    },
+    {
+      step: '02',
+      title: 'Choose Your Path',
+      description: 'Select subjects and difficulty levels that match your learning goals',
+      icon: Target
+    },
+    {
+      step: '03',
+      title: 'Learn Interactively',
+      description: 'Engage with simulations, labs, and collaborative tools',
+      icon: Lightbulb
+    },
+    {
+      step: '04',
+      title: 'Track Progress',
+      description: 'Monitor your achievements and get personalized recommendations',
+      icon: TrendingUp
+    }
+  ];
+
+  const platformFeatures = [
+    {
+      icon: Monitor,
+      title: 'Desktop Experience',
+      description: 'Full-featured platform with advanced tools and simulations'
+    },
+    {
+      icon: Tablet,
+      title: 'Tablet Optimized',
+      description: 'Touch-friendly interface perfect for interactive learning'
+    },
+    {
+      icon: Smartphone,
+      title: 'Mobile Ready',
+      description: 'Learn on-the-go with our responsive mobile experience'
+    }
+  ];
+
+  const successStories = [
+    {
+      metric: '40%',
+      description: 'Increase in test scores',
+      detail: 'Students using CoreVerse show significant improvement'
+    },
+    {
+      metric: '85%',
+      description: 'Student engagement rate',
+      detail: 'Higher participation in virtual labs vs traditional methods'
+    },
+    {
+      metric: '92%',
+      description: 'Teacher satisfaction',
+      detail: 'Educators report improved teaching effectiveness'
+    },
+    {
+      metric: '60%',
+      description: 'Time saved on prep',
+      detail: 'Teachers spend less time preparing lab materials'
+    }
+  ];
+
+  const pricingPlans = [
+    {
+      name: 'Student',
+      price: 'Free',
+      description: 'Perfect for individual learners',
+      features: ['Access to basic simulations', 'Progress tracking', 'Community support', 'Mobile app access'],
+      popular: false
+    },
+    {
+      name: 'Educator',
+      price: '$29/month',
+      description: 'Ideal for teachers and instructors',
+      features: ['All student features', 'Classroom management', 'Assignment creation', 'Advanced analytics', 'Priority support'],
+      popular: true
+    },
+    {
+      name: 'Institution',
+      price: 'Custom',
+      description: 'For schools and universities',
+      features: ['All educator features', 'Unlimited users', 'Custom branding', 'API access', 'Dedicated support'],
+      popular: false
+    }
+  ];
+
+  // NEW SECTION 1: Global Reach & Impact
+  const globalStats = [
+    {
+      icon: Globe,
+      number: '150+',
+      label: 'Countries Served',
+      description: 'Students worldwide using CoreVerse'
+    },
+    {
+      icon: Building,
+      number: '5,000+',
+      label: 'Educational Institutions',
+      description: 'Schools and universities trust us'
+    },
+    {
+      icon: GraduationCap,
+      number: '2M+',
+      label: 'Courses Completed',
+      description: 'Successful learning journeys'
+    },
+    {
+      icon: Award,
+      number: '98%',
+      label: 'Completion Rate',
+      description: 'Students finish what they start'
+    }
+  ];
+
+  // NEW SECTION 2: Career Pathways
+  const careerPaths = [
+    {
+      icon: Beaker,
+      title: 'Research Scientist',
+      description: 'Advance scientific knowledge through research and experimentation',
+      skills: ['Laboratory Techniques', 'Data Analysis', 'Research Methods', 'Scientific Writing'],
+      salary: '$75,000 - $120,000',
+      growth: '+8% annually',
+      image: 'https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=2'
+    },
+    {
+      icon: Code,
+      title: 'Software Engineer',
+      description: 'Design and develop innovative software solutions',
+      skills: ['Programming', 'Problem Solving', 'System Design', 'Team Collaboration'],
+      salary: '$85,000 - $150,000',
+      growth: '+13% annually',
+      image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=2'
+    },
+    {
+      icon: Heart,
+      title: 'Healthcare Professional',
+      description: 'Make a difference in people\'s lives through medical care',
+      skills: ['Medical Knowledge', 'Patient Care', 'Communication', 'Critical Thinking'],
+      salary: '$70,000 - $200,000',
+      growth: '+7% annually',
+      image: 'https://images.pexels.com/photos/4173251/pexels-photo-4173251.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=2'
+    },
+    {
+      icon: Briefcase,
+      title: 'Business Analyst',
+      description: 'Bridge technology and business to drive organizational success',
+      skills: ['Data Analysis', 'Business Strategy', 'Communication', 'Project Management'],
+      salary: '$65,000 - $110,000',
+      growth: '+11% annually',
+      image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=2'
+    }
+  ];
+
+  // NEW SECTION 3: Upcoming Events & Webinars
   const upcomingEvents = [
     {
-      title: 'Global STEM Competition 2024',
+      title: 'Virtual Science Fair 2024',
       date: 'March 15, 2024',
+      time: '2:00 PM EST',
       type: 'Competition',
-      image: 'https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&dpr=2',
-      participants: '2,500+',
-      location: 'Virtual Event'
+      description: 'Showcase your scientific projects and compete with students worldwide',
+      attendees: 1200,
+      image: 'https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=2'
     },
     {
       title: 'AI in Education Webinar',
       date: 'March 22, 2024',
+      time: '4:00 PM EST',
       type: 'Webinar',
-      image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&dpr=2',
-      participants: '1,200+',
-      location: 'Online'
+      description: 'Learn how artificial intelligence is transforming modern education',
+      attendees: 850,
+      image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=2'
     },
     {
-      title: 'Virtual Lab Workshop',
-      date: 'April 5, 2024',
+      title: 'Chemistry Lab Workshop',
+      date: 'March 28, 2024',
+      time: '1:00 PM EST',
       type: 'Workshop',
-      image: 'https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&dpr=2',
-      participants: '800+',
-      location: 'Interactive Session'
+      description: 'Hands-on virtual chemistry experiments with expert guidance',
+      attendees: 450,
+      image: 'https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=2'
     }
   ];
 
   return (
-    <div className="min-vh-100 bg-light-bg">
+    <div className="min-vh-100">
       {/* Navigation */}
       <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
         <div className="container-lg">
-          <motion.button
+          <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="navbar-brand d-flex align-items-center gap-2 btn btn-link text-decoration-none"
-            onClick={() => onNavigate('home')}
+            className="navbar-brand d-flex align-items-center gap-2"
           >
             <div className="bg-primary-red rounded-4 d-flex align-items-center justify-content-center"
                  style={{ width: '40px', height: '40px' }}>
               <BookOpen className="text-white" size={24} />
             </div>
             <span className="fw-bold h3 text-deep-red mb-0">CoreVerse</span>
-          </motion.button>
+          </motion.div>
           
           <div className="d-none d-md-flex align-items-center gap-4">
-            <button 
-              onClick={() => onNavigate('features')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              Features
-            </button>
-            <button 
-              onClick={() => onNavigate('about')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              About
-            </button>
-            <button 
-              onClick={() => onNavigate('contact')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              Contact
-            </button>
+            <a href="#features" className="nav-link text-deep-red">Features</a>
+            <a href="#subjects" className="nav-link text-deep-red">Subjects</a>
+            <a href="#how-it-works" className="nav-link text-deep-red">How It Works</a>
+            <a href="#testimonials" className="nav-link text-deep-red">Reviews</a>
+            <a href="#pricing" className="nav-link text-deep-red">Pricing</a>
             <ThemeToggle />
-            <Button variant="secondary" className="me-2" onClick={() => onNavigate('dashboard')}>
-              Sign In
-            </Button>
-            <Button onClick={() => onNavigate('dashboard')}>Get Started</Button>
+            <Button variant="secondary" className="me-2">Sign In</Button>
+            <Button>Get Started</Button>
           </div>
         </div>
       </nav>
@@ -272,7 +421,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 and collaborative classrooms designed for modern learners.
               </p>
               <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-                <Button size="lg" className="justify-content-center" onClick={() => onNavigate('dashboard')}>
+                <Button size="lg" className="justify-content-center">
                   Start Learning Today
                   <ArrowRight size={20} className="ms-2" />
                 </Button>
@@ -350,7 +499,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* Master Every Subject Section */}
+      {/* NEW SECTION 1: Global Reach & Impact */}
       <section className="py-5 bg-white">
         <div className="container-lg">
           <motion.div
@@ -358,48 +507,205 @@ export function HomePage({ onNavigate }: HomePageProps) {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-5"
           >
-            <div className="badge bg-primary-red text-white px-3 py-2 rounded-pill mb-3">
-              <Star className="me-1" size={16} />
-              Master Every Subject
-            </div>
+            <span className="badge bg-primary-red bg-opacity-10 text-primary-red px-3 py-2 rounded-pill mb-3">
+              Global Impact
+            </span>
             <h2 className="display-4 fw-bold text-deep-red mb-4">
-              Explore Diverse Learning Paths
+              Transforming Education Worldwide
             </h2>
             <p className="lead text-muted mx-auto" style={{ maxWidth: '600px' }}>
-              From fundamental sciences to cutting-edge technology, discover your passion 
-              through our comprehensive subject offerings.
+              Join millions of learners and thousands of institutions across the globe 
+              who trust CoreVerse for their educational journey.
+            </p>
+          </motion.div>
+
+          <div className="row g-4">
+            {globalStats.map((stat, index) => (
+              <div key={stat.label} className="col-md-6 col-lg-3">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="text-center"
+                >
+                  <Card className="h-100 border-0 shadow-sm">
+                    <div className="card-body p-4">
+                      <div className="bg-primary-red bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                           style={{ width: '64px', height: '64px' }}>
+                        <stat.icon className="text-primary-red" size={32} />
+                      </div>
+                      <div className="display-5 fw-bold text-primary-red mb-2">{stat.number}</div>
+                      <h5 className="fw-semibold text-deep-red mb-2">{stat.label}</h5>
+                      <p className="text-muted small mb-0">{stat.description}</p>
+                    </div>
+                  </Card>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Redesigned Subject-wise Section */}
+      <section id="subjects" className="py-5 bg-light-bg position-relative overflow-hidden">
+        <div className="container-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-5"
+          >
+            <span className="badge bg-primary-red bg-opacity-10 text-primary-red px-3 py-2 rounded-pill mb-3">
+              Comprehensive Learning
+            </span>
+            <h2 className="display-4 fw-bold text-deep-red mb-4">
+              Master Every Subject
+            </h2>
+            <p className="lead text-muted mx-auto" style={{ maxWidth: '700px' }}>
+              Dive deep into interactive learning experiences across all major academic disciplines. 
+              From cutting-edge STEM simulations to creative arts tools.
             </p>
           </motion.div>
 
           <div className="row g-4">
             {subjects.map((subject, index) => (
-              <div key={subject.name} className="col-md-6 col-lg-3">
+              <div key={subject.title} className="col-lg-6">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   className="h-100"
                 >
-                  <Card hover className="h-100 overflow-hidden subject-card-gradient">
+                  <Card hover className="h-100 overflow-hidden border-0 shadow-lg">
+                    <div className="row g-0 h-100">
+                      <div className="col-md-5">
+                        <div className="position-relative h-100">
+                          <img
+                            src={subject.image}
+                            alt={subject.title}
+                            className="w-100 h-100 object-fit-cover"
+                          />
+                          <div className={`position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-white bg-gradient-to-br ${subject.color} bg-opacity-90`}>
+                            <div className="position-absolute top-0 end-0 p-3">
+                              <span className="badge bg-white bg-opacity-20 text-white small">
+                                {subject.students} students
+                              </span>
+                            </div>
+                            <div className="text-center">
+                              <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                                   style={{ width: '80px', height: '80px' }}>
+                                <subject.icon size={40} />
+                              </div>
+                              <h3 className="fw-bold mb-2">{subject.title}</h3>
+                              <p className="opacity-90 small mb-0">{subject.description}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-7">
+                        <div className="card-body p-4 h-100 d-flex flex-column">
+                          <h5 className="fw-bold text-deep-red mb-3">What You'll Learn:</h5>
+                          <div className="flex-fill">
+                            <div className="row g-2">
+                              {subject.features.map((feature, idx) => (
+                                <div key={idx} className="col-6">
+                                  <div className="d-flex align-items-center p-2 bg-light-bg rounded-3">
+                                    <CheckCircle className="text-success me-2 flex-shrink-0" size={16} />
+                                    <span className="small text-muted">{feature}</span>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="mt-4 d-flex gap-2">
+                            <Button variant="primary" size="sm" className="flex-fill">
+                              Start Learning
+                            </Button>
+                            <Button variant="secondary" size="sm" className="flex-fill">
+                              Preview
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* NEW SECTION 2: Career Pathways */}
+      <section className="py-5 bg-white">
+        <div className="container-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-5"
+          >
+            <span className="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill mb-3">
+              Career Development
+            </span>
+            <h2 className="display-4 fw-bold text-deep-red mb-4">
+              Explore Career Pathways
+            </h2>
+            <p className="lead text-muted mx-auto" style={{ maxWidth: '700px' }}>
+              Discover exciting career opportunities and the skills you need to succeed. 
+              Our platform prepares you for the jobs of tomorrow.
+            </p>
+          </motion.div>
+
+          <div className="row g-4">
+            {careerPaths.map((career, index) => (
+              <div key={career.title} className="col-md-6 col-lg-3">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="h-100"
+                >
+                  <Card hover className="h-100 border-0 shadow-sm">
                     <div className="position-relative">
                       <img
-                        src={subject.image}
-                        alt={subject.name}
-                        className="card-img-top object-fit-cover"
-                        style={{ height: '200px' }}
+                        src={career.image}
+                        alt={career.title}
+                        className="card-img-top"
+                        style={{ height: '200px', objectFit: 'cover' }}
                       />
-                      <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-25"></div>
-                      <div className="position-absolute top-0 end-0 m-3">
-                        <span className="badge bg-primary-red text-white">
-                          {subject.students} students
-                        </span>
+                      <div className="position-absolute top-0 end-0 p-3">
+                        <span className="badge bg-success text-white">{career.growth}</span>
                       </div>
                     </div>
                     <div className="card-body p-4">
-                      <h4 className="fw-bold text-deep-red mb-2">{subject.name}</h4>
-                      <p className="text-muted small mb-3">{subject.description}</p>
-                      <Button size="sm" className="w-100" onClick={() => onNavigate('dashboard')}>
-                        Start Learning
+                      <div className="d-flex align-items-center mb-3">
+                        <div className="bg-primary-red bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3"
+                             style={{ width: '48px', height: '48px' }}>
+                          <career.icon className="text-primary-red" size={24} />
+                        </div>
+                        <div>
+                          <h5 className="fw-bold text-deep-red mb-0">{career.title}</h5>
+                          <small className="text-success fw-medium">{career.salary}</small>
+                        </div>
+                      </div>
+                      <p className="text-muted small mb-3">{career.description}</p>
+                      <div className="mb-3">
+                        <h6 className="fw-semibold text-deep-red mb-2">Key Skills:</h6>
+                        <div className="d-flex flex-wrap gap-1">
+                          {career.skills.slice(0, 2).map((skill, idx) => (
+                            <span key={idx} className="badge bg-light-bg text-muted small">
+                              {skill}
+                            </span>
+                          ))}
+                          {career.skills.length > 2 && (
+                            <span className="badge bg-light-bg text-muted small">
+                              +{career.skills.length - 2} more
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <Button variant="secondary" size="sm" className="w-100">
+                        Explore Path
+                        <ChevronRight size={16} className="ms-1" />
                       </Button>
                     </div>
                   </Card>
@@ -410,8 +716,252 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
+      {/* How It Works Section */}
+      <section id="how-it-works" className="py-5 bg-light-bg">
+        <div className="container-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-5"
+          >
+            <span className="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill mb-3">
+              Simple Process
+            </span>
+            <h2 className="display-4 fw-bold text-deep-red mb-4">
+              How CoreVerse Works
+            </h2>
+            <p className="lead text-muted">
+              Get started with interactive learning in just four simple steps
+            </p>
+          </motion.div>
+
+          <div className="row g-4">
+            {howItWorks.map((step, index) => (
+              <div key={step.step} className="col-md-6 col-lg-3">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.2 }}
+                  className="text-center"
+                >
+                  <div className="position-relative mb-4">
+                    <div className="bg-primary-red rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                         style={{ width: '80px', height: '80px' }}>
+                      <step.icon className="text-white" size={32} />
+                    </div>
+                    <div className="position-absolute top-0 start-0 bg-white border border-primary-red rounded-circle d-flex align-items-center justify-content-center"
+                         style={{ width: '32px', height: '32px', transform: 'translate(-8px, -8px)' }}>
+                      <span className="fw-bold text-primary-red small">{step.step}</span>
+                    </div>
+                  </div>
+                  <h4 className="fw-bold text-deep-red mb-3">{step.title}</h4>
+                  <p className="text-muted">{step.description}</p>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* NEW SECTION 3: Upcoming Events & Webinars */}
+      <section className="py-5 bg-white">
+        <div className="container-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-5"
+          >
+            <span className="badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill mb-3">
+              Community Events
+            </span>
+            <h2 className="display-4 fw-bold text-deep-red mb-4">
+              Upcoming Events & Webinars
+            </h2>
+            <p className="lead text-muted mx-auto" style={{ maxWidth: '700px' }}>
+              Join our vibrant community of learners and educators. Participate in competitions, 
+              workshops, and webinars to enhance your learning experience.
+            </p>
+          </motion.div>
+
+          <div className="row g-4">
+            {upcomingEvents.map((event, index) => (
+              <div key={event.title} className="col-md-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="h-100"
+                >
+                  <Card hover className="h-100 border-0 shadow-sm">
+                    <div className="position-relative">
+                      <img
+                        src={event.image}
+                        alt={event.title}
+                        className="card-img-top"
+                        style={{ height: '200px', objectFit: 'cover' }}
+                      />
+                      <div className="position-absolute top-0 start-0 p-3">
+                        <span className="badge bg-primary-red text-white">{event.type}</span>
+                      </div>
+                    </div>
+                    <div className="card-body p-4">
+                      <h5 className="fw-bold text-deep-red mb-2">{event.title}</h5>
+                      <p className="text-muted small mb-3">{event.description}</p>
+                      
+                      <div className="d-flex align-items-center mb-2">
+                        <Calendar className="text-muted me-2" size={16} />
+                        <span className="small text-muted">{event.date}</span>
+                      </div>
+                      
+                      <div className="d-flex align-items-center mb-3">
+                        <Clock className="text-muted me-2" size={16} />
+                        <span className="small text-muted">{event.time}</span>
+                      </div>
+                      
+                      <div className="d-flex align-items-center justify-content-between mb-3">
+                        <div className="d-flex align-items-center">
+                          <Users className="text-success me-2" size={16} />
+                          <span className="small text-success fw-medium">{event.attendees} registered</span>
+                        </div>
+                      </div>
+                      
+                      <Button variant="primary" size="sm" className="w-100">
+                        Register Now
+                      </Button>
+                    </div>
+                  </Card>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Success Stories Section */}
+      <section className="py-5 bg-light-bg">
+        <div className="container-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-5"
+          >
+            <span className="badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill mb-3">
+              Proven Impact
+            </span>
+            <h2 className="display-4 fw-bold text-deep-red mb-4">
+              Success Stories
+            </h2>
+            <p className="lead text-muted">
+              Real results from educators and students worldwide
+            </p>
+          </motion.div>
+
+          <div className="row g-4">
+            {successStories.map((story, index) => (
+              <div key={story.metric} className="col-md-6 col-lg-3">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="text-center"
+                >
+                  <Card className="h-100">
+                    <div className="card-body p-4">
+                      <div className="display-3 fw-bold text-primary-red mb-2">{story.metric}</div>
+                      <h5 className="fw-semibold text-deep-red mb-2">{story.description}</h5>
+                      <p className="text-muted small mb-0">{story.detail}</p>
+                    </div>
+                  </Card>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Platform Features Section */}
+      <section className="py-5 bg-white">
+        <div className="container-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-5"
+          >
+            <span className="badge bg-info bg-opacity-10 text-info px-3 py-2 rounded-pill mb-3">
+              Multi-Platform
+            </span>
+            <h2 className="display-4 fw-bold text-deep-red mb-4">
+              Learn Anywhere, Anytime
+            </h2>
+            <p className="lead text-muted">
+              Access CoreVerse on all your devices with a seamless experience
+            </p>
+          </motion.div>
+
+          <div className="row g-4 align-items-center">
+            {platformFeatures.map((feature, index) => (
+              <div key={feature.title} className="col-md-4">
+                <motion.div
+                  initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.2 }}
+                  className="text-center"
+                >
+                  <div className="bg-white rounded-4 p-4 shadow-sm">
+                    <div className="bg-primary-red bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                         style={{ width: '64px', height: '64px' }}>
+                      <feature.icon className="text-primary-red" size={32} />
+                    </div>
+                    <h4 className="fw-bold text-deep-red mb-2">{feature.title}</h4>
+                    <p className="text-muted mb-0">{feature.description}</p>
+                  </div>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-5 bg-light-bg">
+        <div className="container-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-5"
+          >
+            <h2 className="display-4 fw-bold text-deep-red mb-4">
+              Why Choose CoreVerse?
+            </h2>
+            <p className="lead text-muted">
+              Experience the future of education with our innovative platform
+            </p>
+          </motion.div>
+
+          <div className="row g-4">
+            {benefits.map((benefit, index) => (
+              <div key={benefit.title} className="col-md-6 col-lg-3">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="text-center"
+                >
+                  <div className="bg-primary-red bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
+                       style={{ width: '80px', height: '80px' }}>
+                    <benefit.icon className="text-primary-red" size={40} />
+                  </div>
+                  <h4 className="fw-bold text-deep-red mb-3">{benefit.title}</h4>
+                  <p className="text-muted">{benefit.description}</p>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
-      <section id="features" className="py-5 bg-light-bg">
+      <section id="features" className="py-5 bg-white">
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -453,200 +1003,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* Global Reach & Impact Section */}
-      <section className="py-5 bg-white">
-        <div className="container-lg">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-5"
-          >
-            <div className="badge bg-success text-white px-3 py-2 rounded-pill mb-3">
-              <Globe className="me-1" size={16} />
-              Global Impact
-            </div>
-            <h2 className="display-4 fw-bold text-deep-red mb-4">
-              Transforming Education Worldwide
-            </h2>
-            <p className="lead text-muted mx-auto" style={{ maxWidth: '600px' }}>
-              Our platform reaches learners across the globe, making quality education 
-              accessible to everyone, everywhere.
-            </p>
-          </motion.div>
-
-          <div className="row g-4">
-            {globalStats.map((stat, index) => (
-              <div key={stat.label} className="col-md-6 col-lg-3">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Card className="text-center">
-                    <div className="card-body p-4">
-                      <div className="bg-primary-red bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                           style={{ width: '64px', height: '64px' }}>
-                        <stat.icon className="text-primary-red" size={32} />
-                      </div>
-                      <div className="display-4 fw-bold text-primary-red mb-2">{stat.number}</div>
-                      <div className="text-muted fw-medium">{stat.label}</div>
-                    </div>
-                  </Card>
-                </motion.div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Career Pathways Section */}
-      <section className="py-5 bg-light-bg">
-        <div className="container-lg">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-5"
-          >
-            <div className="badge bg-warning text-dark px-3 py-2 rounded-pill mb-3">
-              <TrendingUp className="me-1" size={16} />
-              Career Pathways
-            </div>
-            <h2 className="display-4 fw-bold text-deep-red mb-4">
-              Launch Your Dream Career
-            </h2>
-            <p className="lead text-muted mx-auto" style={{ maxWidth: '600px' }}>
-              Explore high-demand career paths and understand the skills needed 
-              to succeed in tomorrow's job market.
-            </p>
-          </motion.div>
-
-          <div className="row g-4">
-            {careerPaths.map((career, index) => (
-              <div key={career.title} className="col-md-6 col-lg-3">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="h-100"
-                >
-                  <Card hover className="h-100">
-                    <img
-                      src={career.image}
-                      alt={career.title}
-                      className="card-img-top object-fit-cover"
-                      style={{ height: '200px' }}
-                    />
-                    <div className="card-body p-4">
-                      <h4 className="fw-bold text-deep-red mb-2">{career.title}</h4>
-                      <p className="text-muted small mb-3">{career.description}</p>
-                      
-                      <div className="d-flex justify-content-between mb-3">
-                        <div>
-                          <small className="text-muted d-block">Salary Range</small>
-                          <span className="fw-semibold text-success">{career.salary}</span>
-                        </div>
-                        <div className="text-end">
-                          <small className="text-muted d-block">Growth</small>
-                          <span className="fw-semibold text-primary-red">{career.growth}</span>
-                        </div>
-                      </div>
-
-                      <div className="mb-3">
-                        <small className="text-muted d-block mb-2">Key Skills:</small>
-                        <div className="d-flex flex-wrap gap-1">
-                          {career.skills.slice(0, 2).map((skill, idx) => (
-                            <span key={idx} className="badge bg-light-bg text-deep-red small">
-                              {skill}
-                            </span>
-                          ))}
-                          {career.skills.length > 2 && (
-                            <span className="badge bg-light-bg text-muted small">
-                              +{career.skills.length - 2} more
-                            </span>
-                          )}
-                        </div>
-                      </div>
-
-                      <Button size="sm" className="w-100" onClick={() => onNavigate('careers')}>
-                        Explore Path
-                      </Button>
-                    </div>
-                  </Card>
-                </motion.div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Upcoming Events & Webinars Section */}
-      <section className="py-5 bg-white">
-        <div className="container-lg">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-5"
-          >
-            <div className="badge bg-info text-white px-3 py-2 rounded-pill mb-3">
-              <Calendar className="me-1" size={16} />
-              Upcoming Events
-            </div>
-            <h2 className="display-4 fw-bold text-deep-red mb-4">
-              Join Our Learning Community
-            </h2>
-            <p className="lead text-muted mx-auto" style={{ maxWidth: '600px' }}>
-              Participate in competitions, webinars, and workshops designed to 
-              enhance your learning experience and connect with peers.
-            </p>
-          </motion.div>
-
-          <div className="row g-4">
-            {upcomingEvents.map((event, index) => (
-              <div key={event.title} className="col-lg-4">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="h-100"
-                >
-                  <Card hover className="h-100">
-                    <img
-                      src={event.image}
-                      alt={event.title}
-                      className="card-img-top object-fit-cover"
-                      style={{ height: '200px' }}
-                    />
-                    <div className="card-body p-4">
-                      <div className="d-flex align-items-center justify-content-between mb-3">
-                        <span className="badge bg-primary-red text-white">{event.type}</span>
-                        <small className="text-muted">{event.date}</small>
-                      </div>
-                      
-                      <h4 className="fw-bold text-deep-red mb-3">{event.title}</h4>
-                      
-                      <div className="d-flex align-items-center mb-2">
-                        <Users className="text-muted me-2" size={16} />
-                        <small className="text-muted">{event.participants} registered</small>
-                      </div>
-                      
-                      <div className="d-flex align-items-center mb-4">
-                        <MapPin className="text-muted me-2" size={16} />
-                        <small className="text-muted">{event.location}</small>
-                      </div>
-
-                      <Button size="sm" className="w-100">
-                        <ExternalLink size={16} className="me-2" />
-                        Register Now
-                      </Button>
-                    </div>
-                  </Card>
-                </motion.div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Testimonials Section */}
       <section id="testimonials" className="py-5 bg-light-bg">
         <div className="container-lg">
@@ -674,24 +1030,87 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 >
                   <Card className="h-100">
                     <div className="card-body p-4">
-                      <div className="d-flex align-items-center mb-4">
+                      <div className="d-flex align-items-center mb-3">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star key={i} className="text-warning" size={16} fill="currentColor" />
+                        ))}
+                      </div>
+                      <p className="text-muted fst-italic lh-base mb-4">"{testimonial.content}"</p>
+                      <div className="d-flex align-items-center">
                         <img
                           src={testimonial.avatar}
                           alt={testimonial.name}
                           className="rounded-circle object-fit-cover me-3"
                           style={{ width: '48px', height: '48px' }}
                         />
-                        <div className="flex-fill">
+                        <div>
                           <h6 className="fw-semibold text-deep-red mb-0">{testimonial.name}</h6>
                           <small className="text-muted">{testimonial.role}</small>
                         </div>
-                        <div className="d-flex">
-                          {[...Array(testimonial.rating)].map((_, i) => (
-                            <Star key={i} className="text-warning" size={16} fill="currentColor" />
-                          ))}
-                        </div>
                       </div>
-                      <p className="text-muted fst-italic lh-base">"{testimonial.content}"</p>
+                    </div>
+                  </Card>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-5 bg-white">
+        <div className="container-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-5"
+          >
+            <h2 className="display-4 fw-bold text-deep-red mb-4">
+              Choose Your Plan
+            </h2>
+            <p className="lead text-muted">
+              Flexible pricing options for every learning need
+            </p>
+          </motion.div>
+
+          <div className="row g-4 justify-content-center">
+            {pricingPlans.map((plan, index) => (
+              <div key={plan.name} className="col-md-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="h-100"
+                >
+                  <Card className={`h-100 position-relative ${plan.popular ? 'border-primary-red' : ''}`}>
+                    {plan.popular && (
+                      <div className="position-absolute top-0 start-50 translate-middle">
+                        <span className="badge bg-primary-red text-white px-3 py-2">Most Popular</span>
+                      </div>
+                    )}
+                    <div className="card-body p-4 text-center">
+                      <h3 className="fw-bold text-deep-red mb-2">{plan.name}</h3>
+                      <div className="mb-3">
+                        <span className="display-4 fw-bold text-primary-red">{plan.price}</span>
+                        {plan.price !== 'Free' && plan.price !== 'Custom' && (
+                          <span className="text-muted">/month</span>
+                        )}
+                      </div>
+                      <p className="text-muted mb-4">{plan.description}</p>
+                      <ul className="list-unstyled text-start mb-4">
+                        {plan.features.map((feature, idx) => (
+                          <li key={idx} className="d-flex align-items-center mb-2">
+                            <CheckCircle className="text-success me-2" size={16} />
+                            <span className="small">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <Button 
+                        variant={plan.popular ? 'primary' : 'secondary'} 
+                        className="w-100"
+                      >
+                        {plan.price === 'Custom' ? 'Contact Sales' : 'Get Started'}
+                      </Button>
                     </div>
                   </Card>
                 </motion.div>
@@ -716,10 +1135,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
               to enhance their learning experience.
             </p>
             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-              <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white" onClick={() => onNavigate('dashboard')}>
+              <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white">
                 Start Free Trial
               </Button>
-              <Button variant="outline-secondary" size="lg" className="border-white text-white" onClick={() => onNavigate('contact')}>
+              <Button variant="outline-secondary" size="lg" className="border-white text-white">
                 Schedule Demo
               </Button>
             </div>
@@ -732,96 +1151,53 @@ export function HomePage({ onNavigate }: HomePageProps) {
         <div className="container-lg">
           <div className="row g-4">
             <div className="col-lg-3">
-              <button 
-                onClick={() => onNavigate('home')}
-                className="d-flex align-items-center gap-2 mb-4 btn btn-link text-white text-decoration-none p-0"
-              >
+              <div className="d-flex align-items-center gap-2 mb-4">
                 <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
                      style={{ width: '32px', height: '32px' }}>
                   <BookOpen className="text-white" size={20} />
                 </div>
                 <span className="fw-bold h5 mb-0">CoreVerse</span>
-              </button>
-              <p className="text-white-50">
+              </div>
+              <p className="text-white-50 mb-4">
                 Transforming education through interactive technology and innovative learning experiences.
               </p>
+              <div className="d-flex align-items-center gap-3">
+                <Mail className="text-white-50" size={20} />
+                <span className="text-white-50">contact@coreverse.edu</span>
+              </div>
+              <div className="d-flex align-items-center gap-3 mt-2">
+                <Phone className="text-white-50" size={20} />
+                <span className="text-white-50">+1 (555) 123-4567</span>
+              </div>
             </div>
             
             <div className="col-lg-3">
               <h6 className="fw-semibold mb-3">Platform</h6>
               <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('labs')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    STEM Labs
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('classes')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Virtual Classrooms
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('progress')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Progress Tracking
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('tools')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Scientific Tools
-                  </button>
-                </li>
+                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">STEM Labs</a></li>
+                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Virtual Classrooms</a></li>
+                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Progress Tracking</a></li>
+                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Scientific Tools</a></li>
               </ul>
             </div>
             
             <div className="col-lg-3">
               <h6 className="fw-semibold mb-3">Support</h6>
               <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('help-center')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Help Center
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('documentation')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Documentation
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('community')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Community
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Contact Us
-                  </button>
-                </li>
+                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Help Center</a></li>
+                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Documentation</a></li>
+                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Community</a></li>
+                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Contact Us</a></li>
               </ul>
             </div>
             
             <div className="col-lg-3">
               <h6 className="fw-semibold mb-3">Company</h6>
               <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('about')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    About
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('careers')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Careers
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('privacy')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Privacy
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('terms')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Terms
-                  </button>
-                </li>
+                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">About</a></li>
+                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Careers</a></li>
+                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Privacy</a></li>
+                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Terms</a></li>
               </ul>
             </div>
           </div>
