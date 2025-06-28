@@ -376,10 +376,70 @@ export function HomePage() {
   return (
     <div className="min-vh-100">
       {/* Navigation */}
-      <Navbar />
+      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <div className="container-lg">
+          <motion.a
+            className="navbar-brand d-flex align-items-center gap-2"
+            href="#"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
+                 style={{ width: '32px', height: '32px' }}>
+              <BookOpen className="text-white" size={20} />
+            </div>
+            <span className="fw-bold text-deep-red">CoreVerse</span>
+          </motion.a>
+
+          <div className="d-flex align-items-center gap-3">
+            <div className="d-none d-lg-flex align-items-center gap-4">
+              <motion.button
+                className="btn btn-link text-decoration-none text-muted fw-medium"
+                whileHover={{ color: '#dc2626' }}
+                transition={{ duration: 0.2 }}
+              >
+                Features
+              </motion.button>
+              <motion.button
+                className="btn btn-link text-decoration-none text-muted fw-medium"
+                whileHover={{ color: '#dc2626' }}
+                transition={{ duration: 0.2 }}
+              >
+                Subjects
+              </motion.button>
+              <motion.button
+                className="btn btn-link text-decoration-none text-muted fw-medium"
+                whileHover={{ color: '#dc2626' }}
+                transition={{ duration: 0.2 }}
+              >
+                Pricing
+              </motion.button>
+              <motion.button
+                className="btn btn-link text-decoration-none text-muted fw-medium"
+                whileHover={{ color: '#dc2626' }}
+                transition={{ duration: 0.2 }}
+              >
+                About
+              </motion.button>
+            </div>
+            
+            <ThemeToggle />
+            
+            <div className="d-flex align-items-center gap-2">
+              <Button variant="secondary" size="sm">
+                Sign In
+              </Button>
+              <Button variant="primary" size="sm">
+                Get Started
+              </Button>
+            </div>
+          </div>
+        </div>
+      </nav>
 
       {/* Hero Section */}
-      <section className="position-relative overflow-hidden bg-gradient-light py-5">
+      <section className="position-relative overflow-hidden bg-gradient-light py-5" style={{ marginTop: '76px' }}>
         <div className="container-lg py-5">
           <div className="text-center">
             <motion.div
