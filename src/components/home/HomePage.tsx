@@ -9,6 +9,7 @@ import { GlobalImpactSection } from './sections/GlobalImpactSection';
 import { CareerPathwaysSection } from './sections/CareerPathwaysSection';
 import { UpcomingEventsSection } from './sections/UpcomingEventsSection';
 import { TestimonialsSection } from './sections/TestimonialsSection';
+import { IntegrationSection } from './sections/IntegrationSection';
 import { CTASection } from './sections/CTASection';
 import { FooterSection } from './sections/FooterSection';
 
@@ -29,6 +30,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
       <CareerPathwaysSection onNavigate={onNavigate} />
       <UpcomingEventsSection />
       <TestimonialsSection />
+      <IntegrationSection onNavigate={onNavigate} />
       <CTASection onNavigate={onNavigate} />
       <FooterSection onNavigate={onNavigate} />
     </div>
