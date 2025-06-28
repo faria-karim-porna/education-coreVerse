@@ -26,32 +26,32 @@ export function Button({
   const getVariantClass = () => {
     switch (variant) {
       case 'primary':
-        return 'btn-custom-primary';
+        return 'btn-paper-primary';
       case 'secondary':
-        return 'btn-custom-secondary';
+        return 'btn-paper-secondary';
       case 'success':
-        return 'btn-success';
+        return 'btn-paper text-success';
       case 'warning':
-        return 'btn-warning';
+        return 'btn-paper text-warning';
       case 'danger':
-        return 'btn-danger';
+        return 'btn-paper text-danger';
       case 'outline-primary':
-        return 'btn-outline-primary';
+        return 'btn-paper border border-primary text-primary';
       case 'outline-secondary':
-        return 'btn-outline-secondary';
+        return 'btn-paper border border-secondary text-secondary';
       default:
-        return 'btn-custom-primary';
+        return 'btn-paper-primary';
     }
   };
 
   const getSizeClass = () => {
     switch (size) {
       case 'sm':
-        return 'btn-sm';
+        return 'btn-sm px-3 py-2';
       case 'lg':
-        return 'btn-lg';
+        return 'btn-lg px-4 py-3';
       default:
-        return '';
+        return 'px-3 py-2';
     }
   };
 
@@ -64,7 +64,7 @@ export function Button({
       type={type}
       className={`btn ${getVariantClass()} ${getSizeClass()} d-inline-flex align-items-center gap-2 fw-medium ${className}`}
     >
-      {Icon && <Icon size={16} />}
+      {Icon && <Icon size={16} className="icon" />}
       <span>{children}</span>
     </motion.button>
   );

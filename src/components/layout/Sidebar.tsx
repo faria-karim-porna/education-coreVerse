@@ -69,23 +69,25 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
             initial={{ x: -300 }}
             animate={{ x: 0 }}
             exit={{ x: -300 }}
-            className="position-fixed position-lg-static top-0 start-0 bottom-0 bg-white border-end shadow-lg d-flex flex-column"
+            className="position-fixed position-lg-static top-0 start-0 bottom-0 paper-sidebar d-flex flex-column"
             style={{ width: '256px', zIndex: 1050 }}
           >
             <div className="p-4 border-bottom d-flex align-items-center justify-content-between justify-content-lg-center">
               <div className="d-flex align-items-center gap-2">
-                <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
+                <div className="icon-paper-container bg-primary-red d-flex align-items-center justify-content-center"
                      style={{ width: '32px', height: '32px' }}>
-                  <span className="text-white fw-bold small">CV</span>
+                  <span className="text-white fw-bold small icon">CV</span>
                 </div>
                 <span className="fw-bold h4 text-deep-red mb-0">CoreVerse</span>
               </div>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={onClose}
-                className="btn btn-link p-2 d-lg-none"
+                className="btn btn-paper-secondary p-2 d-lg-none organic-shape-1"
               >
                 <X size={20} />
-              </button>
+              </motion.button>
             </div>
 
             <nav className="p-4 flex-fill">
@@ -99,10 +101,8 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
                       onViewChange(item.id);
                       onClose();
                     }}
-                    className={`btn text-start d-flex align-items-center gap-3 px-3 py-2 rounded-3 ${
-                      activeView === item.id
-                        ? 'bg-light-bg text-primary-red border border-card-bg'
-                        : 'btn-link text-dark'
+                    className={`nav-paper-item btn text-start d-flex align-items-center gap-3 px-3 py-2 ${
+                      activeView === item.id ? 'active' : ''
                     }`}
                   >
                     <item.icon size={20} />
@@ -122,10 +122,8 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
                         onViewChange(item.id);
                         onClose();
                       }}
-                      className={`btn text-start d-flex align-items-center gap-3 px-3 py-2 rounded-3 ${
-                        activeView === item.id
-                          ? 'bg-light-bg text-primary-red border border-card-bg'
-                          : 'btn-link text-dark'
+                      className={`nav-paper-item btn text-start d-flex align-items-center gap-3 px-3 py-2 ${
+                        activeView === item.id ? 'active' : ''
                       }`}
                     >
                       <item.icon size={20} />

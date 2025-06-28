@@ -73,18 +73,18 @@ export function HomePage() {
   ];
 
   return (
-    <div className="min-vh-100 bg-light-bg">
+    <div className="min-vh-100 paper-layer-1">
       {/* Navigation */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
+      <nav className="navbar navbar-expand-lg navbar-light paper-header">
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             className="navbar-brand d-flex align-items-center gap-2"
           >
-            <div className="bg-primary-red rounded-4 d-flex align-items-center justify-content-center"
+            <div className="icon-paper-container bg-primary-red d-flex align-items-center justify-content-center"
                  style={{ width: '40px', height: '40px' }}>
-              <BookOpen className="text-white" size={24} />
+              <BookOpen className="text-white icon" size={24} />
             </div>
             <span className="fw-bold h3 text-deep-red mb-0">CoreVerse</span>
           </motion.div>
@@ -132,7 +132,7 @@ export function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-5 bg-white">
+      <section className="py-5 paper-layer-2">
         <div className="container-lg">
           <div className="row g-4">
             {stats.map((stat, index) => (
@@ -141,7 +141,7 @@ export function HomePage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="text-center"
+                  className="text-center paper-cutout-shallow p-4"
                 >
                   <div className="display-4 fw-bold text-primary-red mb-2">{stat.number}</div>
                   <div className="text-muted">{stat.label}</div>
@@ -153,7 +153,7 @@ export function HomePage() {
       </section>
 
       {/* Interactive Tilt Card Section */}
-      <section className="py-5 bg-light-bg">
+      <section className="py-5 paper-layer-1">
         <div className="container-lg">
           <div className="d-flex justify-content-center">
             <motion.div
@@ -162,30 +162,32 @@ export function HomePage() {
               transition={{ duration: 0.8 }}
               className="position-relative tilt-card-container"
             >
-              <div className="card shadow-lg border-0 p-4 transform-rotate-3 hover-transform-rotate-0 transition-all">
-                <div className="row g-3">
-                  <div className="col-6">
-                    <div className="bg-light-bg p-3 rounded-3 text-center">
-                      <Beaker className="text-primary-red mb-2" size={32} />
-                      <h6 className="fw-semibold text-deep-red mb-0">Virtual Labs</h6>
+              <div className="paper-container">
+                <div className="container-content">
+                  <div className="row g-3">
+                    <div className="col-6">
+                      <div className="paper-cutout-shallow p-3 text-center">
+                        <Beaker className="text-primary-red mb-2" size={32} />
+                        <h6 className="fw-semibold text-deep-red mb-0">Virtual Labs</h6>
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-6">
-                    <div className="bg-card-bg p-3 rounded-3 text-center">
-                      <Calculator className="text-accent-red mb-2" size={32} />
-                      <h6 className="fw-semibold text-deep-red mb-0">Sci Tools</h6>
+                    <div className="col-6">
+                      <div className="paper-cutout-shallow p-3 text-center">
+                        <Calculator className="text-accent-red mb-2" size={32} />
+                        <h6 className="fw-semibold text-deep-red mb-0">Sci Tools</h6>
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-6">
-                    <div className="bg-success bg-opacity-10 p-3 rounded-3 text-center">
-                      <Globe className="text-success mb-2" size={32} />
-                      <h6 className="fw-semibold text-deep-red mb-0">Explore</h6>
+                    <div className="col-6">
+                      <div className="paper-cutout-shallow p-3 text-center">
+                        <Globe className="text-success mb-2" size={32} />
+                        <h6 className="fw-semibold text-deep-red mb-0">Explore</h6>
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-6">
-                    <div className="bg-warning bg-opacity-10 p-3 rounded-3 text-center">
-                      <Users className="text-warning mb-2" size={32} />
-                      <h6 className="fw-semibold text-deep-red mb-0">Collaborate</h6>
+                    <div className="col-6">
+                      <div className="paper-cutout-shallow p-3 text-center">
+                        <Users className="text-warning mb-2" size={32} />
+                        <h6 className="fw-semibold text-deep-red mb-0">Collaborate</h6>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -196,7 +198,7 @@ export function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-5 bg-white">
+      <section id="features" className="py-5 paper-layer-2">
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -223,9 +225,9 @@ export function HomePage() {
                 >
                   <Card hover className="h-100">
                     <div className="card-body p-4">
-                      <div className={`${feature.color} rounded-4 d-inline-flex align-items-center justify-content-center mb-4`}
+                      <div className={`icon-paper-container ${feature.color} d-inline-flex align-items-center justify-content-center mb-4`}
                            style={{ width: '64px', height: '64px' }}>
-                        <feature.icon className="text-white" size={32} />
+                        <feature.icon className="text-white icon" size={32} />
                       </div>
                       <h4 className="fw-bold text-deep-red mb-3">{feature.title}</h4>
                       <p className="text-muted lh-base">{feature.description}</p>
@@ -239,7 +241,7 @@ export function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="py-5 bg-light-bg">
+      <section id="testimonials" className="py-5 paper-layer-1">
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -266,12 +268,13 @@ export function HomePage() {
                   <Card className="h-100">
                     <div className="card-body p-4">
                       <div className="d-flex align-items-center mb-4">
-                        <img
-                          src={testimonial.avatar}
-                          alt={testimonial.name}
-                          className="rounded-circle object-fit-cover me-3"
-                          style={{ width: '48px', height: '48px' }}
-                        />
+                        <div className="icon-paper-container me-3" style={{ width: '48px', height: '48px', padding: '2px' }}>
+                          <img
+                            src={testimonial.avatar}
+                            alt={testimonial.name}
+                            className="w-100 h-100 object-fit-cover organic-shape-3"
+                          />
+                        </div>
                         <div>
                           <h6 className="fw-semibold text-deep-red mb-0">{testimonial.name}</h6>
                           <small className="text-muted">{testimonial.role}</small>
@@ -319,9 +322,9 @@ export function HomePage() {
           <div className="row g-4">
             <div className="col-lg-3">
               <div className="d-flex align-items-center gap-2 mb-4">
-                <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
+                <div className="icon-paper-container bg-primary-red d-flex align-items-center justify-content-center"
                      style={{ width: '32px', height: '32px' }}>
-                  <BookOpen className="text-white" size={20} />
+                  <BookOpen className="text-white icon" size={20} />
                 </div>
                 <span className="fw-bold h5 mb-0">CoreVerse</span>
               </div>

@@ -14,24 +14,41 @@ export function StatCard({ title, value, change, icon: Icon, color = 'primary' }
   const getColorClass = () => {
     switch (color) {
       case 'primary':
-        return 'bg-light-bg text-primary-red';
+        return 'text-primary-red';
       case 'secondary':
-        return 'bg-card-bg text-accent-red';
+        return 'text-accent-red';
       case 'success':
-        return 'bg-success bg-opacity-10 text-success';
+        return 'text-success';
       case 'warning':
-        return 'bg-warning bg-opacity-10 text-warning';
+        return 'text-warning';
       case 'danger':
-        return 'bg-danger bg-opacity-10 text-danger';
+        return 'text-danger';
       default:
-        return 'bg-light-bg text-primary-red';
+        return 'text-primary-red';
+    }
+  };
+
+  const getIconBgClass = () => {
+    switch (color) {
+      case 'primary':
+        return 'bg-primary-red';
+      case 'secondary':
+        return 'bg-accent-red';
+      case 'success':
+        return 'bg-success';
+      case 'warning':
+        return 'bg-warning';
+      case 'danger':
+        return 'bg-danger';
+      default:
+        return 'bg-primary-red';
     }
   };
 
   return (
     <motion.div
       whileHover={{ scale: 1.02, y: -2 }}
-      className="card border-0 shadow-sm"
+      className="stat-paper-card"
     >
       <div className="card-body p-4">
         <div className="d-flex align-items-center justify-content-between">
@@ -53,8 +70,8 @@ export function StatCard({ title, value, change, icon: Icon, color = 'primary' }
               </div>
             )}
           </div>
-          <div className={`p-3 rounded-3 ${getColorClass()}`}>
-            <Icon size={24} />
+          <div className={`icon-paper-container p-3 ${getIconBgClass()}`}>
+            <Icon size={24} className="text-white icon" />
           </div>
         </div>
       </div>

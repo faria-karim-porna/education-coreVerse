@@ -15,25 +15,27 @@ export function Header({ onMenuToggle, isSidebarOpen }: HeaderProps) {
     <motion.header
       initial={{ y: -50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="bg-white border-bottom shadow-sm"
+      className="paper-header"
     >
       <div className="container-fluid px-4 py-3">
         <div className="d-flex align-items-center justify-content-between">
           <div className="d-flex align-items-center gap-3">
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={onMenuToggle}
-              className="btn btn-link p-2 d-lg-none"
+              className="btn btn-paper-secondary p-2 d-lg-none organic-shape-1"
             >
               <Menu size={20} />
-            </button>
+            </motion.button>
             
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="d-none d-sm-flex align-items-center gap-2"
             >
-              <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
+              <div className="icon-paper-container bg-primary-red d-flex align-items-center justify-content-center"
                    style={{ width: '32px', height: '32px' }}>
-                <span className="text-white fw-bold small">CV</span>
+                <span className="text-white fw-bold small icon">CV</span>
               </div>
               <span className="fw-bold h4 text-deep-red mb-0">CoreVerse</span>
             </motion.div>
@@ -46,7 +48,7 @@ export function Header({ onMenuToggle, isSidebarOpen }: HeaderProps) {
               <input
                 type="text"
                 placeholder="Search courses, assignments..."
-                className="form-control ps-5 rounded-3"
+                className="form-paper-input form-control ps-5"
                 style={{ paddingLeft: '2.5rem' }}
               />
             </div>
@@ -56,7 +58,7 @@ export function Header({ onMenuToggle, isSidebarOpen }: HeaderProps) {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="btn btn-link p-2 position-relative"
+              className="btn btn-paper-secondary p-2 position-relative organic-shape-2"
             >
               <Bell size={20} />
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
@@ -72,17 +74,18 @@ export function Header({ onMenuToggle, isSidebarOpen }: HeaderProps) {
                   {user?.role?.charAt(0).toUpperCase() + user?.role?.slice(1)}
                 </p>
               </div>
-              <img
-                src={user?.avatar || 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2'}
-                alt={user?.name}
-                className="rounded-circle object-fit-cover"
-                style={{ width: '32px', height: '32px' }}
-              />
+              <div className="icon-paper-container" style={{ width: '32px', height: '32px', padding: '2px' }}>
+                <img
+                  src={user?.avatar || 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2'}
+                  alt={user?.name}
+                  className="w-100 h-100 object-fit-cover organic-shape-3"
+                />
+              </div>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={logout}
-                className="btn btn-link p-2"
+                className="btn btn-paper-secondary p-2 organic-shape-4"
               >
                 <LogOut size={16} />
               </motion.button>

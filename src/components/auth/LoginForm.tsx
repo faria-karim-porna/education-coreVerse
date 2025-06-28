@@ -35,17 +35,17 @@ export function LoginForm() {
         className="w-100"
         style={{ maxWidth: '400px' }}
       >
-        <div className="card shadow-lg border-0 rounded-4">
-          <div className="card-body p-5">
+        <div className="paper-container">
+          <div className="container-content">
             <div className="text-center mb-5">
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2 }}
-                className="d-inline-flex align-items-center justify-content-center bg-primary-red rounded-4 mb-4"
+                className="icon-paper-container bg-primary-red d-inline-flex align-items-center justify-content-center mb-4"
                 style={{ width: '64px', height: '64px' }}
               >
-                <BookOpen className="text-white" size={32} />
+                <BookOpen className="text-white icon" size={32} />
               </motion.div>
               <h1 className="h2 fw-bold text-deep-red">CoreVerse</h1>
               <p className="text-muted mt-2">Sign in to your educational platform</p>
@@ -64,7 +64,7 @@ export function LoginForm() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="form-control ps-5 py-3 border-2 rounded-3"
+                    className="form-paper-input form-control ps-5 py-3"
                     placeholder="Enter your email"
                     required
                     style={{ paddingLeft: '3rem' }}
@@ -84,19 +84,21 @@ export function LoginForm() {
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="form-control ps-5 pe-5 py-3 border-2 rounded-3"
+                    className="form-paper-input form-control ps-5 pe-5 py-3"
                     placeholder="Enter your password"
                     required
                     style={{ paddingLeft: '3rem', paddingRight: '3rem' }}
                   />
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="btn btn-link position-absolute text-muted p-0"
-                    style={{ right: '12px', top: '50%', transform: 'translateY(-50%)' }}
+                    className="btn btn-paper-secondary position-absolute p-1"
+                    style={{ right: '8px', top: '50%', transform: 'translateY(-50%)' }}
                   >
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                  </button>
+                  </motion.button>
                 </div>
               </div>
 
@@ -104,7 +106,7 @@ export function LoginForm() {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="alert alert-danger rounded-3 py-3"
+                  className="paper-cutout-shallow p-3 mb-4 text-danger"
                 >
                   {error}
                 </motion.div>
