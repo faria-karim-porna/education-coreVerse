@@ -567,7 +567,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                         </div>
                       </div>
 
-                      <Button size="sm" className="w-100">
+                      <Button size="sm" className="w-100" onClick={() => onNavigate('careers')}>
                         Explore Path
                       </Button>
                     </div>
@@ -777,17 +777,17 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <h6 className="fw-semibold mb-3">Support</h6>
               <ul className="list-unstyled">
                 <li className="mb-2">
-                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                  <button onClick={() => onNavigate('help-center')} className="btn btn-link text-white-50 text-decoration-none p-0">
                     Help Center
                   </button>
                 </li>
                 <li className="mb-2">
-                  <button onClick={() => onNavigate('features')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                  <button onClick={() => onNavigate('documentation')} className="btn btn-link text-white-50 text-decoration-none p-0">
                     Documentation
                   </button>
                 </li>
                 <li className="mb-2">
-                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                  <button onClick={() => onNavigate('community')} className="btn btn-link text-white-50 text-decoration-none p-0">
                     Community
                   </button>
                 </li>
@@ -808,17 +808,17 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   </button>
                 </li>
                 <li className="mb-2">
-                  <button onClick={() => onNavigate('about')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                  <button onClick={() => onNavigate('careers')} className="btn btn-link text-white-50 text-decoration-none p-0">
                     Careers
                   </button>
                 </li>
                 <li className="mb-2">
-                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                  <button onClick={() => onNavigate('privacy')} className="btn btn-link text-white-50 text-decoration-none p-0">
                     Privacy
                   </button>
                 </li>
                 <li className="mb-2">
-                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                  <button onClick={() => onNavigate('terms')} className="btn btn-link text-white-50 text-decoration-none p-0">
                     Terms
                   </button>
                 </li>

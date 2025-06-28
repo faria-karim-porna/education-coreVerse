@@ -11,7 +11,9 @@ import {
   MessageCircle,
   Home,
   Settings,
-  X
+  X,
+  HelpCircle,
+  FileText
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -48,6 +50,8 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
   const commonItems = [
     { id: 'knowledge', label: 'Knowledge Base', icon: Globe },
     { id: 'communication', label: 'Communication', icon: MessageCircle },
+    { id: 'help-center', label: 'Help Center', icon: HelpCircle },
+    { id: 'documentation', label: 'Documentation', icon: FileText },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
