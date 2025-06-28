@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Users, Beaker, Calculator, Globe, MessageCircle, Award, ArrowRight, Play, CheckCircle, Atom, Microscope, Brain, Code, Palette, Music, Languages, History, TrendingUp, Star, Clock, Shield } from 'lucide-react';
+import { BookOpen, Users, Beaker, Calculator, Globe, MessageCircle, Award, ArrowRight, Play, CheckCircle, Atom, Microscope, Brain, Code, Palette, Music, Languages, History, TrendingUp, Star, Clock, Shield, Zap, Target, Lightbulb, Rocket, Heart, Monitor, Smartphone, Tablet } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 
@@ -48,66 +48,74 @@ export function HomePage() {
     {
       icon: Beaker,
       title: 'Physics',
-      description: 'Explore mechanics, thermodynamics, electromagnetism, and quantum physics',
+      description: 'Explore the fundamental laws of nature through interactive simulations',
       features: ['Circuit Simulators', 'Motion Analysis', 'Wave Properties', 'Quantum Mechanics'],
-      color: 'bg-primary-red',
-      gradient: 'from-red-400 to-red-600'
+      color: 'from-blue-500 to-purple-600',
+      bgPattern: 'physics-pattern',
+      students: '12.5K'
     },
     {
       icon: Atom,
       title: 'Chemistry',
-      description: 'Dive into molecular structures, reactions, and chemical properties',
+      description: 'Dive into molecular structures and chemical reactions safely',
       features: ['Reaction Simulator', 'Periodic Table', 'Molecular Modeling', 'Lab Safety'],
-      color: 'bg-accent-red',
-      gradient: 'from-orange-400 to-red-500'
+      color: 'from-green-500 to-teal-600',
+      bgPattern: 'chemistry-pattern',
+      students: '9.8K'
     },
     {
       icon: Microscope,
       title: 'Biology',
-      description: 'Study life sciences from cellular level to ecosystems',
+      description: 'Study life sciences from cellular level to complex ecosystems',
       features: ['Cell Viewer', 'DNA Sequencing', 'Ecosystem Models', 'Human Anatomy'],
-      color: 'bg-success',
-      gradient: 'from-green-400 to-green-600'
+      color: 'from-emerald-500 to-green-600',
+      bgPattern: 'biology-pattern',
+      students: '15.2K'
     },
     {
       icon: Calculator,
       title: 'Mathematics',
-      description: 'Master algebra, calculus, statistics, and advanced mathematics',
+      description: 'Master mathematical concepts with visual and interactive tools',
       features: ['Graphing Tools', 'Equation Solver', 'Statistics Lab', 'Geometry Builder'],
-      color: 'bg-info',
-      gradient: 'from-blue-400 to-blue-600'
+      color: 'from-orange-500 to-red-600',
+      bgPattern: 'math-pattern',
+      students: '18.7K'
     },
     {
       icon: Code,
       title: 'Computer Science',
-      description: 'Learn programming, algorithms, and computational thinking',
+      description: 'Learn programming and computational thinking step by step',
       features: ['Code Editor', 'Algorithm Visualizer', 'Project Builder', 'Debug Tools'],
-      color: 'bg-warning',
-      gradient: 'from-purple-400 to-purple-600'
+      color: 'from-purple-500 to-indigo-600',
+      bgPattern: 'cs-pattern',
+      students: '22.1K'
     },
     {
       icon: Languages,
       title: 'Languages',
-      description: 'Practice speaking, writing, and comprehension skills',
+      description: 'Practice speaking, writing, and comprehension with AI tutors',
       features: ['Speech Practice', 'Grammar Check', 'Cultural Context', 'Conversation AI'],
-      color: 'bg-info',
-      gradient: 'from-teal-400 to-teal-600'
+      color: 'from-pink-500 to-rose-600',
+      bgPattern: 'lang-pattern',
+      students: '8.9K'
     },
     {
       icon: History,
-      title: 'History & Social Studies',
-      description: 'Explore civilizations, cultures, and historical events',
+      title: 'History',
+      description: 'Explore civilizations and historical events through immersive experiences',
       features: ['Timeline Explorer', 'Map Interactions', 'Document Analysis', 'Virtual Tours'],
-      color: 'bg-warning',
-      gradient: 'from-amber-400 to-amber-600'
+      color: 'from-amber-500 to-orange-600',
+      bgPattern: 'history-pattern',
+      students: '6.4K'
     },
     {
       icon: Palette,
       title: 'Arts & Design',
-      description: 'Express creativity through digital art and design tools',
+      description: 'Express creativity through digital art and design principles',
       features: ['Digital Canvas', 'Design Principles', 'Color Theory', 'Portfolio Builder'],
-      color: 'bg-danger',
-      gradient: 'from-pink-400 to-pink-600'
+      color: 'from-violet-500 to-purple-600',
+      bgPattern: 'art-pattern',
+      students: '4.7K'
     }
   ];
 
@@ -165,6 +173,74 @@ export function HomePage() {
     }
   ];
 
+  const howItWorks = [
+    {
+      step: '01',
+      title: 'Sign Up & Explore',
+      description: 'Create your account and browse our extensive library of interactive content',
+      icon: Rocket
+    },
+    {
+      step: '02',
+      title: 'Choose Your Path',
+      description: 'Select subjects and difficulty levels that match your learning goals',
+      icon: Target
+    },
+    {
+      step: '03',
+      title: 'Learn Interactively',
+      description: 'Engage with simulations, labs, and collaborative tools',
+      icon: Lightbulb
+    },
+    {
+      step: '04',
+      title: 'Track Progress',
+      description: 'Monitor your achievements and get personalized recommendations',
+      icon: TrendingUp
+    }
+  ];
+
+  const platformFeatures = [
+    {
+      icon: Monitor,
+      title: 'Desktop Experience',
+      description: 'Full-featured platform with advanced tools and simulations'
+    },
+    {
+      icon: Tablet,
+      title: 'Tablet Optimized',
+      description: 'Touch-friendly interface perfect for interactive learning'
+    },
+    {
+      icon: Smartphone,
+      title: 'Mobile Ready',
+      description: 'Learn on-the-go with our responsive mobile experience'
+    }
+  ];
+
+  const successStories = [
+    {
+      metric: '40%',
+      description: 'Increase in test scores',
+      detail: 'Students using CoreVerse show significant improvement'
+    },
+    {
+      metric: '85%',
+      description: 'Student engagement rate',
+      detail: 'Higher participation in virtual labs vs traditional methods'
+    },
+    {
+      metric: '92%',
+      description: 'Teacher satisfaction',
+      detail: 'Educators report improved teaching effectiveness'
+    },
+    {
+      metric: '60%',
+      description: 'Time saved on prep',
+      detail: 'Teachers spend less time preparing lab materials'
+    }
+  ];
+
   const pricingPlans = [
     {
       name: 'Student',
@@ -209,6 +285,7 @@ export function HomePage() {
           <div className="d-none d-md-flex align-items-center gap-4">
             <a href="#features" className="nav-link text-deep-red">Features</a>
             <a href="#subjects" className="nav-link text-deep-red">Subjects</a>
+            <a href="#how-it-works" className="nav-link text-deep-red">How It Works</a>
             <a href="#testimonials" className="nav-link text-deep-red">Reviews</a>
             <a href="#pricing" className="nav-link text-deep-red">Pricing</a>
             <Button variant="secondary" className="me-2">Sign In</Button>
@@ -313,56 +390,79 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Subject-wise Section */}
-      <section id="subjects" className="py-5 bg-white">
+      {/* Redesigned Subject-wise Section */}
+      <section id="subjects" className="py-5 bg-white position-relative overflow-hidden">
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-5"
           >
+            <span className="badge bg-primary-red bg-opacity-10 text-primary-red px-3 py-2 rounded-pill mb-3">
+              Comprehensive Learning
+            </span>
             <h2 className="display-4 fw-bold text-deep-red mb-4">
               Master Every Subject
             </h2>
             <p className="lead text-muted mx-auto" style={{ maxWidth: '700px' }}>
-              Comprehensive learning tools across all major academic disciplines. 
-              From STEM to humanities, we've got you covered with interactive content and real-world applications.
+              Dive deep into interactive learning experiences across all major academic disciplines. 
+              From cutting-edge STEM simulations to creative arts tools.
             </p>
           </motion.div>
 
           <div className="row g-4">
             {subjects.map((subject, index) => (
-              <div key={subject.title} className="col-md-6 col-lg-3">
+              <div key={subject.title} className="col-lg-6">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   className="h-100"
                 >
-                  <Card hover className="h-100 overflow-hidden">
-                    <div className={`p-4 text-white bg-gradient-to-br ${subject.gradient}`}>
-                      <div className="d-flex align-items-center justify-content-between mb-3">
-                        <subject.icon size={32} />
-                        <span className="badge bg-white bg-opacity-20 text-white">
-                          {subject.features.length} Tools
-                        </span>
+                  <Card hover className="h-100 overflow-hidden border-0 shadow-lg">
+                    <div className="row g-0 h-100">
+                      <div className="col-md-5">
+                        <div className={`h-100 d-flex flex-column justify-content-center align-items-center text-white position-relative bg-gradient-to-br ${subject.color} p-4`}>
+                          <div className="position-absolute top-0 end-0 p-3">
+                            <span className="badge bg-white bg-opacity-20 text-white small">
+                              {subject.students} students
+                            </span>
+                          </div>
+                          <div className="text-center">
+                            <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                                 style={{ width: '80px', height: '80px' }}>
+                              <subject.icon size={40} />
+                            </div>
+                            <h3 className="fw-bold mb-2">{subject.title}</h3>
+                            <p className="opacity-90 small mb-0">{subject.description}</p>
+                          </div>
+                        </div>
                       </div>
-                      <h4 className="fw-bold mb-2">{subject.title}</h4>
-                      <p className="opacity-90 small">{subject.description}</p>
-                    </div>
-                    <div className="card-body p-4">
-                      <h6 className="fw-semibold text-deep-red mb-3">Key Features:</h6>
-                      <ul className="list-unstyled">
-                        {subject.features.map((feature, idx) => (
-                          <li key={idx} className="d-flex align-items-center mb-2">
-                            <CheckCircle className="text-success me-2" size={16} />
-                            <span className="small text-muted">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      <Button variant="secondary" size="sm" className="w-100 mt-3">
-                        Explore {subject.title}
-                      </Button>
+                      <div className="col-md-7">
+                        <div className="card-body p-4 h-100 d-flex flex-column">
+                          <h5 className="fw-bold text-deep-red mb-3">What You'll Learn:</h5>
+                          <div className="flex-fill">
+                            <div className="row g-2">
+                              {subject.features.map((feature, idx) => (
+                                <div key={idx} className="col-6">
+                                  <div className="d-flex align-items-center p-2 bg-light-bg rounded-3">
+                                    <CheckCircle className="text-success me-2 flex-shrink-0" size={16} />
+                                    <span className="small text-muted">{feature}</span>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="mt-4 d-flex gap-2">
+                            <Button variant="primary" size="sm" className="flex-fill">
+                              Start Learning
+                            </Button>
+                            <Button variant="secondary" size="sm" className="flex-fill">
+                              Preview
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </Card>
                 </motion.div>
@@ -372,8 +472,140 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Benefits Section */}
+      {/* How It Works Section */}
+      <section id="how-it-works" className="py-5 bg-light-bg">
+        <div className="container-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-5"
+          >
+            <span className="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill mb-3">
+              Simple Process
+            </span>
+            <h2 className="display-4 fw-bold text-deep-red mb-4">
+              How CoreVerse Works
+            </h2>
+            <p className="lead text-muted">
+              Get started with interactive learning in just four simple steps
+            </p>
+          </motion.div>
+
+          <div className="row g-4">
+            {howItWorks.map((step, index) => (
+              <div key={step.step} className="col-md-6 col-lg-3">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.2 }}
+                  className="text-center"
+                >
+                  <div className="position-relative mb-4">
+                    <div className="bg-primary-red rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                         style={{ width: '80px', height: '80px' }}>
+                      <step.icon className="text-white" size={32} />
+                    </div>
+                    <div className="position-absolute top-0 start-0 bg-white border border-primary-red rounded-circle d-flex align-items-center justify-content-center"
+                         style={{ width: '32px', height: '32px', transform: 'translate(-8px, -8px)' }}>
+                      <span className="fw-bold text-primary-red small">{step.step}</span>
+                    </div>
+                  </div>
+                  <h4 className="fw-bold text-deep-red mb-3">{step.title}</h4>
+                  <p className="text-muted">{step.description}</p>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Success Stories Section */}
+      <section className="py-5 bg-white">
+        <div className="container-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-5"
+          >
+            <span className="badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill mb-3">
+              Proven Impact
+            </span>
+            <h2 className="display-4 fw-bold text-deep-red mb-4">
+              Success Stories
+            </h2>
+            <p className="lead text-muted">
+              Real results from educators and students worldwide
+            </p>
+          </motion.div>
+
+          <div className="row g-4">
+            {successStories.map((story, index) => (
+              <div key={story.metric} className="col-md-6 col-lg-3">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="text-center"
+                >
+                  <Card className="h-100">
+                    <div className="card-body p-4">
+                      <div className="display-3 fw-bold text-primary-red mb-2">{story.metric}</div>
+                      <h5 className="fw-semibold text-deep-red mb-2">{story.description}</h5>
+                      <p className="text-muted small mb-0">{story.detail}</p>
+                    </div>
+                  </Card>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Platform Features Section */}
       <section className="py-5 bg-light-bg">
+        <div className="container-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-5"
+          >
+            <span className="badge bg-info bg-opacity-10 text-info px-3 py-2 rounded-pill mb-3">
+              Multi-Platform
+            </span>
+            <h2 className="display-4 fw-bold text-deep-red mb-4">
+              Learn Anywhere, Anytime
+            </h2>
+            <p className="lead text-muted">
+              Access CoreVerse on all your devices with a seamless experience
+            </p>
+          </motion.div>
+
+          <div className="row g-4 align-items-center">
+            {platformFeatures.map((feature, index) => (
+              <div key={feature.title} className="col-md-4">
+                <motion.div
+                  initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.2 }}
+                  className="text-center"
+                >
+                  <div className="bg-white rounded-4 p-4 shadow-sm">
+                    <div className="bg-primary-red bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                         style={{ width: '64px', height: '64px' }}>
+                      <feature.icon className="text-primary-red" size={32} />
+                    </div>
+                    <h4 className="fw-bold text-deep-red mb-2">{feature.title}</h4>
+                    <p className="text-muted mb-0">{feature.description}</p>
+                  </div>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-5 bg-white">
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -411,7 +643,7 @@ export function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-5 bg-white">
+      <section id="features" className="py-5 bg-light-bg">
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -454,7 +686,7 @@ export function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="py-5 bg-light-bg">
+      <section id="testimonials" className="py-5 bg-white">
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -508,7 +740,7 @@ export function HomePage() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-5 bg-white">
+      <section id="pricing" className="py-5 bg-light-bg">
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

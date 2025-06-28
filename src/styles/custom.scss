@@ -148,6 +148,75 @@ $btn-border-radius-lg: 0.75rem;
   background: linear-gradient(135deg, $light-bg, $card-bg) !important;
 }
 
+// Custom gradient utilities for subject cards
+.bg-gradient-to-br {
+  background-image: linear-gradient(to bottom right, var(--bs-gradient-from), var(--bs-gradient-to)) !important;
+}
+
+.from-blue-500 {
+  --bs-gradient-from: #3b82f6;
+}
+
+.to-purple-600 {
+  --bs-gradient-to: #9333ea;
+}
+
+.from-green-500 {
+  --bs-gradient-from: #22c55e;
+}
+
+.to-teal-600 {
+  --bs-gradient-to: #0d9488;
+}
+
+.from-emerald-500 {
+  --bs-gradient-from: #10b981;
+}
+
+.to-green-600 {
+  --bs-gradient-to: #16a34a;
+}
+
+.from-orange-500 {
+  --bs-gradient-from: #f97316;
+}
+
+.to-red-600 {
+  --bs-gradient-to: #dc2626;
+}
+
+.from-purple-500 {
+  --bs-gradient-from: #a855f7;
+}
+
+.to-indigo-600 {
+  --bs-gradient-to: #4f46e5;
+}
+
+.from-pink-500 {
+  --bs-gradient-from: #ec4899;
+}
+
+.to-rose-600 {
+  --bs-gradient-to: #e11d48;
+}
+
+.from-amber-500 {
+  --bs-gradient-from: #f59e0b;
+}
+
+.to-orange-600 {
+  --bs-gradient-to: #ea580c;
+}
+
+.from-violet-500 {
+  --bs-gradient-from: #8b5cf6;
+}
+
+.to-purple-600 {
+  --bs-gradient-to: #9333ea;
+}
+
 // Shadow utilities
 .shadow-custom {
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
@@ -184,5 +253,53 @@ $btn-border-radius-lg: 0.75rem;
   to { 
     transform: translateY(0); 
     opacity: 1; 
+  }
+}
+
+// Enhanced subject card styles
+.subject-card-gradient {
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    pointer-events: none;
+  }
+}
+
+// Badge styles
+.badge {
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+
+// Enhanced card hover effects
+.card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &.card-hover:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+// Improved button styles
+.btn {
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
   }
 }
