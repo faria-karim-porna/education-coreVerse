@@ -376,32 +376,7 @@ export function HomePage() {
   return (
     <div className="min-vh-100">
       {/* Navigation */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
-        <div className="container-lg">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="navbar-brand d-flex align-items-center gap-2"
-          >
-            <div className="bg-primary-red rounded-4 d-flex align-items-center justify-content-center"
-                 style={{ width: '40px', height: '40px' }}>
-              <BookOpen className="text-white" size={24} />
-            </div>
-            <span className="fw-bold h3 text-deep-red mb-0">CoreVerse</span>
-          </motion.div>
-          
-          <div className="d-none d-md-flex align-items-center gap-4">
-            <a href="#features" className="nav-link text-deep-red">Features</a>
-            <a href="#subjects" className="nav-link text-deep-red">Subjects</a>
-            <a href="#how-it-works" className="nav-link text-deep-red">How It Works</a>
-            <a href="#testimonials" className="nav-link text-deep-red">Reviews</a>
-            <a href="#pricing" className="nav-link text-deep-red">Pricing</a>
-            <ThemeToggle />
-            <Button variant="secondary" className="me-2">Sign In</Button>
-            <Button>Get Started</Button>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero Section */}
       <section className="position-relative overflow-hidden bg-gradient-light py-5">
