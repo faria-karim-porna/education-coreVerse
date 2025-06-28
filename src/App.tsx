@@ -3,6 +3,10 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { LoginForm } from './components/auth/LoginForm';
 import { HomePage } from './components/home/HomePage';
+import { AboutPage } from './components/pages/AboutPage';
+import { FeaturesPage } from './components/pages/FeaturesPage';
+import { ContactPage } from './components/pages/ContactPage';
+import { NotFoundPage } from './components/pages/NotFoundPage';
 import { Header } from './components/layout/Header';
 import { Sidebar } from './components/layout/Sidebar';
 import { StudentDashboard } from './components/dashboard/StudentDashboard';
@@ -20,6 +24,22 @@ function MainApp() {
     return <HomePage />;
   }
 
+  // Show static pages when not logged in
+  if (!user && ['about', 'features', 'contact', '404'].includes(activeView)) {
+    switch (activeView) {
+      case 'about':
+        return <AboutPage />;
+      case 'features':
+        return <FeaturesPage />;
+      case 'contact':
+        return <ContactPage />;
+      case '404':
+        return <NotFoundPage />;
+      default:
+        return <HomePage />;
+    }
+  }
+
   // Show login form when trying to access protected routes without authentication
   if (!user) {
     return <LoginForm />;
@@ -29,6 +49,14 @@ function MainApp() {
     switch (activeView) {
       case 'home':
         return <HomePage />;
+      case 'about':
+        return <AboutPage />;
+      case 'features':
+        return <FeaturesPage />;
+      case 'contact':
+        return <ContactPage />;
+      case '404':
+        return <NotFoundPage />;
       case 'dashboard':
         return user.role === 'teacher' ? <TeacherDashboard /> : <StudentDashboard />;
       case 'labs':
@@ -54,9 +82,9 @@ function MainApp() {
     }
   };
 
-  // Show homepage without sidebar/header
-  if (activeView === 'home') {
-    return <HomePage />;
+  // Show static pages without sidebar/header
+  if (['home', 'about', 'features', 'contact', '404'].includes(activeView)) {
+    return renderContent();
   }
 
   return (
