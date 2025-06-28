@@ -11,6 +11,9 @@ import { CareersPage } from './components/pages/CareersPage';
 import { PrivacyPage } from './components/pages/PrivacyPage';
 import { TermsPage } from './components/pages/TermsPage';
 import { HelpCenterPage } from './components/pages/HelpCenterPage';
+import { DocumentationPage } from './components/pages/DocumentationPage';
+import { CommunityPage } from './components/pages/CommunityPage';
+import { ProgressTrackingPage } from './components/pages/ProgressTrackingPage';
 import { Header } from './components/layout/Header';
 import { Sidebar } from './components/layout/Sidebar';
 import { StudentDashboard } from './components/dashboard/StudentDashboard';
@@ -42,11 +45,11 @@ function MainApp() {
       case 'help-center':
         return <HelpCenterPage onNavigate={setActiveView} />;
       case 'documentation':
-        return <HelpCenterPage onNavigate={setActiveView} />;
+        return <DocumentationPage onNavigate={setActiveView} />;
       case 'community':
-        return <HelpCenterPage onNavigate={setActiveView} />;
+        return <CommunityPage onNavigate={setActiveView} />;
       case 'progress-tracking':
-        return <ProgressTracker />;
+        return <ProgressTrackingPage onNavigate={setActiveView} />;
       case '404':
         return <NotFoundPage onNavigate={setActiveView} />;
       case 'dashboard':
@@ -75,7 +78,7 @@ function MainApp() {
   };
 
   // Show static pages without sidebar/header for non-authenticated users
-  if (!user && ['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', '404'].includes(activeView)) {
+  if (!user && ['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', '404'].includes(activeView)) {
     return renderContent();
   }
 
@@ -85,7 +88,7 @@ function MainApp() {
   }
 
   // Show static pages without sidebar/header even for authenticated users
-  if (['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', '404'].includes(activeView)) {
+  if (['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', '404'].includes(activeView)) {
     return renderContent();
   }
 
