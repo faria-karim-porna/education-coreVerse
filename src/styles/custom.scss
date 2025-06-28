@@ -19,6 +19,13 @@ $primary-red: #ff7474;
 $accent-red: #c64242;
 $deep-red: #541616;
 
+// Dark theme colors
+$dark-bg: #1a1a1a;
+$dark-card-bg: #2d2d2d;
+$dark-border: #404040;
+$dark-text: #e5e5e5;
+$dark-text-muted: #a0a0a0;
+
 // Override Bootstrap variables
 $body-bg: $light-bg;
 $body-color: $dark;
@@ -72,6 +79,168 @@ $btn-border-radius-lg: 0.75rem;
 
 .border-card-bg {
   border-color: rgba($accent-red, 0.125) !important;
+}
+
+// Dark theme styles
+.dark-theme {
+  background-color: $dark-bg !important;
+  color: $dark-text !important;
+  
+  .bg-light-bg {
+    background-color: $dark-bg !important;
+  }
+  
+  .bg-white {
+    background-color: $dark-card-bg !important;
+  }
+  
+  .card {
+    background-color: $dark-card-bg !important;
+    border-color: $dark-border !important;
+    color: $dark-text !important;
+  }
+  
+  .navbar {
+    background-color: $dark-card-bg !important;
+    border-color: $dark-border !important;
+    
+    .navbar-brand {
+      color: $dark-text !important;
+    }
+    
+    .nav-link {
+      color: $dark-text-muted !important;
+      
+      &:hover {
+        color: $primary-red !important;
+      }
+    }
+  }
+  
+  .text-muted {
+    color: $dark-text-muted !important;
+  }
+  
+  .text-deep-red {
+    color: $dark-text !important;
+  }
+  
+  .border-bottom {
+    border-color: $dark-border !important;
+  }
+  
+  .border-top {
+    border-color: $dark-border !important;
+  }
+  
+  .bg-gradient-light {
+    background: linear-gradient(135deg, $dark-bg, $dark-card-bg) !important;
+  }
+  
+  .badge {
+    &.bg-primary-red {
+      background-color: $primary-red !important;
+    }
+    
+    &.bg-success {
+      background-color: $success !important;
+    }
+    
+    &.bg-warning {
+      background-color: $warning !important;
+    }
+    
+    &.bg-info {
+      background-color: $info !important;
+    }
+  }
+  
+  .btn-custom-secondary {
+    background-color: transparent !important;
+    border-color: $primary-red !important;
+    color: $primary-red !important;
+    
+    &:hover {
+      background-color: rgba($primary-red, 0.1) !important;
+      border-color: $primary-red !important;
+      color: $primary-red !important;
+    }
+  }
+}
+
+// Light theme styles (default)
+.light-theme {
+  background-color: $light-bg !important;
+  color: $dark !important;
+}
+
+// Custom gradient utilities for subject cards
+.bg-gradient-to-br {
+  background-image: linear-gradient(to bottom right, var(--bs-gradient-from), var(--bs-gradient-to)) !important;
+}
+
+.from-blue-500 {
+  --bs-gradient-from: #3b82f6;
+}
+
+.to-purple-600 {
+  --bs-gradient-to: #9333ea;
+}
+
+.from-green-500 {
+  --bs-gradient-from: #22c55e;
+}
+
+.to-teal-600 {
+  --bs-gradient-to: #0d9488;
+}
+
+.from-emerald-500 {
+  --bs-gradient-from: #10b981;
+}
+
+.to-green-600 {
+  --bs-gradient-to: #16a34a;
+}
+
+.from-orange-500 {
+  --bs-gradient-from: #f97316;
+}
+
+.to-red-600 {
+  --bs-gradient-to: #dc2626;
+}
+
+.from-purple-500 {
+  --bs-gradient-from: #a855f7;
+}
+
+.to-indigo-600 {
+  --bs-gradient-to: #4f46e5;
+}
+
+.from-pink-500 {
+  --bs-gradient-from: #ec4899;
+}
+
+.to-rose-600 {
+  --bs-gradient-to: #e11d48;
+}
+
+.from-amber-500 {
+  --bs-gradient-from: #f59e0b;
+}
+
+.to-orange-600 {
+  --bs-gradient-to: #ea580c;
+}
+
+.from-violet-500 {
+  --bs-gradient-from: #8b5cf6;
+}
+
+.to-purple-600 {
+  --bs-gradient-to: #9333ea;
 }
 
 // Custom component styles
@@ -146,75 +315,6 @@ $btn-border-radius-lg: 0.75rem;
 
 .bg-gradient-light {
   background: linear-gradient(135deg, $light-bg, $card-bg) !important;
-}
-
-// Custom gradient utilities for subject cards
-.bg-gradient-to-br {
-  background-image: linear-gradient(to bottom right, var(--bs-gradient-from), var(--bs-gradient-to)) !important;
-}
-
-.from-blue-500 {
-  --bs-gradient-from: #3b82f6;
-}
-
-.to-purple-600 {
-  --bs-gradient-to: #9333ea;
-}
-
-.from-green-500 {
-  --bs-gradient-from: #22c55e;
-}
-
-.to-teal-600 {
-  --bs-gradient-to: #0d9488;
-}
-
-.from-emerald-500 {
-  --bs-gradient-from: #10b981;
-}
-
-.to-green-600 {
-  --bs-gradient-to: #16a34a;
-}
-
-.from-orange-500 {
-  --bs-gradient-from: #f97316;
-}
-
-.to-red-600 {
-  --bs-gradient-to: #dc2626;
-}
-
-.from-purple-500 {
-  --bs-gradient-from: #a855f7;
-}
-
-.to-indigo-600 {
-  --bs-gradient-to: #4f46e5;
-}
-
-.from-pink-500 {
-  --bs-gradient-from: #ec4899;
-}
-
-.to-rose-600 {
-  --bs-gradient-to: #e11d48;
-}
-
-.from-amber-500 {
-  --bs-gradient-from: #f59e0b;
-}
-
-.to-orange-600 {
-  --bs-gradient-to: #ea580c;
-}
-
-.from-violet-500 {
-  --bs-gradient-from: #8b5cf6;
-}
-
-.to-purple-600 {
-  --bs-gradient-to: #9333ea;
 }
 
 // Shadow utilities
@@ -302,4 +402,9 @@ $btn-border-radius-lg: 0.75rem;
   &:active {
     transform: translateY(0);
   }
+}
+
+// Theme transition
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }

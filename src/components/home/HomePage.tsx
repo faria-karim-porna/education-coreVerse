@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Users, Beaker, Calculator, Globe, MessageCircle, Award, ArrowRight, Play, CheckCircle, Atom, Microscope, Brain, Code, Palette, Music, Languages, History, TrendingUp, Star, Clock, Shield, Zap, Target, Lightbulb, Rocket, Heart, Monitor, Smartphone, Tablet } from 'lucide-react';
+import { BookOpen, Users, Beaker, Calculator, Globe, MessageCircle, Award, ArrowRight, Play, CheckCircle, Atom, Microscope, Brain, Code, Palette, Music, Languages, History, TrendingUp, Star, Clock, Shield, Zap, Target, Lightbulb, Rocket, Heart, Monitor, Smartphone, Tablet, ChevronRight, Building, GraduationCap, Briefcase, MapPin, Calendar, Mail, Phone } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
+import { ThemeToggle } from '../ui/ThemeToggle';
 
 export function HomePage() {
   const features = [
@@ -52,7 +53,8 @@ export function HomePage() {
       features: ['Circuit Simulators', 'Motion Analysis', 'Wave Properties', 'Quantum Mechanics'],
       color: 'from-blue-500 to-purple-600',
       bgPattern: 'physics-pattern',
-      students: '12.5K'
+      students: '12.5K',
+      image: 'https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     },
     {
       icon: Atom,
@@ -61,7 +63,8 @@ export function HomePage() {
       features: ['Reaction Simulator', 'Periodic Table', 'Molecular Modeling', 'Lab Safety'],
       color: 'from-green-500 to-teal-600',
       bgPattern: 'chemistry-pattern',
-      students: '9.8K'
+      students: '9.8K',
+      image: 'https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     },
     {
       icon: Microscope,
@@ -70,7 +73,8 @@ export function HomePage() {
       features: ['Cell Viewer', 'DNA Sequencing', 'Ecosystem Models', 'Human Anatomy'],
       color: 'from-emerald-500 to-green-600',
       bgPattern: 'biology-pattern',
-      students: '15.2K'
+      students: '15.2K',
+      image: 'https://images.pexels.com/photos/2280568/pexels-photo-2280568.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     },
     {
       icon: Calculator,
@@ -79,7 +83,8 @@ export function HomePage() {
       features: ['Graphing Tools', 'Equation Solver', 'Statistics Lab', 'Geometry Builder'],
       color: 'from-orange-500 to-red-600',
       bgPattern: 'math-pattern',
-      students: '18.7K'
+      students: '18.7K',
+      image: 'https://images.pexels.com/photos/6238050/pexels-photo-6238050.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     },
     {
       icon: Code,
@@ -88,7 +93,8 @@ export function HomePage() {
       features: ['Code Editor', 'Algorithm Visualizer', 'Project Builder', 'Debug Tools'],
       color: 'from-purple-500 to-indigo-600',
       bgPattern: 'cs-pattern',
-      students: '22.1K'
+      students: '22.1K',
+      image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     },
     {
       icon: Languages,
@@ -97,7 +103,8 @@ export function HomePage() {
       features: ['Speech Practice', 'Grammar Check', 'Cultural Context', 'Conversation AI'],
       color: 'from-pink-500 to-rose-600',
       bgPattern: 'lang-pattern',
-      students: '8.9K'
+      students: '8.9K',
+      image: 'https://images.pexels.com/photos/267669/pexels-photo-267669.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     },
     {
       icon: History,
@@ -106,7 +113,8 @@ export function HomePage() {
       features: ['Timeline Explorer', 'Map Interactions', 'Document Analysis', 'Virtual Tours'],
       color: 'from-amber-500 to-orange-600',
       bgPattern: 'history-pattern',
-      students: '6.4K'
+      students: '6.4K',
+      image: 'https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     },
     {
       icon: Palette,
@@ -115,7 +123,8 @@ export function HomePage() {
       features: ['Digital Canvas', 'Design Principles', 'Color Theory', 'Portfolio Builder'],
       color: 'from-violet-500 to-purple-600',
       bgPattern: 'art-pattern',
-      students: '4.7K'
+      students: '4.7K',
+      image: 'https://images.pexels.com/photos/1053687/pexels-photo-1053687.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     }
   ];
 
@@ -265,8 +274,107 @@ export function HomePage() {
     }
   ];
 
+  // NEW SECTION 1: Global Reach & Impact
+  const globalStats = [
+    {
+      icon: Globe,
+      number: '150+',
+      label: 'Countries Served',
+      description: 'Students worldwide using CoreVerse'
+    },
+    {
+      icon: Building,
+      number: '5,000+',
+      label: 'Educational Institutions',
+      description: 'Schools and universities trust us'
+    },
+    {
+      icon: GraduationCap,
+      number: '2M+',
+      label: 'Courses Completed',
+      description: 'Successful learning journeys'
+    },
+    {
+      icon: Award,
+      number: '98%',
+      label: 'Completion Rate',
+      description: 'Students finish what they start'
+    }
+  ];
+
+  // NEW SECTION 2: Career Pathways
+  const careerPaths = [
+    {
+      icon: Beaker,
+      title: 'Research Scientist',
+      description: 'Advance scientific knowledge through research and experimentation',
+      skills: ['Laboratory Techniques', 'Data Analysis', 'Research Methods', 'Scientific Writing'],
+      salary: '$75,000 - $120,000',
+      growth: '+8% annually',
+      image: 'https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=2'
+    },
+    {
+      icon: Code,
+      title: 'Software Engineer',
+      description: 'Design and develop innovative software solutions',
+      skills: ['Programming', 'Problem Solving', 'System Design', 'Team Collaboration'],
+      salary: '$85,000 - $150,000',
+      growth: '+13% annually',
+      image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=2'
+    },
+    {
+      icon: Heart,
+      title: 'Healthcare Professional',
+      description: 'Make a difference in people\'s lives through medical care',
+      skills: ['Medical Knowledge', 'Patient Care', 'Communication', 'Critical Thinking'],
+      salary: '$70,000 - $200,000',
+      growth: '+7% annually',
+      image: 'https://images.pexels.com/photos/4173251/pexels-photo-4173251.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=2'
+    },
+    {
+      icon: Briefcase,
+      title: 'Business Analyst',
+      description: 'Bridge technology and business to drive organizational success',
+      skills: ['Data Analysis', 'Business Strategy', 'Communication', 'Project Management'],
+      salary: '$65,000 - $110,000',
+      growth: '+11% annually',
+      image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=2'
+    }
+  ];
+
+  // NEW SECTION 3: Upcoming Events & Webinars
+  const upcomingEvents = [
+    {
+      title: 'Virtual Science Fair 2024',
+      date: 'March 15, 2024',
+      time: '2:00 PM EST',
+      type: 'Competition',
+      description: 'Showcase your scientific projects and compete with students worldwide',
+      attendees: 1200,
+      image: 'https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=2'
+    },
+    {
+      title: 'AI in Education Webinar',
+      date: 'March 22, 2024',
+      time: '4:00 PM EST',
+      type: 'Webinar',
+      description: 'Learn how artificial intelligence is transforming modern education',
+      attendees: 850,
+      image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=2'
+    },
+    {
+      title: 'Chemistry Lab Workshop',
+      date: 'March 28, 2024',
+      time: '1:00 PM EST',
+      type: 'Workshop',
+      description: 'Hands-on virtual chemistry experiments with expert guidance',
+      attendees: 450,
+      image: 'https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=2'
+    }
+  ];
+
   return (
-    <div className="min-vh-100 bg-light-bg">
+    <div className="min-vh-100">
       {/* Navigation */}
       <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
         <div className="container-lg">
@@ -288,6 +396,7 @@ export function HomePage() {
             <a href="#how-it-works" className="nav-link text-deep-red">How It Works</a>
             <a href="#testimonials" className="nav-link text-deep-red">Reviews</a>
             <a href="#pricing" className="nav-link text-deep-red">Pricing</a>
+            <ThemeToggle />
             <Button variant="secondary" className="me-2">Sign In</Button>
             <Button>Get Started</Button>
           </div>
@@ -390,8 +499,55 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* NEW SECTION 1: Global Reach & Impact */}
+      <section className="py-5 bg-white">
+        <div className="container-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-5"
+          >
+            <span className="badge bg-primary-red bg-opacity-10 text-primary-red px-3 py-2 rounded-pill mb-3">
+              Global Impact
+            </span>
+            <h2 className="display-4 fw-bold text-deep-red mb-4">
+              Transforming Education Worldwide
+            </h2>
+            <p className="lead text-muted mx-auto" style={{ maxWidth: '600px' }}>
+              Join millions of learners and thousands of institutions across the globe 
+              who trust CoreVerse for their educational journey.
+            </p>
+          </motion.div>
+
+          <div className="row g-4">
+            {globalStats.map((stat, index) => (
+              <div key={stat.label} className="col-md-6 col-lg-3">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="text-center"
+                >
+                  <Card className="h-100 border-0 shadow-sm">
+                    <div className="card-body p-4">
+                      <div className="bg-primary-red bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                           style={{ width: '64px', height: '64px' }}>
+                        <stat.icon className="text-primary-red" size={32} />
+                      </div>
+                      <div className="display-5 fw-bold text-primary-red mb-2">{stat.number}</div>
+                      <h5 className="fw-semibold text-deep-red mb-2">{stat.label}</h5>
+                      <p className="text-muted small mb-0">{stat.description}</p>
+                    </div>
+                  </Card>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Redesigned Subject-wise Section */}
-      <section id="subjects" className="py-5 bg-white position-relative overflow-hidden">
+      <section id="subjects" className="py-5 bg-light-bg position-relative overflow-hidden">
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -422,19 +578,26 @@ export function HomePage() {
                   <Card hover className="h-100 overflow-hidden border-0 shadow-lg">
                     <div className="row g-0 h-100">
                       <div className="col-md-5">
-                        <div className={`h-100 d-flex flex-column justify-content-center align-items-center text-white position-relative bg-gradient-to-br ${subject.color} p-4`}>
-                          <div className="position-absolute top-0 end-0 p-3">
-                            <span className="badge bg-white bg-opacity-20 text-white small">
-                              {subject.students} students
-                            </span>
-                          </div>
-                          <div className="text-center">
-                            <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                                 style={{ width: '80px', height: '80px' }}>
-                              <subject.icon size={40} />
+                        <div className="position-relative h-100">
+                          <img
+                            src={subject.image}
+                            alt={subject.title}
+                            className="w-100 h-100 object-fit-cover"
+                          />
+                          <div className={`position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-white bg-gradient-to-br ${subject.color} bg-opacity-90`}>
+                            <div className="position-absolute top-0 end-0 p-3">
+                              <span className="badge bg-white bg-opacity-20 text-white small">
+                                {subject.students} students
+                              </span>
                             </div>
-                            <h3 className="fw-bold mb-2">{subject.title}</h3>
-                            <p className="opacity-90 small mb-0">{subject.description}</p>
+                            <div className="text-center">
+                              <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                                   style={{ width: '80px', height: '80px' }}>
+                                <subject.icon size={40} />
+                              </div>
+                              <h3 className="fw-bold mb-2">{subject.title}</h3>
+                              <p className="opacity-90 small mb-0">{subject.description}</p>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -463,6 +626,87 @@ export function HomePage() {
                           </div>
                         </div>
                       </div>
+                    </div>
+                  </Card>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* NEW SECTION 2: Career Pathways */}
+      <section className="py-5 bg-white">
+        <div className="container-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-5"
+          >
+            <span className="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill mb-3">
+              Career Development
+            </span>
+            <h2 className="display-4 fw-bold text-deep-red mb-4">
+              Explore Career Pathways
+            </h2>
+            <p className="lead text-muted mx-auto" style={{ maxWidth: '700px' }}>
+              Discover exciting career opportunities and the skills you need to succeed. 
+              Our platform prepares you for the jobs of tomorrow.
+            </p>
+          </motion.div>
+
+          <div className="row g-4">
+            {careerPaths.map((career, index) => (
+              <div key={career.title} className="col-md-6 col-lg-3">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="h-100"
+                >
+                  <Card hover className="h-100 border-0 shadow-sm">
+                    <div className="position-relative">
+                      <img
+                        src={career.image}
+                        alt={career.title}
+                        className="card-img-top"
+                        style={{ height: '200px', objectFit: 'cover' }}
+                      />
+                      <div className="position-absolute top-0 end-0 p-3">
+                        <span className="badge bg-success text-white">{career.growth}</span>
+                      </div>
+                    </div>
+                    <div className="card-body p-4">
+                      <div className="d-flex align-items-center mb-3">
+                        <div className="bg-primary-red bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3"
+                             style={{ width: '48px', height: '48px' }}>
+                          <career.icon className="text-primary-red" size={24} />
+                        </div>
+                        <div>
+                          <h5 className="fw-bold text-deep-red mb-0">{career.title}</h5>
+                          <small className="text-success fw-medium">{career.salary}</small>
+                        </div>
+                      </div>
+                      <p className="text-muted small mb-3">{career.description}</p>
+                      <div className="mb-3">
+                        <h6 className="fw-semibold text-deep-red mb-2">Key Skills:</h6>
+                        <div className="d-flex flex-wrap gap-1">
+                          {career.skills.slice(0, 2).map((skill, idx) => (
+                            <span key={idx} className="badge bg-light-bg text-muted small">
+                              {skill}
+                            </span>
+                          ))}
+                          {career.skills.length > 2 && (
+                            <span className="badge bg-light-bg text-muted small">
+                              +{career.skills.length - 2} more
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <Button variant="secondary" size="sm" className="w-100">
+                        Explore Path
+                        <ChevronRight size={16} className="ms-1" />
+                      </Button>
                     </div>
                   </Card>
                 </motion.div>
@@ -519,8 +763,82 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Success Stories Section */}
+      {/* NEW SECTION 3: Upcoming Events & Webinars */}
       <section className="py-5 bg-white">
+        <div className="container-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-5"
+          >
+            <span className="badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill mb-3">
+              Community Events
+            </span>
+            <h2 className="display-4 fw-bold text-deep-red mb-4">
+              Upcoming Events & Webinars
+            </h2>
+            <p className="lead text-muted mx-auto" style={{ maxWidth: '700px' }}>
+              Join our vibrant community of learners and educators. Participate in competitions, 
+              workshops, and webinars to enhance your learning experience.
+            </p>
+          </motion.div>
+
+          <div className="row g-4">
+            {upcomingEvents.map((event, index) => (
+              <div key={event.title} className="col-md-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="h-100"
+                >
+                  <Card hover className="h-100 border-0 shadow-sm">
+                    <div className="position-relative">
+                      <img
+                        src={event.image}
+                        alt={event.title}
+                        className="card-img-top"
+                        style={{ height: '200px', objectFit: 'cover' }}
+                      />
+                      <div className="position-absolute top-0 start-0 p-3">
+                        <span className="badge bg-primary-red text-white">{event.type}</span>
+                      </div>
+                    </div>
+                    <div className="card-body p-4">
+                      <h5 className="fw-bold text-deep-red mb-2">{event.title}</h5>
+                      <p className="text-muted small mb-3">{event.description}</p>
+                      
+                      <div className="d-flex align-items-center mb-2">
+                        <Calendar className="text-muted me-2" size={16} />
+                        <span className="small text-muted">{event.date}</span>
+                      </div>
+                      
+                      <div className="d-flex align-items-center mb-3">
+                        <Clock className="text-muted me-2" size={16} />
+                        <span className="small text-muted">{event.time}</span>
+                      </div>
+                      
+                      <div className="d-flex align-items-center justify-content-between mb-3">
+                        <div className="d-flex align-items-center">
+                          <Users className="text-success me-2" size={16} />
+                          <span className="small text-success fw-medium">{event.attendees} registered</span>
+                        </div>
+                      </div>
+                      
+                      <Button variant="primary" size="sm" className="w-100">
+                        Register Now
+                      </Button>
+                    </div>
+                  </Card>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Success Stories Section */}
+      <section className="py-5 bg-light-bg">
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -562,7 +880,7 @@ export function HomePage() {
       </section>
 
       {/* Platform Features Section */}
-      <section className="py-5 bg-light-bg">
+      <section className="py-5 bg-white">
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -605,7 +923,7 @@ export function HomePage() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-5 bg-white">
+      <section className="py-5 bg-light-bg">
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -643,7 +961,7 @@ export function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-5 bg-light-bg">
+      <section id="features" className="py-5 bg-white">
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -686,7 +1004,7 @@ export function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="py-5 bg-white">
+      <section id="testimonials" className="py-5 bg-light-bg">
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -740,7 +1058,7 @@ export function HomePage() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-5 bg-light-bg">
+      <section id="pricing" className="py-5 bg-white">
         <div className="container-lg">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -840,9 +1158,17 @@ export function HomePage() {
                 </div>
                 <span className="fw-bold h5 mb-0">CoreVerse</span>
               </div>
-              <p className="text-white-50">
+              <p className="text-white-50 mb-4">
                 Transforming education through interactive technology and innovative learning experiences.
               </p>
+              <div className="d-flex align-items-center gap-3">
+                <Mail className="text-white-50" size={20} />
+                <span className="text-white-50">contact@coreverse.edu</span>
+              </div>
+              <div className="d-flex align-items-center gap-3 mt-2">
+                <Phone className="text-white-50" size={20} />
+                <span className="text-white-50">+1 (555) 123-4567</span>
+              </div>
             </div>
             
             <div className="col-lg-3">

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import { LoginForm } from './components/auth/LoginForm';
 import { HomePage } from './components/home/HomePage';
 import { Header } from './components/layout/Header';
@@ -83,9 +84,11 @@ function MainApp() {
 
 function App() {
   return (
-    <AuthProvider>
-      <MainApp />
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <MainApp />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
