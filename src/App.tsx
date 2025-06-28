@@ -7,6 +7,10 @@ import { AboutPage } from './components/pages/AboutPage';
 import { FeaturesPage } from './components/pages/FeaturesPage';
 import { ContactPage } from './components/pages/ContactPage';
 import { NotFoundPage } from './components/pages/NotFoundPage';
+import { CareersPage } from './components/pages/CareersPage';
+import { PrivacyPage } from './components/pages/PrivacyPage';
+import { TermsPage } from './components/pages/TermsPage';
+import { HelpCenterPage } from './components/pages/HelpCenterPage';
 import { Header } from './components/layout/Header';
 import { Sidebar } from './components/layout/Sidebar';
 import { StudentDashboard } from './components/dashboard/StudentDashboard';
@@ -29,6 +33,20 @@ function MainApp() {
         return <FeaturesPage onNavigate={setActiveView} />;
       case 'contact':
         return <ContactPage onNavigate={setActiveView} />;
+      case 'careers':
+        return <CareersPage onNavigate={setActiveView} />;
+      case 'privacy':
+        return <PrivacyPage onNavigate={setActiveView} />;
+      case 'terms':
+        return <TermsPage onNavigate={setActiveView} />;
+      case 'help-center':
+        return <HelpCenterPage onNavigate={setActiveView} />;
+      case 'documentation':
+        return <HelpCenterPage onNavigate={setActiveView} />;
+      case 'community':
+        return <HelpCenterPage onNavigate={setActiveView} />;
+      case 'progress-tracking':
+        return <ProgressTracker />;
       case '404':
         return <NotFoundPage onNavigate={setActiveView} />;
       case 'dashboard':
@@ -57,7 +75,7 @@ function MainApp() {
   };
 
   // Show static pages without sidebar/header for non-authenticated users
-  if (!user && ['home', 'about', 'features', 'contact', '404'].includes(activeView)) {
+  if (!user && ['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', '404'].includes(activeView)) {
     return renderContent();
   }
 
@@ -67,7 +85,7 @@ function MainApp() {
   }
 
   // Show static pages without sidebar/header even for authenticated users
-  if (['home', 'about', 'features', 'contact', '404'].includes(activeView)) {
+  if (['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', '404'].includes(activeView)) {
     return renderContent();
   }
 
