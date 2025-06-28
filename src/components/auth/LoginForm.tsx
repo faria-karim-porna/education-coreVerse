@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Lock, Eye, EyeOff, BookOpen } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, BookOpen, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../ui/Button';
 
-export function LoginForm() {
+interface LoginFormProps {
+  onNavigate: (view: string) => void;
+}
+
+export function LoginForm({ onNavigate }: LoginFormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -37,18 +41,28 @@ export function LoginForm() {
       >
         <div className="card shadow-lg border-0 rounded-4">
           <div className="card-body p-5">
-            <div className="text-center mb-5">
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.2 }}
-                className="d-inline-flex align-items-center justify-content-center bg-primary-red rounded-4 mb-4"
-                style={{ width: '64px', height: '64px' }}
+            <div className="d-flex align-items-center justify-content-between mb-4">
+              <button
+                onClick={() => onNavigate('home')}
+                className="btn btn-link p-2 text-muted"
+                title="Back to home"
               >
-                <BookOpen className="text-white" size={32} />
-              </motion.div>
-              <h1 className="h2 fw-bold text-deep-red">CoreVerse</h1>
-              <p className="text-muted mt-2">Sign in to your educational platform</p>
+                <ArrowLeft size={20} />
+              </button>
+              <div className="text-center">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.2 }}
+                  className="d-inline-flex align-items-center justify-content-center bg-primary-red rounded-4 mb-3"
+                  style={{ width: '64px', height: '64px' }}
+                >
+                  <BookOpen className="text-white" size={32} />
+                </motion.div>
+                <h1 className="h2 fw-bold text-deep-red">CoreVerse</h1>
+                <p className="text-muted mt-2">Sign in to your educational platform</p>
+              </div>
+              <div style={{ width: '44px' }}></div>
             </div>
 
             <form onSubmit={handleSubmit}>

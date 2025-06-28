@@ -19,46 +19,20 @@ function MainApp() {
   const [activeView, setActiveView] = useState('home');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Show homepage when not logged in
-  if (!user && activeView === 'home') {
-    return <HomePage />;
-  }
-
-  // Show static pages when not logged in
-  if (!user && ['about', 'features', 'contact', '404'].includes(activeView)) {
-    switch (activeView) {
-      case 'about':
-        return <AboutPage />;
-      case 'features':
-        return <FeaturesPage />;
-      case 'contact':
-        return <ContactPage />;
-      case '404':
-        return <NotFoundPage />;
-      default:
-        return <HomePage />;
-    }
-  }
-
-  // Show login form when trying to access protected routes without authentication
-  if (!user) {
-    return <LoginForm />;
-  }
-
   const renderContent = () => {
     switch (activeView) {
       case 'home':
-        return <HomePage />;
+        return <HomePage onNavigate={setActiveView} />;
       case 'about':
-        return <AboutPage />;
+        return <AboutPage onNavigate={setActiveView} />;
       case 'features':
-        return <FeaturesPage />;
+        return <FeaturesPage onNavigate={setActiveView} />;
       case 'contact':
-        return <ContactPage />;
+        return <ContactPage onNavigate={setActiveView} />;
       case '404':
-        return <NotFoundPage />;
+        return <NotFoundPage onNavigate={setActiveView} />;
       case 'dashboard':
-        return user.role === 'teacher' ? <TeacherDashboard /> : <StudentDashboard />;
+        return user?.role === 'teacher' ? <TeacherDashboard /> : <StudentDashboard />;
       case 'labs':
         return <LabSimulators />;
       case 'progress':
@@ -78,11 +52,21 @@ function MainApp() {
           </div>
         );
       default:
-        return user.role === 'teacher' ? <TeacherDashboard /> : <StudentDashboard />;
+        return user?.role === 'teacher' ? <TeacherDashboard /> : <StudentDashboard />;
     }
   };
 
-  // Show static pages without sidebar/header
+  // Show static pages without sidebar/header for non-authenticated users
+  if (!user && ['home', 'about', 'features', 'contact', '404'].includes(activeView)) {
+    return renderContent();
+  }
+
+  // Show login form when trying to access protected routes without authentication
+  if (!user) {
+    return <LoginForm onNavigate={setActiveView} />;
+  }
+
+  // Show static pages without sidebar/header even for authenticated users
   if (['home', 'about', 'features', 'contact', '404'].includes(activeView)) {
     return renderContent();
   }
@@ -100,6 +84,7 @@ function MainApp() {
         <Header
           onMenuToggle={() => setIsSidebarOpen(!isSidebarOpen)}
           isSidebarOpen={isSidebarOpen}
+          onNavigate={setActiveView}
         />
         
         <main className="flex-fill overflow-auto p-3">

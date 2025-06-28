@@ -12,45 +12,53 @@ import {
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 
-export function NotFoundPage() {
+interface NotFoundPageProps {
+  onNavigate: (view: string) => void;
+}
+
+export function NotFoundPage({ onNavigate }: NotFoundPageProps) {
   const suggestions = [
     {
       icon: Home,
       title: 'Go to Homepage',
       description: 'Return to our main page and explore CoreVerse',
       action: 'Take me home',
-      color: 'bg-primary-red'
+      color: 'bg-primary-red',
+      onClick: () => onNavigate('home')
     },
     {
       icon: Search,
       title: 'Search Platform',
       description: 'Find what you\'re looking for using our search',
       action: 'Start searching',
-      color: 'bg-accent-red'
+      color: 'bg-accent-red',
+      onClick: () => onNavigate('dashboard')
     },
     {
       icon: BookOpen,
       title: 'Browse Features',
       description: 'Discover our educational tools and simulations',
       action: 'Explore features',
-      color: 'bg-success'
+      color: 'bg-success',
+      onClick: () => onNavigate('features')
     },
     {
       icon: HelpCircle,
       title: 'Get Help',
       description: 'Contact our support team for assistance',
       action: 'Contact support',
-      color: 'bg-info'
+      color: 'bg-info',
+      onClick: () => onNavigate('contact')
     }
   ];
 
   const quickLinks = [
-    { label: 'Virtual Labs', href: '#' },
-    { label: 'Study Tools', href: '#' },
-    { label: 'Progress Tracker', href: '#' },
-    { label: 'Help Center', href: '#' },
-    { label: 'Community Forum', href: '#' },
-    { label: 'Contact Us', href: '#' }
+    { label: 'Virtual Labs', onClick: () => onNavigate('features') },
+    { label: 'Study Tools', onClick: () => onNavigate('features') },
+    { label: 'Progress Tracker', onClick: () => onNavigate('dashboard') },
+    { label: 'Help Center', onClick: () => onNavigate('contact') },
+    { label: 'Community Forum', onClick: () => onNavigate('contact') },
+    { label: 'Contact Us', onClick: () => onNavigate('contact') }
   ];
 
   return (
@@ -104,11 +112,11 @@ export function NotFoundPage() {
                 transition={{ delay: 0.7 }}
                 className="d-flex flex-column flex-sm-row gap-3 justify-content-center mb-5"
               >
-                <Button size="lg" className="d-flex align-items-center justify-content-center">
+                <Button size="lg" className="d-flex align-items-center justify-content-center" onClick={() => window.history.back()}>
                   <ArrowLeft size={20} className="me-2" />
                   Go Back
                 </Button>
-                <Button variant="secondary" size="lg" className="d-flex align-items-center justify-content-center">
+                <Button variant="secondary" size="lg" className="d-flex align-items-center justify-content-center" onClick={() => window.location.reload()}>
                   <RefreshCw size={20} className="me-2" />
                   Refresh Page
                 </Button>
@@ -139,7 +147,7 @@ export function NotFoundPage() {
                           </div>
                           <h4 className="fw-bold text-deep-red mb-2">{suggestion.title}</h4>
                           <p className="text-muted small mb-3">{suggestion.description}</p>
-                          <Button size="sm" className="w-100">
+                          <Button size="sm" className="w-100" onClick={suggestion.onClick}>
                             {suggestion.action}
                           </Button>
                         </div>
@@ -175,15 +183,15 @@ export function NotFoundPage() {
                       <div className="row g-3">
                         {quickLinks.map((link, index) => (
                           <div key={link.label} className="col-md-6">
-                            <motion.a
-                              href={link.href}
+                            <motion.button
+                              onClick={link.onClick}
                               initial={{ opacity: 0, x: 20 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: 1.4 + index * 0.05 }}
                               className="btn btn-outline-primary w-100 text-start"
                             >
                               {link.label}
-                            </motion.a>
+                            </motion.button>
                           </div>
                         ))}
                       </div>

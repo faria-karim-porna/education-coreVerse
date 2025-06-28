@@ -5,7 +5,11 @@ import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { ThemeToggle } from '../ui/ThemeToggle';
 
-export function HomePage() {
+interface HomePageProps {
+  onNavigate: (view: string) => void;
+}
+
+export function HomePage({ onNavigate }: HomePageProps) {
   const features = [
     {
       icon: Beaker,
@@ -209,25 +213,43 @@ export function HomePage() {
       {/* Navigation */}
       <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
         <div className="container-lg">
-          <motion.div
+          <motion.button
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="navbar-brand d-flex align-items-center gap-2"
+            className="navbar-brand d-flex align-items-center gap-2 btn btn-link text-decoration-none"
+            onClick={() => onNavigate('home')}
           >
             <div className="bg-primary-red rounded-4 d-flex align-items-center justify-content-center"
                  style={{ width: '40px', height: '40px' }}>
               <BookOpen className="text-white" size={24} />
             </div>
             <span className="fw-bold h3 text-deep-red mb-0">CoreVerse</span>
-          </motion.div>
+          </motion.button>
           
           <div className="d-none d-md-flex align-items-center gap-4">
-            <a href="#features" className="nav-link text-deep-red">Features</a>
-            <a href="#about" className="nav-link text-deep-red">About</a>
-            <a href="#testimonials" className="nav-link text-deep-red">Reviews</a>
+            <button 
+              onClick={() => onNavigate('features')} 
+              className="nav-link btn btn-link text-deep-red text-decoration-none"
+            >
+              Features
+            </button>
+            <button 
+              onClick={() => onNavigate('about')} 
+              className="nav-link btn btn-link text-deep-red text-decoration-none"
+            >
+              About
+            </button>
+            <button 
+              onClick={() => onNavigate('contact')} 
+              className="nav-link btn btn-link text-deep-red text-decoration-none"
+            >
+              Contact
+            </button>
             <ThemeToggle />
-            <Button variant="secondary" className="me-2">Sign In</Button>
-            <Button>Get Started</Button>
+            <Button variant="secondary" className="me-2" onClick={() => onNavigate('dashboard')}>
+              Sign In
+            </Button>
+            <Button onClick={() => onNavigate('dashboard')}>Get Started</Button>
           </div>
         </div>
       </nav>
@@ -250,7 +272,7 @@ export function HomePage() {
                 and collaborative classrooms designed for modern learners.
               </p>
               <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-                <Button size="lg" className="justify-content-center">
+                <Button size="lg" className="justify-content-center" onClick={() => onNavigate('dashboard')}>
                   Start Learning Today
                   <ArrowRight size={20} className="ms-2" />
                 </Button>
@@ -376,7 +398,7 @@ export function HomePage() {
                     <div className="card-body p-4">
                       <h4 className="fw-bold text-deep-red mb-2">{subject.name}</h4>
                       <p className="text-muted small mb-3">{subject.description}</p>
-                      <Button size="sm" className="w-100">
+                      <Button size="sm" className="w-100" onClick={() => onNavigate('dashboard')}>
                         Start Learning
                       </Button>
                     </div>
@@ -694,10 +716,10 @@ export function HomePage() {
               to enhance their learning experience.
             </p>
             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-              <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white">
+              <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white" onClick={() => onNavigate('dashboard')}>
                 Start Free Trial
               </Button>
-              <Button variant="outline-secondary" size="lg" className="border-white text-white">
+              <Button variant="outline-secondary" size="lg" className="border-white text-white" onClick={() => onNavigate('contact')}>
                 Schedule Demo
               </Button>
             </div>
@@ -710,13 +732,16 @@ export function HomePage() {
         <div className="container-lg">
           <div className="row g-4">
             <div className="col-lg-3">
-              <div className="d-flex align-items-center gap-2 mb-4">
+              <button 
+                onClick={() => onNavigate('home')}
+                className="d-flex align-items-center gap-2 mb-4 btn btn-link text-white text-decoration-none p-0"
+              >
                 <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
                      style={{ width: '32px', height: '32px' }}>
                   <BookOpen className="text-white" size={20} />
                 </div>
                 <span className="fw-bold h5 mb-0">CoreVerse</span>
-              </div>
+              </button>
               <p className="text-white-50">
                 Transforming education through interactive technology and innovative learning experiences.
               </p>
@@ -725,30 +750,78 @@ export function HomePage() {
             <div className="col-lg-3">
               <h6 className="fw-semibold mb-3">Platform</h6>
               <ul className="list-unstyled">
-                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">STEM Labs</a></li>
-                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Virtual Classrooms</a></li>
-                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Progress Tracking</a></li>
-                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Scientific Tools</a></li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('labs')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    STEM Labs
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('classes')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Virtual Classrooms
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('progress')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Progress Tracking
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('tools')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Scientific Tools
+                  </button>
+                </li>
               </ul>
             </div>
             
             <div className="col-lg-3">
               <h6 className="fw-semibold mb-3">Support</h6>
               <ul className="list-unstyled">
-                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Help Center</a></li>
-                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Documentation</a></li>
-                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Community</a></li>
-                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Contact Us</a></li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Help Center
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('features')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Documentation
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Community
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Contact Us
+                  </button>
+                </li>
               </ul>
             </div>
             
             <div className="col-lg-3">
               <h6 className="fw-semibold mb-3">Company</h6>
               <ul className="list-unstyled">
-                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">About</a></li>
-                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Careers</a></li>
-                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Privacy</a></li>
-                <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none">Terms</a></li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('about')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    About
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('about')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Careers
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Privacy
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Terms
+                  </button>
+                </li>
               </ul>
             </div>
           </div>

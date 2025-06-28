@@ -23,8 +23,13 @@ import {
 } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
+import { ThemeToggle } from '../ui/ThemeToggle';
 
-export function FeaturesPage() {
+interface FeaturesPageProps {
+  onNavigate: (view: string) => void;
+}
+
+export function FeaturesPage({ onNavigate }: FeaturesPageProps) {
   const [activeCategory, setActiveCategory] = useState('all');
 
   const featureCategories = [
@@ -187,6 +192,50 @@ export function FeaturesPage() {
 
   return (
     <div className="min-vh-100 bg-light-bg">
+      {/* Navigation */}
+      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
+        <div className="container-lg">
+          <motion.button
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="navbar-brand d-flex align-items-center gap-2 btn btn-link text-decoration-none"
+            onClick={() => onNavigate('home')}
+          >
+            <div className="bg-primary-red rounded-4 d-flex align-items-center justify-content-center"
+                 style={{ width: '40px', height: '40px' }}>
+              <BookOpen className="text-white" size={24} />
+            </div>
+            <span className="fw-bold h3 text-deep-red mb-0">CoreVerse</span>
+          </motion.button>
+          
+          <div className="d-none d-md-flex align-items-center gap-4">
+            <button 
+              onClick={() => onNavigate('features')} 
+              className="nav-link btn btn-link text-primary-red text-decoration-none fw-medium"
+            >
+              Features
+            </button>
+            <button 
+              onClick={() => onNavigate('about')} 
+              className="nav-link btn btn-link text-deep-red text-decoration-none"
+            >
+              About
+            </button>
+            <button 
+              onClick={() => onNavigate('contact')} 
+              className="nav-link btn btn-link text-deep-red text-decoration-none"
+            >
+              Contact
+            </button>
+            <ThemeToggle />
+            <Button variant="secondary" className="me-2" onClick={() => onNavigate('dashboard')}>
+              Sign In
+            </Button>
+            <Button onClick={() => onNavigate('dashboard')}>Get Started</Button>
+          </div>
+        </div>
+      </nav>
+
       {/* Hero Section */}
       <section className="position-relative overflow-hidden bg-gradient-primary text-white py-5">
         <div className="container-lg py-5">
@@ -274,7 +323,7 @@ export function FeaturesPage() {
                               </div>
                             ))}
                           </div>
-                          <Button size="sm" className="align-self-start">
+                          <Button size="sm" className="align-self-start" onClick={() => onNavigate('dashboard')}>
                             Learn More
                           </Button>
                         </div>
@@ -359,7 +408,7 @@ export function FeaturesPage() {
                     <span>API Access for Custom Integrations</span>
                   </div>
                 </div>
-                <Button>
+                <Button onClick={() => onNavigate('contact')}>
                   View Integration Guide
                 </Button>
               </motion.div>
@@ -394,16 +443,121 @@ export function FeaturesPage() {
               transform your educational experience.
             </p>
             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-              <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white">
+              <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white" onClick={() => onNavigate('dashboard')}>
                 Start Free Trial
               </Button>
-              <Button variant="outline-secondary" size="lg" className="border-white text-white">
+              <Button variant="outline-secondary" size="lg" className="border-white text-white" onClick={() => onNavigate('contact')}>
                 Schedule Demo
               </Button>
             </div>
           </motion.div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="bg-deep-red text-white py-5">
+        <div className="container-lg">
+          <div className="row g-4">
+            <div className="col-lg-3">
+              <button 
+                onClick={() => onNavigate('home')}
+                className="d-flex align-items-center gap-2 mb-4 btn btn-link text-white text-decoration-none p-0"
+              >
+                <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
+                     style={{ width: '32px', height: '32px' }}>
+                  <BookOpen className="text-white" size={20} />
+                </div>
+                <span className="fw-bold h5 mb-0">CoreVerse</span>
+              </button>
+              <p className="text-white-50">
+                Transforming education through interactive technology and innovative learning experiences.
+              </p>
+            </div>
+            
+            <div className="col-lg-3">
+              <h6 className="fw-semibold mb-3">Platform</h6>
+              <ul className="list-unstyled">
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('features')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    STEM Labs
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('features')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Virtual Classrooms
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('features')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Progress Tracking
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('features')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Scientific Tools
+                  </button>
+                </li>
+              </ul>
+            </div>
+            
+            <div className="col-lg-3">
+              <h6 className="fw-semibold mb-3">Support</h6>
+              <ul className="list-unstyled">
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Help Center
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('features')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Documentation
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Community
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Contact Us
+                  </button>
+                </li>
+              </ul>
+            </div>
+            
+            <div className="col-lg-3">
+              <h6 className="fw-semibold mb-3">Company</h6>
+              <ul className="list-unstyled">
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('about')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    About
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Careers
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Privacy
+                  </button>
+                </li>
+                <li className="mb-2">
+                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                    Terms
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-top border-white border-opacity-25 mt-5 pt-4 text-center">
+            <p className="text-white-50 mb-0">&copy; 2024 CoreVerse. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

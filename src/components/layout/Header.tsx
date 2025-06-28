@@ -1,14 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Bell, Menu, Search, User, LogOut } from 'lucide-react';
+import { Bell, Menu, Search, User, LogOut, Home } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface HeaderProps {
   onMenuToggle: () => void;
   isSidebarOpen: boolean;
+  onNavigate: (view: string) => void;
 }
 
-export function Header({ onMenuToggle, isSidebarOpen }: HeaderProps) {
+export function Header({ onMenuToggle, isSidebarOpen, onNavigate }: HeaderProps) {
   const { user, logout } = useAuth();
 
   return (
@@ -27,16 +28,17 @@ export function Header({ onMenuToggle, isSidebarOpen }: HeaderProps) {
               <Menu size={20} />
             </button>
             
-            <motion.div
+            <motion.button
               whileHover={{ scale: 1.05 }}
-              className="d-none d-sm-flex align-items-center gap-2"
+              className="d-none d-sm-flex align-items-center gap-2 btn btn-link text-decoration-none"
+              onClick={() => onNavigate('home')}
             >
               <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
                    style={{ width: '32px', height: '32px' }}>
                 <span className="text-white fw-bold small">CV</span>
               </div>
               <span className="fw-bold h4 text-deep-red mb-0">CoreVerse</span>
-            </motion.div>
+            </motion.button>
           </div>
 
           <div className="flex-fill mx-4" style={{ maxWidth: '400px' }}>
@@ -53,6 +55,16 @@ export function Header({ onMenuToggle, isSidebarOpen }: HeaderProps) {
           </div>
 
           <div className="d-flex align-items-center gap-2">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => onNavigate('home')}
+              className="btn btn-link p-2"
+              title="Go to homepage"
+            >
+              <Home size={20} />
+            </motion.button>
+
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -83,6 +95,7 @@ export function Header({ onMenuToggle, isSidebarOpen }: HeaderProps) {
                 whileTap={{ scale: 0.95 }}
                 onClick={logout}
                 className="btn btn-link p-2"
+                title="Logout"
               >
                 <LogOut size={16} />
               </motion.button>
