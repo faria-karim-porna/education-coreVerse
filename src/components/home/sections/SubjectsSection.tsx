@@ -81,7 +81,7 @@ export function SubjectsSection({ onNavigate }: SubjectsSectionProps) {
             Master Every Subject
           </div>
           <h2 className="display-4 fw-bold text-deep-red mb-4">
-            Explore Diverse Learning Paths
+            Master Every Subject
           </h2>
           <p className="lead text-muted mx-auto" style={{ maxWidth: '600px' }}>
             From fundamental sciences to cutting-edge technology, discover your passion 

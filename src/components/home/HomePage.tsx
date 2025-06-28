@@ -8,6 +8,7 @@ import { SubjectsSection } from './sections/SubjectsSection';
 import { CareerPathwaysSection } from './sections/CareerPathwaysSection';
 import { HowItWorksSection } from './sections/HowItWorksSection';
 import { UpcomingEventsSection } from './sections/UpcomingEventsSection';
+import { SuccessStoriesSection } from './sections/SuccessStoriesSection';
 import { TestimonialsSection } from './sections/TestimonialsSection';
 import { LearnAnywhereSection } from './sections/LearnAnywhereSection';
 import { WhyChooseSection } from './sections/WhyChooseSection';
@@ -32,6 +33,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
       <CareerPathwaysSection onNavigate={onNavigate} />
       <HowItWorksSection />
       <UpcomingEventsSection />
+      <SuccessStoriesSection />
       <TestimonialsSection />
       <LearnAnywhereSection />
       <WhyChooseSection />
