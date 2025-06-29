@@ -13,7 +13,6 @@ import { TestimonialsSection } from './sections/TestimonialsSection';
 import { LearnAnywhereSection } from './sections/LearnAnywhereSection';
 import { WhyChooseSection } from './sections/WhyChooseSection';
 import { FeaturesSection } from './sections/FeaturesSection';
-import { PricingSection } from './sections/PricingSection';
 import { CTASection } from './sections/CTASection';
 import { Footer } from './sections/Footer';
 
@@ -38,7 +37,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
       <LearnAnywhereSection />
       <WhyChooseSection />
       <FeaturesSection onNavigate={onNavigate} />
-      <PricingSection onNavigate={onNavigate} />
       <CTASection onNavigate={onNavigate} />
       <Footer onNavigate={onNavigate} />
     </div>
