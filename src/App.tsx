@@ -28,6 +28,9 @@ import { QuestionMakerPage } from './components/pages/QuestionMakerPage';
 import { FlashcardPage } from './components/pages/FlashcardPage';
 import { WordbookPage } from './components/pages/WordbookPage';
 import { StudentProgressPage } from './components/pages/StudentProgressPage';
+import { ChemistrySimulationPage } from './components/pages/ChemistrySimulationPage';
+import { PhysicsSimulationPage } from './components/pages/PhysicsSimulationPage';
+import { BiologySimulationPage } from './components/pages/BiologySimulationPage';
 import { Header } from './components/layout/Header';
 import { Sidebar } from './components/layout/Sidebar';
 import { StudentDashboard } from './components/dashboard/StudentDashboard';
@@ -92,6 +95,12 @@ function MainApp() {
         return <WordbookPage onNavigate={setActiveView} />;
       case 'student-progress':
         return <StudentProgressPage onNavigate={setActiveView} />;
+      case 'chemistry-simulation':
+        return <ChemistrySimulationPage onNavigate={setActiveView} />;
+      case 'physics-simulation':
+        return <PhysicsSimulationPage onNavigate={setActiveView} />;
+      case 'biology-simulation':
+        return <BiologySimulationPage onNavigate={setActiveView} />;
       case '404':
         return <NotFoundPage onNavigate={setActiveView} />;
       case 'dashboard':
@@ -326,7 +335,7 @@ function MainApp() {
   };
 
   // Show static pages without sidebar/header for non-authenticated users
-  if (!user && ['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', 'periodic-table', 'physics-formulas', 'biology-names', 'country-flags', 'interactive-globe', 'scientific-calculator', 'unit-converter', 'discussion-forum', 'live-classroom', 'drawing-tool', 'question-maker', 'flashcard', 'wordbook', 'student-progress', '404'].includes(activeView)) {
+  if (!user && ['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', 'periodic-table', 'physics-formulas', 'biology-names', 'country-flags', 'interactive-globe', 'scientific-calculator', 'unit-converter', 'discussion-forum', 'live-classroom', 'drawing-tool', 'question-maker', 'flashcard', 'wordbook', 'student-progress', 'chemistry-simulation', 'physics-simulation', 'biology-simulation', '404'].includes(activeView)) {
     return renderContent();
   }
 
@@ -336,7 +345,7 @@ function MainApp() {
   }
 
   // Show static pages without sidebar/header even for authenticated users
-  if (['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', 'periodic-table', 'physics-formulas', 'biology-names', 'country-flags', 'interactive-globe', 'scientific-calculator', 'unit-converter', 'discussion-forum', 'live-classroom', 'drawing-tool', 'question-maker', 'flashcard', 'wordbook', 'student-progress', '404'].includes(activeView)) {
+  if (['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', 'periodic-table', 'physics-formulas', 'biology-names', 'country-flags', 'interactive-globe', 'scientific-calculator', 'unit-converter', 'discussion-forum', 'live-classroom', 'drawing-tool', 'question-maker', 'flashcard', 'wordbook', 'student-progress', 'chemistry-simulation', 'physics-simulation', 'biology-simulation', '404'].includes(activeView)) {
     return renderContent();
   }
 

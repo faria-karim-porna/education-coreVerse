@@ -95,7 +95,15 @@ export function LabSimulators() {
                       <span className="text-muted small text-capitalize fw-medium">
                         {sim.type}
                       </span>
-                      <Button size="sm">
+                      <Button size="sm" onClick={() => {
+                        if (sim.type === 'chemistry') {
+                          window.location.href = '/chemistry-simulation';
+                        } else if (sim.type === 'physics') {
+                          window.location.href = '/physics-simulation';
+                        } else if (sim.type === 'biology') {
+                          window.location.href = '/biology-simulation';
+                        }
+                      }}>
                         Launch
                       </Button>
                     </div>

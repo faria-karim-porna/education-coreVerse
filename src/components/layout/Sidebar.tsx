@@ -74,6 +74,12 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
     { id: 'student-progress', label: 'Student Progress', icon: BarChart3 },
   ];
 
+  const simulationItems = [
+    { id: 'chemistry-simulation', label: 'Chemistry Lab', icon: Beaker },
+    { id: 'physics-simulation', label: 'Physics Lab', icon: Zap },
+    { id: 'biology-simulation', label: 'Biology Lab', icon: Leaf },
+  ];
+
   const commonItems = [
     { id: 'knowledge', label: 'Knowledge Base', icon: Globe },
     { id: 'communication', label: 'Communication', icon: MessageCircle },
@@ -140,6 +146,31 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
                     <span className="fw-medium">{item.label}</span>
                   </motion.button>
                 ))}
+              </div>
+
+              <div className="mt-4 pt-4 border-top">
+                <h6 className="fw-semibold text-deep-red mb-3 px-3">Simulations</h6>
+                <div className="d-flex flex-column gap-1">
+                  {simulationItems.map((item) => (
+                    <motion.button
+                      key={item.id}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => {
+                        onViewChange(item.id);
+                        onClose();
+                      }}
+                      className={`btn text-start d-flex align-items-center gap-3 px-3 py-2 rounded-3 ${
+                        activeView === item.id
+                          ? 'bg-light-bg text-primary-red border border-card-bg'
+                          : 'btn-link text-dark'
+                      }`}
+                    >
+                      <item.icon size={20} />
+                      <span className="fw-medium">{item.label}</span>
+                    </motion.button>
+                  ))}
+                </div>
               </div>
 
               <div className="mt-4 pt-4 border-top">
