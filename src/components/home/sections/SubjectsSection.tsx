@@ -144,12 +144,12 @@ export function SubjectsSection({ onNavigate }: SubjectsSectionProps) {
                         />
                         <div className={`position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-white bg-gradient-to-br ${subject.color} bg-opacity-90`}>
                           <div className="position-absolute top-0 end-0 p-3">
-                            <span className="badge bg-white bg-opacity-20 text-white small">
+                            <span className="badge bg-white bg-opacity-20 text-deep-red small">
                               {subject.students} students
                             </span>
                           </div>
                           <div className="text-center">
-                            <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                            <div className="bg-white subject-wise-icon bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
                                  style={{ width: '80px', height: '80px' }}>
                               <subject.icon size={40} />
                             </div>

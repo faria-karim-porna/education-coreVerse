@@ -172,6 +172,12 @@ $btn-border-radius-lg: 0.75rem;
 .light-theme {
   background-color: $light-bg !important;
   color: $dark !important;
+
+  .subject-wise-icon{
+    svg{
+      color: $primary-red !important;
+    }
+  }
 }
 
 // Custom gradient utilities for subject cards
