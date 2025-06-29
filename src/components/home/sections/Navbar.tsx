@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, Menu, X } from 'lucide-react';
 import { Button } from '../../ui/Button';
 import { ThemeToggle } from '../../ui/ThemeToggle';
 import { Link } from 'react-router-dom';
@@ -10,6 +10,12 @@ interface NavbarProps {
 }
 
 export function Navbar({ onNavigate }: NavbarProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
       <div className="container-lg">
@@ -26,30 +32,65 @@ export function Navbar({ onNavigate }: NavbarProps) {
           <span className="fw-bold h3 text-deep-red mb-0">CoreVerse</span>
         </motion.button>
         
-        <div className="d-none d-md-flex align-items-center gap-4">
-          <button 
-            onClick={() => onNavigate('features')} 
-            className="nav-link btn btn-link text-deep-red text-decoration-none"
-          >
-            Features
-          </button>
-          <button 
-            onClick={() => onNavigate('about')} 
-            className="nav-link btn btn-link text-deep-red text-decoration-none"
-          >
-            About
-          </button>
-          <button 
-            onClick={() => onNavigate('contact')} 
-            className="nav-link btn btn-link text-deep-red text-decoration-none"
-          >
-            Contact
-          </button>
-          <ThemeToggle />
-          <Button variant="secondary" className="me-2" onClick={() => onNavigate('dashboard')}>
-            Sign In
-          </Button>
-          <Button onClick={() => onNavigate('dashboard')}>Get Started</Button>
+        {/* Mobile menu toggle button */}
+        <button 
+          className="navbar-toggler border-0" 
+          type="button" 
+          onClick={toggleMenu}
+        >
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+        
+        {/* Navigation links - will collapse on mobile */}
+        <div className={`collapse navbar-collapse ${isMenuOpen ? 'show' : ''}`}>
+          <div className="ms-auto d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-4 mt-3 mt-lg-0">
+            <button 
+              onClick={() => {
+                onNavigate('features');
+                setIsMenuOpen(false);
+              }}
+              className="nav-link btn btn-link text-deep-red text-decoration-none"
+            >
+              Features
+            </button>
+            <button 
+              onClick={() => {
+                onNavigate('about');
+                setIsMenuOpen(false);
+              }}
+              className="nav-link btn btn-link text-deep-red text-decoration-none"
+            >
+              About
+            </button>
+            <button 
+              onClick={() => {
+                onNavigate('contact');
+                setIsMenuOpen(false);
+              }}
+              className="nav-link btn btn-link text-deep-red text-decoration-none"
+            >
+              Contact
+            </button>
+            <ThemeToggle />
+            <Button 
+              variant="secondary" 
+              className="me-2" 
+              onClick={() => {
+                onNavigate('dashboard');
+                setIsMenuOpen(false);
+              }}
+            >
+              Sign In
+            </Button>
+            <Button 
+              onClick={() => {
+                onNavigate('dashboard');
+                setIsMenuOpen(false);
+              }}
+            >
+              Get Started
+            </Button>
+          </div>
         </div>
       </div>
     </nav>
