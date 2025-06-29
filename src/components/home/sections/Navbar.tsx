@@ -17,7 +17,7 @@ export function Navbar({ onNavigate }: NavbarProps) {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
+    <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom fixed-top">
       <div className="container-lg">
         <motion.button
           initial={{ opacity: 0, x: -20 }}
