@@ -43,6 +43,20 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
                   <div className="page"></div>
                   <div className="page"></div>
                   <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
                 </div>
                 <div className="flips">
                   <div className="flip flip1">
@@ -51,7 +65,17 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
                         <div className="flip flip4">
                           <div className="flip flip5">
                             <div className="flip flip6">
-                              <div className="flip flip7"></div>
+                              <div className="flip flip7">
+                                <div className="flip flip8">
+                                  <div className="flip flip9">
+                                    <div className="flip flip10">
+                                      <div className="flip flip11">
+                                        <div className="flip flip12"></div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>

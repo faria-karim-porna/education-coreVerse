@@ -509,6 +509,7 @@ $btn-border-radius-lg: 0.75rem;
   transform: rotateX(60deg) rotateY(-177deg);
 }
 
+// Add more pages for a fatter book
 .page:nth-child(1) {
   transform: rotateX(60deg) rotateY(-3deg);
 }
@@ -526,19 +527,84 @@ $btn-border-radius-lg: 0.75rem;
 }
 
 .page:nth-child(4) {
-  transform: rotateX(60deg) rotateY(-177deg);
+  transform: rotateX(60deg) rotateY(-7.5deg);
+  background-color: #e0e0e0;
 }
 
 .page:nth-child(5) {
-  transform: rotateX(60deg) rotateY(-175.5deg);
+  transform: rotateX(60deg) rotateY(-9deg);
+  background-color: #d8d8d8;
 }
 
 .page:nth-child(6) {
+  transform: rotateX(60deg) rotateY(-10.5deg);
+  background-color: #d0d0d0;
+}
+
+.page:nth-child(7) {
+  transform: rotateX(60deg) rotateY(-12deg);
+  background-color: #c8c8c8;
+}
+
+.page:nth-child(8) {
+  transform: rotateX(60deg) rotateY(-13.5deg);
+  background-color: #c0c0c0;
+}
+
+.page:nth-child(9) {
+  transform: rotateX(60deg) rotateY(-15deg);
+  background-color: #b8b8b8;
+}
+
+.page:nth-child(10) {
+  transform: rotateX(60deg) rotateY(-16.5deg);
+  background-color: #b0b0b0;
+}
+
+.page:nth-child(11) {
+  transform: rotateX(60deg) rotateY(-18deg);
+  background-color: #a8a8a8;
+}
+
+.page:nth-child(12) {
+  transform: rotateX(60deg) rotateY(-19.5deg);
+  background-color: #a0a0a0;
+}
+
+.page:nth-child(13) {
+  transform: rotateX(60deg) rotateY(-177deg);
+}
+
+.page:nth-child(14) {
+  transform: rotateX(60deg) rotateY(-175.5deg);
+}
+
+.page:nth-child(15) {
   transform: rotateX(60deg) rotateY(-174deg);
+}
+
+.page:nth-child(16) {
+  transform: rotateX(60deg) rotateY(-172.5deg);
+}
+
+.page:nth-child(17) {
+  transform: rotateX(60deg) rotateY(-171deg);
+}
+
+.page:nth-child(18) {
+  transform: rotateX(60deg) rotateY(-169.5deg);
+}
+
+.page:nth-child(19) {
+  transform: rotateX(60deg) rotateY(-168deg);
+}
+
+.page:nth-child(20) {
+  transform: rotateX(60deg) rotateY(-166.5deg);
   overflow: hidden;
 }
 
-.page:nth-child(6)::after {
+.page:nth-child(20)::after {
   content: "";
   width: 210px;
   height: 300px;
@@ -601,6 +667,7 @@ $btn-border-radius-lg: 0.75rem;
   transform-style: preserve-3d;
 }
 
+// Add more flips for a fatter book
 .flip {
   width: 32px;
   height: 300px;
@@ -677,14 +744,34 @@ $btn-border-radius-lg: 0.75rem;
   animation: nextFlip7 25s -20s infinite steps(1);
 }
 
-.flip.flip7 {
-  width: 30px;
-  border-width: 2px 2px 2px 0;
+.flip.flip8::after {
+  -webkit-animation: nextFlip8 25s -20s infinite steps(1);
+  animation: nextFlip8 25s -20s infinite steps(1);
 }
 
-.flip.flip7::after {
-  -webkit-animation: nextFlip7 25s -20s infinite steps(1);
-  animation: nextFlip7 25s -20s infinite steps(1);
+.flip.flip9::after {
+  -webkit-animation: nextFlip9 25s -20s infinite steps(1);
+  animation: nextFlip9 25s -20s infinite steps(1);
+}
+
+.flip.flip10::after {
+  -webkit-animation: nextFlip10 25s -20s infinite steps(1);
+  animation: nextFlip10 25s -20s infinite steps(1);
+}
+
+.flip.flip11::after {
+  -webkit-animation: nextFlip11 25s -20s infinite steps(1);
+  animation: nextFlip11 25s -20s infinite steps(1);
+}
+
+.flip.flip12::after {
+  -webkit-animation: nextFlip12 25s -20s infinite steps(1);
+  animation: nextFlip12 25s -20s infinite steps(1);
+}
+
+.flip.flip12 {
+  width: 30px;
+  border-width: 2px 2px 2px 0;
 }
 
 @keyframes flip1 {
@@ -1075,6 +1162,271 @@ $btn-border-radius-lg: 0.75rem;
   93% {
     background-color: #f2f2f2;
     background-position: 388px -2px;
+    transform: rotateY(-180deg);
+  }
+}
+
+@keyframes nextFlip8 {
+  0% {
+    background-color: #f2f2f2;
+    background-position: -28px -2px;
+    transform: rotateY(0deg);
+  }
+  13.5% {
+    background-color: #f2f2f2;
+    background-position: 418px -2px;
+    transform: rotateY(-180deg);
+  }
+  20% {
+    background-color: #f2f2f2;
+    background-position: -28px -2px;
+    transform: rotateY(0deg);
+  }
+  33.5% {
+    background-color: #f2f2f2;
+    background-position: 418px -2px;
+    transform: rotateY(-180deg);
+  }
+  40% {
+    background-color: #f2f2f2;
+    background-position: -28px -2px;
+    transform: rotateY(0deg);
+  }
+  53.5% {
+    background-color: #f2f2f2;
+    background-position: 418px -2px;
+    transform: rotateY(-180deg);
+  }
+  60% {
+    background-color: #f2f2f2;
+    background-position: -28px -2px;
+    transform: rotateY(0deg);
+  }
+  73.5% {
+    background-color: #f2f2f2;
+    background-position: 418px -2px;
+    transform: rotateY(-180deg);
+  }
+  80% {
+    background-color: #f2f2f2;
+    background-position: -28px -2px;
+    transform: rotateY(0deg);
+  }
+  93.5% {
+    background-color: #f2f2f2;
+    background-position: 418px -2px;
+    transform: rotateY(-180deg);
+  }
+}
+
+@keyframes nextFlip9 {
+  0% {
+    background-color: #f2f2f2;
+    background-position: -58px -2px;
+    transform: rotateY(0deg);
+  }
+  14% {
+    background-color: #f2f2f2;
+    background-position: 448px -2px;
+    transform: rotateY(-180deg);
+  }
+  20% {
+    background-color: #f2f2f2;
+    background-position: -58px -2px;
+    transform: rotateY(0deg);
+  }
+  34% {
+    background-color: #f2f2f2;
+    background-position: 448px -2px;
+    transform: rotateY(-180deg);
+  }
+  40% {
+    background-color: #f2f2f2;
+    background-position: -58px -2px;
+    transform: rotateY(0deg);
+  }
+  54% {
+    background-color: #f2f2f2;
+    background-position: 448px -2px;
+    transform: rotateY(-180deg);
+  }
+  60% {
+    background-color: #f2f2f2;
+    background-position: -58px -2px;
+    transform: rotateY(0deg);
+  }
+  74% {
+    background-color: #f2f2f2;
+    background-position: 448px -2px;
+    transform: rotateY(-180deg);
+  }
+  80% {
+    background-color: #f2f2f2;
+    background-position: -58px -2px;
+    transform: rotateY(0deg);
+  }
+  94% {
+    background-color: #f2f2f2;
+    background-position: 448px -2px;
+    transform: rotateY(-180deg);
+  }
+}
+
+@keyframes nextFlip10 {
+  0% {
+    background-color: #f2f2f2;
+    background-position: -88px -2px;
+    transform: rotateY(0deg);
+  }
+  14.5% {
+    background-color: #f2f2f2;
+    background-position: 478px -2px;
+    transform: rotateY(-180deg);
+  }
+  20% {
+    background-color: #f2f2f2;
+    background-position: -88px -2px;
+    transform: rotateY(0deg);
+  }
+  34.5% {
+    background-color: #f2f2f2;
+    background-position: 478px -2px;
+    transform: rotateY(-180deg);
+  }
+  40% {
+    background-color: #f2f2f2;
+    background-position: -88px -2px;
+    transform: rotateY(0deg);
+  }
+  54.5% {
+    background-color: #f2f2f2;
+    background-position: 478px -2px;
+    transform: rotateY(-180deg);
+  }
+  60% {
+    background-color: #f2f2f2;
+    background-position: -88px -2px;
+    transform: rotateY(0deg);
+  }
+  74.5% {
+    background-color: #f2f2f2;
+    background-position: 478px -2px;
+    transform: rotateY(-180deg);
+  }
+  80% {
+    background-color: #f2f2f2;
+    background-position: -88px -2px;
+    transform: rotateY(0deg);
+  }
+  94.5% {
+    background-color: #f2f2f2;
+    background-position: 478px -2px;
+    transform: rotateY(-180deg);
+  }
+}
+
+@keyframes nextFlip11 {
+  0% {
+    background-color: #f2f2f2;
+    background-position: -118px -2px;
+    transform: rotateY(0deg);
+  }
+  15% {
+    background-color: #f2f2f2;
+    background-position: 508px -2px;
+    transform: rotateY(-180deg);
+  }
+  20% {
+    background-color: #f2f2f2;
+    background-position: -118px -2px;
+    transform: rotateY(0deg);
+  }
+  35% {
+    background-color: #f2f2f2;
+    background-position: 508px -2px;
+    transform: rotateY(-180deg);
+  }
+  40% {
+    background-color: #f2f2f2;
+    background-position: -118px -2px;
+    transform: rotateY(0deg);
+  }
+  55% {
+    background-color: #f2f2f2;
+    background-position: 508px -2px;
+    transform: rotateY(-180deg);
+  }
+  60% {
+    background-color: #f2f2f2;
+    background-position: -118px -2px;
+    transform: rotateY(0deg);
+  }
+  75% {
+    background-color: #f2f2f2;
+    background-position: 508px -2px;
+    transform: rotateY(-180deg);
+  }
+  80% {
+    background-color: #f2f2f2;
+    background-position: -118px -2px;
+    transform: rotateY(0deg);
+  }
+  95% {
+    background-color: #f2f2f2;
+    background-position: 508px -2px;
+    transform: rotateY(-180deg);
+  }
+}
+
+@keyframes nextFlip12 {
+  0% {
+    background-color: #f2f2f2;
+    background-position: -148px -2px;
+    transform: rotateY(0deg);
+  }
+  15.5% {
+    background-color: #f2f2f2;
+    background-position: 538px -2px;
+    transform: rotateY(-180deg);
+  }
+  20% {
+    background-color: #f2f2f2;
+    background-position: -148px -2px;
+    transform: rotateY(0deg);
+  }
+  35.5% {
+    background-color: #f2f2f2;
+    background-position: 538px -2px;
+    transform: rotateY(-180deg);
+  }
+  40% {
+    background-color: #f2f2f2;
+    background-position: -148px -2px;
+    transform: rotateY(0deg);
+  }
+  55.5% {
+    background-color: #f2f2f2;
+    background-position: 538px -2px;
+    transform: rotateY(-180deg);
+  }
+  60% {
+    background-color: #f2f2f2;
+    background-position: -148px -2px;
+    transform: rotateY(0deg);
+  }
+  75.5% {
+    background-color: #f2f2f2;
+    background-position: 538px -2px;
+    transform: rotateY(-180deg);
+  }
+  80% {
+    background-color: #f2f2f2;
+    background-position: -148px -2px;
+    transform: rotateY(0deg);
+  }
+  95.5% {
+    background-color: #f2f2f2;
+    background-position: 538px -2px;
     transform: rotateY(-180deg);
   }
 }
