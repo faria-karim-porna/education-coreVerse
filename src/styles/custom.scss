@@ -3,28 +3,28 @@
 @import "bootstrap/scss/functions";
 
 // Custom color variables
-$primary: #ff7474;
-$secondary: #c64242;
+$primary: #ab8b74;
+$secondary: #8d7359;
 $success: #22c55e;
 $info: #3b82f6;
 $warning: #f59e0b;
 $danger: #ef4444;
-$light: #fce5e5;
-$dark: #541616;
+$light: #ffe4a3;
+$dark: #765848;
 
 // Custom theme colors
-$light-bg: #fce5e5;
-$card-bg: #f7c2c2;
-$primary-red: #ff7474;
-$accent-red: #c64242;
-$deep-red: #541616;
+$light-bg: #ffe4a3;
+$card-bg: #ddbf86;
+$primary-red: #ab8b74;
+$accent-red: #8d7359;
+$deep-red: #765848;
 
 // Dark theme colors
-$dark-bg: #1a1a1a;
-$dark-card-bg: #2d2d2d;
-$dark-border: #404040;
-$dark-text: #e5e5e5;
-$dark-text-muted: #a0a0a0;
+$dark-bg: #765848;
+$dark-card-bg: #8d7359;
+$dark-border: #ab8b74;
+$dark-text: #ffe4a3;
+$dark-text-muted: #ddbf86;
 
 // Override Bootstrap variables
 $body-bg: $light-bg;
