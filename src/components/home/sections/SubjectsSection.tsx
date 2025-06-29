@@ -142,7 +142,7 @@ export function SubjectsSection({ onNavigate }: SubjectsSectionProps) {
                           alt={subject.title}
                           className="w-100 h-100 object-fit-cover"
                         />
-                        <div className="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-white" style={{ backgroundColor: 'rgba(84, 22, 22, 0.8)' }}>
+                        <div className={`position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-white bg-gradient-to-br ${subject.color} bg-opacity-90`}>
                           <div className="position-absolute top-0 end-0 p-3">
                             <span className="badge bg-white bg-opacity-20 text-white small">
                               {subject.students} students
@@ -151,7 +151,7 @@ export function SubjectsSection({ onNavigate }: SubjectsSectionProps) {
                           <div className="text-center">
                             <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
                                  style={{ width: '80px', height: '80px' }}>
-                              <subject.icon className="text-white" size={40} />
+                              <subject.icon size={40} />
                             </div>
                             <h3 className="fw-bold mb-2">{subject.title}</h3>
                             <p className="opacity-90 small mb-0">{subject.description}</p>
