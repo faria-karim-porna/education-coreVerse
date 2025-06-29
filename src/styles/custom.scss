@@ -1,48 +1,165 @@
-// CoreVerse Custom Bootstrap Theme
+// CoreVerse Custom Bootstrap Theme with Paper Cut Out Aesthetic
 // Import Bootstrap functions first
 @import "bootstrap/scss/functions";
 
-// Custom color variables
-$primary: #ff7474;
-$secondary: #c64242;
-$success: #22c55e;
-$info: #3b82f6;
-$warning: #f59e0b;
-$danger: #ef4444;
-$light: #fce5e5;
-$dark: #541616;
+// Custom color variables - Updated for paper cut out theme
+$primary: #8a6fff;
+$secondary: #ff7eb6;
+$success: #4ade80;
+$info: #60a5fa;
+$warning: #fbbf24;
+$danger: #f87171;
+$light: #f0f4ff;
+$dark: #2e1065;
 
-// Custom theme colors
-$light-bg: #fce5e5;
-$card-bg: #f7c2c2;
-$primary-red: #ff7474;
-$accent-red: #c64242;
-$deep-red: #541616;
+// Custom theme colors - Updated for paper cut out theme
+$light-bg: #f0f4ff;
+$card-bg: #ffffff;
+$primary-purple: #8a6fff;
+$accent-purple: #6d28d9;
+$deep-purple: #4c1d95;
+$soft-pink: #ff7eb6;
+$soft-blue: #93c5fd;
+$soft-yellow: #fde68a;
 
 // Dark theme colors
-$dark-bg: #1a1a1a;
-$dark-card-bg: #2d2d2d;
-$dark-border: #404040;
+$dark-bg: #1e1b4b;
+$dark-card-bg: #312e81;
+$dark-border: #4338ca;
 $dark-text: #e5e5e5;
-$dark-text-muted: #a0a0a0;
+$dark-text-muted: #a5b4fc;
 
 // Override Bootstrap variables
 $body-bg: $light-bg;
 $body-color: $dark;
-$link-color: $primary-red;
-$link-hover-color: $accent-red;
+$link-color: $primary-purple;
+$link-hover-color: $accent-purple;
 
 // Card styling
-$card-border-color: rgba($accent-red, 0.125);
+$card-border-color: rgba($accent-purple, 0.125);
 $card-bg: #ffffff;
 
 // Button styling
-$btn-border-radius: 0.5rem;
-$btn-border-radius-sm: 0.375rem;
-$btn-border-radius-lg: 0.75rem;
+$btn-border-radius: 1.5rem;
+$btn-border-radius-sm: 1.25rem;
+$btn-border-radius-lg: 2rem;
 
 // Import Bootstrap
 @import "bootstrap/scss/bootstrap";
+
+// Paper Cut Out Theme Styles
+// -------------------------
+
+// Global styles
+body {
+  background-color: $light-bg;
+  overflow-x: hidden;
+  position: relative;
+}
+
+// Paper layer styles
+.paper-layer {
+  position: relative;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 1;
+}
+
+.paper-layer-top {
+  position: relative;
+  z-index: 3;
+  border-radius: 0 0 30px 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.paper-layer-bottom {
+  position: relative;
+  z-index: 1;
+  border-radius: 30px 30px 0 0;
+  box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.1);
+}
+
+// Wavy dividers
+.wavy-divider {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  z-index: 2;
+}
+
+.wavy-divider-top {
+  top: -1px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39 56.44c58-10.79 114.16-30.13 172-41.86 82.39-16.72 168.19-17.73 250.45-.39C823.78 31 906.67 72 985.66 92.83c70.05 18.48 146.53 26.09 214.34 3V0H0v27.35a600.21 600.21 0 00321.39 29.09z' fill='%23ffffff'/%3E%3C/svg%3E");
+}
+
+.wavy-divider-bottom {
+  bottom: -1px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39 56.44c58-10.79 114.16-30.13 172-41.86 82.39-16.72 168.19-17.73 250.45-.39C823.78 31 906.67 72 985.66 92.83c70.05 18.48 146.53 26.09 214.34 3V120H0V27.35a600.21 600.21 0 00321.39 29.09z' fill='%23ffffff'/%3E%3C/svg%3E");
+  transform: rotate(180deg);
+}
+
+// Clouds
+.cloud {
+  position: absolute;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+.cloud-1 {
+  width: 100px;
+  height: 60px;
+  top: 10%;
+  left: 10%;
+}
+
+.cloud-2 {
+  width: 150px;
+  height: 80px;
+  top: 5%;
+  right: 15%;
+}
+
+.cloud-3 {
+  width: 120px;
+  height: 70px;
+  top: 15%;
+  left: 40%;
+}
+
+// Stars
+.star {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: $soft-yellow;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  z-index: 2;
+}
+
+.star-1 { top: 15%; left: 20%; }
+.star-2 { top: 25%; right: 25%; }
+.star-3 { top: 10%; left: 50%; }
+.star-4 { top: 20%; right: 10%; }
+.star-5 { top: 30%; left: 30%; }
+
+// Moon
+.moon {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: $soft-yellow;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+  top: 15%;
+  right: 20%;
+  z-index: 2;
+}
 
 // Custom utility classes
 .bg-light-bg {
@@ -53,32 +170,131 @@ $btn-border-radius-lg: 0.75rem;
   background-color: $card-bg !important;
 }
 
-.bg-primary-red {
-  background-color: $primary-red !important;
+.bg-primary-purple {
+  background-color: $primary-purple !important;
 }
 
-.bg-accent-red {
-  background-color: $accent-red !important;
+.bg-accent-purple {
+  background-color: $accent-purple !important;
 }
 
-.bg-deep-red {
-  background-color: $deep-red !important;
+.bg-deep-purple {
+  background-color: $deep-purple !important;
 }
 
-.text-primary-red {
-  color: $primary-red !important;
+.bg-soft-pink {
+  background-color: $soft-pink !important;
 }
 
-.text-accent-red {
-  color: $accent-red !important;
+.bg-soft-blue {
+  background-color: $soft-blue !important;
 }
 
-.text-deep-red {
-  color: $deep-red !important;
+.bg-soft-yellow {
+  background-color: $soft-yellow !important;
+}
+
+.text-primary-purple {
+  color: $primary-purple !important;
+}
+
+.text-accent-purple {
+  color: $accent-purple !important;
+}
+
+.text-deep-purple {
+  color: $deep-purple !important;
 }
 
 .border-card-bg {
-  border-color: rgba($accent-red, 0.125) !important;
+  border-color: rgba($accent-purple, 0.125) !important;
+}
+
+// Paper cut out card styles
+.card {
+  border-radius: 1.5rem;
+  border: none;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.4s ease;
+  background: linear-gradient(145deg, #ffffff, #f5f7ff);
+  
+  &.card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+  }
+  
+  .card-body {
+    border-radius: 1.5rem;
+  }
+}
+
+// Paper cut out button styles
+.btn {
+  border-radius: 1.5rem;
+  padding: 0.5rem 1.5rem;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+.btn-custom-primary {
+  background: linear-gradient(135deg, $primary-purple, $accent-purple);
+  border: none;
+  color: white;
+  
+  &:hover {
+    background: linear-gradient(135deg, lighten($primary-purple, 5%), lighten($accent-purple, 5%));
+    color: white;
+  }
+}
+
+.btn-custom-secondary {
+  background: white;
+  border: 2px solid $primary-purple;
+  color: $primary-purple;
+  
+  &:hover {
+    background: rgba($primary-purple, 0.05);
+    border-color: $accent-purple;
+    color: $accent-purple;
+  }
+}
+
+// Form controls
+.form-control, .form-select {
+  border-radius: 1rem;
+  border: 2px solid rgba($primary-purple, 0.2);
+  padding: 0.75rem 1rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  
+  &:focus {
+    border-color: $primary-purple;
+    box-shadow: 0 0 0 0.25rem rgba($primary-purple, 0.25);
+  }
+}
+
+// Gradient backgrounds
+.bg-gradient-primary {
+  background: linear-gradient(135deg, $primary-purple, $accent-purple) !important;
+}
+
+.bg-gradient-secondary {
+  background: linear-gradient(135deg, $soft-pink, $accent-purple) !important;
+}
+
+.bg-gradient-light {
+  background: linear-gradient(135deg, #ffffff, $light-bg) !important;
 }
 
 // Dark theme styles
@@ -95,9 +311,10 @@ $btn-border-radius-lg: 0.75rem;
   }
 
   .card {
-    background-color: $dark-card-bg !important;
+    background: linear-gradient(145deg, lighten($dark-card-bg, 5%), $dark-card-bg) !important;
     border-color: $dark-border !important;
     color: $dark-text !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   }
 
   .navbar {
@@ -112,7 +329,7 @@ $btn-border-radius-lg: 0.75rem;
       color: $dark-text-muted !important;
 
       &:hover {
-        color: $primary-red !important;
+        color: $primary-purple !important;
       }
     }
   }
@@ -121,7 +338,7 @@ $btn-border-radius-lg: 0.75rem;
     color: $dark-text-muted !important;
   }
 
-  .text-deep-red {
+  .text-deep-purple {
     color: $dark-text !important;
   }
 
@@ -137,43 +354,47 @@ $btn-border-radius-lg: 0.75rem;
     background: linear-gradient(135deg, $dark-bg, $dark-card-bg) !important;
   }
 
-  .badge {
-    &.bg-primary-red {
-      background-color: $primary-red !important;
-    }
+  .wavy-divider-top {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39 56.44c58-10.79 114.16-30.13 172-41.86 82.39-16.72 168.19-17.73 250.45-.39C823.78 31 906.67 72 985.66 92.83c70.05 18.48 146.53 26.09 214.34 3V0H0v27.35a600.21 600.21 0 00321.39 29.09z' fill='%23312e81'/%3E%3C/svg%3E");
+  }
 
-    &.bg-success {
-      background-color: $success !important;
-    }
+  .wavy-divider-bottom {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39 56.44c58-10.79 114.16-30.13 172-41.86 82.39-16.72 168.19-17.73 250.45-.39C823.78 31 906.67 72 985.66 92.83c70.05 18.48 146.53 26.09 214.34 3V120H0V27.35a600.21 600.21 0 00321.39 29.09z' fill='%23312e81'/%3E%3C/svg%3E");
+  }
 
-    &.bg-warning {
-      background-color: $warning !important;
-    }
+  .cloud {
+    background: $dark-card-bg;
+  }
 
-    &.bg-info {
-      background-color: $info !important;
+  .moon {
+    background: #fbbf24;
+  }
+
+  .star {
+    background: #fbbf24;
+  }
+
+  .form-control, .form-select {
+    background-color: rgba($dark-card-bg, 0.8);
+    border-color: $dark-border;
+    color: $dark-text;
+    
+    &:focus {
+      background-color: rgba($dark-card-bg, 0.9);
+      border-color: $primary-purple;
+      color: $dark-text;
     }
   }
 
   .btn-custom-secondary {
-    background-color: transparent !important;
-    border-color: $primary-red !important;
-    color: $primary-red !important;
+    background-color: transparent;
+    border-color: $primary-purple;
+    color: $primary-purple;
 
     &:hover {
-      background-color: rgba($primary-red, 0.1) !important;
-      border-color: $primary-red !important;
-      color: $primary-red !important;
-    }
-  }
-
-  .btn-custom-white {
-    border-color: white !important;
-    color: white !important;
-
-    &:hover {
-      color: white !important;
-      border-color: white !important;
+      background-color: rgba($primary-purple, 0.1);
+      border-color: $primary-purple;
+      color: $primary-purple;
     }
   }
 }
@@ -182,12 +403,6 @@ $btn-border-radius-lg: 0.75rem;
 .light-theme {
   background-color: $light-bg !important;
   color: $dark !important;
-
-  .subject-wise-icon {
-    svg {
-      color: $primary-red !important;
-    }
-  }
 }
 
 // Custom gradient utilities for subject cards
@@ -196,15 +411,15 @@ $btn-border-radius-lg: 0.75rem;
 }
 
 .from-blue-500 {
-  --bs-gradient-from: #3b82f6;
+  --bs-gradient-from: $soft-blue;
 }
 
 .to-purple-600 {
-  --bs-gradient-to: #9333ea;
+  --bs-gradient-to: $primary-purple;
 }
 
 .from-green-500 {
-  --bs-gradient-from: #22c55e;
+  --bs-gradient-from: $success;
 }
 
 .to-teal-600 {
@@ -228,7 +443,7 @@ $btn-border-radius-lg: 0.75rem;
 }
 
 .from-purple-500 {
-  --bs-gradient-from: #a855f7;
+  --bs-gradient-from: $primary-purple;
 }
 
 .to-indigo-600 {
@@ -236,7 +451,7 @@ $btn-border-radius-lg: 0.75rem;
 }
 
 .from-pink-500 {
-  --bs-gradient-from: #ec4899;
+  --bs-gradient-from: $soft-pink;
 }
 
 .to-rose-600 {
@@ -244,7 +459,7 @@ $btn-border-radius-lg: 0.75rem;
 }
 
 .from-amber-500 {
-  --bs-gradient-from: #f59e0b;
+  --bs-gradient-from: $soft-yellow;
 }
 
 .to-orange-600 {
@@ -256,16 +471,16 @@ $btn-border-radius-lg: 0.75rem;
 }
 
 .to-purple-600 {
-  --bs-gradient-to: #9333ea;
+  --bs-gradient-to: $accent-purple;
 }
 
 // Custom component styles
 .card-hover {
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12) !important;
   }
 }
 
@@ -296,60 +511,13 @@ $btn-border-radius-lg: 0.75rem;
   }
 }
 
-.btn-custom-primary {
-  background-color: $primary-red;
-  border-color: $primary-red;
-  color: white;
-
-  &:hover {
-    background-color: $accent-red;
-    border-color: $accent-red;
-    color: white;
-  }
-}
-
-.btn-custom-secondary {
-  background-color: transparent;
-  border-color: $accent-red;
-  color: $deep-red;
-
-  &:hover {
-    background-color: $light-bg;
-    border-color: $accent-red;
-    color: $deep-red;
-  }
-}
-
-.btn-custom-white {
-  background-color: white;
-  border-color: white;
-  color: $primary-red;
-
-  &:hover {
-    color: $primary-red !important;
-  }
-}
-
-// Gradient backgrounds
-.bg-gradient-primary {
-  background: linear-gradient(135deg, $primary-red, $accent-red) !important;
-}
-
-.bg-gradient-secondary {
-  background: linear-gradient(135deg, $accent-red, $deep-red) !important;
-}
-
-.bg-gradient-light {
-  background: linear-gradient(135deg, $light-bg, $card-bg) !important;
-}
-
 // Shadow utilities
 .shadow-custom {
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
 }
 
 .shadow-custom-lg {
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12) !important;
 }
 
 // Responsive utilities
@@ -386,20 +554,63 @@ $btn-border-radius-lg: 0.75rem;
   }
 }
 
-// Enhanced subject card styles
-.subject-card-gradient {
-  position: relative;
-  overflow: hidden;
+// Floating animation
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
 
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.float-slow {
+  animation: float 8s ease-in-out infinite;
+}
+
+.float-fast {
+  animation: float 4s ease-in-out infinite;
+}
+
+// Paper cut out specific styles
+.paper-cutout {
+  position: relative;
+  border-radius: 1.5rem;
+  background: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-    pointer-events: none;
+    height: 10px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.05), transparent);
+  }
+}
+
+// Hanging elements
+.hanging-element {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    width: 2px;
+    height: 20px;
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: translateX(-50%);
   }
 }
 
@@ -407,34 +618,12 @@ $btn-border-radius-lg: 0.75rem;
 .badge {
   font-weight: 500;
   letter-spacing: 0.025em;
-}
-
-// Enhanced card hover effects
-.card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-  &.card-hover:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
-  }
-}
-
-// Improved button styles
-.btn {
-  font-weight: 500;
-  letter-spacing: 0.025em;
-  transition: all 0.2s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
+  border-radius: 1rem;
+  padding: 0.35em 0.8em;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 // Theme transition
 * {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }

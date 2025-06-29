@@ -107,16 +107,16 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
             initial={{ x: -300 }}
             animate={{ x: 0 }}
             exit={{ x: -300 }}
-            className="position-fixed position-lg-static top-0 start-0 bottom-0 bg-white border-end shadow-lg d-flex flex-column"
-            style={{ width: '256px', zIndex: 1050 }}
+            className="position-fixed position-lg-static top-0 start-0 bottom-0 bg-white border-end shadow-lg d-flex flex-column paper-layer"
+            style={{ width: '256px', zIndex: 1050, borderRadius: '0 1.5rem 1.5rem 0' }}
           >
             <div className="p-4 border-bottom d-flex align-items-center justify-content-between justify-content-lg-center">
               <div className="d-flex align-items-center gap-2">
-                <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
-                     style={{ width: '32px', height: '32px' }}>
+                <div className="bg-primary-purple rounded-3 d-flex align-items-center justify-content-center"
+                     style={{ width: '32px', height: '32px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' }}>
                   <span className="text-white fw-bold small">CV</span>
                 </div>
-                <span className="fw-bold h4 text-deep-red mb-0">CoreVerse</span>
+                <span className="fw-bold h4 text-deep-purple mb-0">CoreVerse</span>
               </div>
               <button
                 onClick={onClose}
@@ -131,7 +131,7 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
                 {menuItems.map((item) => (
                   <motion.button
                     key={item.id}
-                    whileHover={{ scale: 1.02 }}
+                    whileHover={{ scale: 1.02, x: 5 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => {
                       onViewChange(item.id);
@@ -139,9 +139,13 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
                     }}
                     className={`btn text-start d-flex align-items-center gap-3 px-3 py-2 rounded-3 ${
                       activeView === item.id
-                        ? 'bg-light-bg text-primary-red border border-card-bg'
+                        ? 'bg-light-bg text-primary-purple border border-card-bg'
                         : 'btn-link text-dark'
                     }`}
+                    style={{ 
+                      boxShadow: activeView === item.id ? '0 4px 10px rgba(0, 0, 0, 0.05)' : 'none',
+                      transition: 'all 0.3s ease'
+                    }}
                   >
                     <item.icon size={20} />
                     <span className="fw-medium">{item.label}</span>
@@ -150,12 +154,12 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
               </div>
 
               <div className="mt-4 pt-4 border-top">
-                <h6 className="fw-semibold text-deep-red mb-3 px-3">Simulations</h6>
+                <h6 className="fw-semibold text-deep-purple mb-3 px-3">Simulations</h6>
                 <div className="d-flex flex-column gap-1">
                   {simulationItems.map((item) => (
                     <motion.button
                       key={item.id}
-                      whileHover={{ scale: 1.02 }}
+                      whileHover={{ scale: 1.02, x: 5 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => {
                         onViewChange(item.id);
@@ -163,9 +167,13 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
                       }}
                       className={`btn text-start d-flex align-items-center gap-3 px-3 py-2 rounded-3 ${
                         activeView === item.id
-                          ? 'bg-light-bg text-primary-red border border-card-bg'
+                          ? 'bg-light-bg text-primary-purple border border-card-bg'
                           : 'btn-link text-dark'
                       }`}
+                      style={{ 
+                        boxShadow: activeView === item.id ? '0 4px 10px rgba(0, 0, 0, 0.05)' : 'none',
+                        transition: 'all 0.3s ease'
+                      }}
                     >
                       <item.icon size={20} />
                       <span className="fw-medium">{item.label}</span>
@@ -175,12 +183,12 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
               </div>
 
               <div className="mt-4 pt-4 border-top">
-                <h6 className="fw-semibold text-deep-red mb-3 px-3">Study Tools</h6>
+                <h6 className="fw-semibold text-deep-purple mb-3 px-3">Study Tools</h6>
                 <div className="d-flex flex-column gap-1">
                   {studyToolsItems.map((item) => (
                     <motion.button
                       key={item.id}
-                      whileHover={{ scale: 1.02 }}
+                      whileHover={{ scale: 1.02, x: 5 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => {
                         onViewChange(item.id);
@@ -188,9 +196,13 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
                       }}
                       className={`btn text-start d-flex align-items-center gap-3 px-3 py-2 rounded-3 ${
                         activeView === item.id
-                          ? 'bg-light-bg text-primary-red border border-card-bg'
+                          ? 'bg-light-bg text-primary-purple border border-card-bg'
                           : 'btn-link text-dark'
                       }`}
+                      style={{ 
+                        boxShadow: activeView === item.id ? '0 4px 10px rgba(0, 0, 0, 0.05)' : 'none',
+                        transition: 'all 0.3s ease'
+                      }}
                     >
                       <item.icon size={20} />
                       <span className="fw-medium">{item.label}</span>
@@ -204,7 +216,7 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
                   {commonItems.map((item) => (
                     <motion.button
                       key={item.id}
-                      whileHover={{ scale: 1.02 }}
+                      whileHover={{ scale: 1.02, x: 5 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => {
                         onViewChange(item.id);
@@ -212,9 +224,13 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
                       }}
                       className={`btn text-start d-flex align-items-center gap-3 px-3 py-2 rounded-3 ${
                         activeView === item.id
-                          ? 'bg-light-bg text-primary-red border border-card-bg'
+                          ? 'bg-light-bg text-primary-purple border border-card-bg'
                           : 'btn-link text-dark'
                       }`}
+                      style={{ 
+                        boxShadow: activeView === item.id ? '0 4px 10px rgba(0, 0, 0, 0.05)' : 'none',
+                        transition: 'all 0.3s ease'
+                      }}
                     >
                       <item.icon size={20} />
                       <span className="fw-medium">{item.label}</span>

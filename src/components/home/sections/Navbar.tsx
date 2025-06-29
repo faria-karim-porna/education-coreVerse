@@ -17,7 +17,7 @@ export function Navbar({ onNavigate }: NavbarProps) {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom fixed-top">
+    <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom fixed-top paper-layer-top">
       <div className="container-lg">
         <motion.button
           initial={{ opacity: 0, x: -20 }}
@@ -25,11 +25,11 @@ export function Navbar({ onNavigate }: NavbarProps) {
           className="navbar-brand d-flex align-items-center gap-2 btn btn-link text-decoration-none"
           onClick={() => onNavigate('home')}
         >
-          <div className="bg-primary-red rounded-4 d-flex align-items-center justify-content-center"
-               style={{ width: '40px', height: '40px' }}>
+          <div className="bg-primary-purple rounded-4 d-flex align-items-center justify-content-center"
+               style={{ width: '40px', height: '40px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' }}>
             <BookOpen className="text-white" size={24} />
           </div>
-          <span className="fw-bold h3 text-deep-red mb-0">CoreVerse</span>
+          <span className="fw-bold h3 text-deep-purple mb-0">CoreVerse</span>
         </motion.button>
         
         {/* Mobile menu toggle button */}
@@ -49,7 +49,7 @@ export function Navbar({ onNavigate }: NavbarProps) {
                 onNavigate('features');
                 setIsMenuOpen(false);
               }}
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
+              className="nav-link btn btn-link text-deep-purple text-decoration-none"
             >
               Features
             </button>
@@ -58,7 +58,7 @@ export function Navbar({ onNavigate }: NavbarProps) {
                 onNavigate('about');
                 setIsMenuOpen(false);
               }}
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
+              className="nav-link btn btn-link text-deep-purple text-decoration-none"
             >
               About
             </button>
@@ -67,7 +67,7 @@ export function Navbar({ onNavigate }: NavbarProps) {
                 onNavigate('contact');
                 setIsMenuOpen(false);
               }}
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
+              className="nav-link btn btn-link text-deep-purple text-decoration-none"
             >
               Contact
             </button>

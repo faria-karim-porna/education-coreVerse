@@ -57,12 +57,16 @@ export function Button({
 
   return (
     <motion.button
-      whileHover={{ scale: disabled ? 1 : 1.02 }}
-      whileTap={{ scale: disabled ? 1 : 0.98 }}
+      whileHover={{ scale: disabled ? 1 : 1.05, y: disabled ? 0 : -3 }}
+      whileTap={{ scale: disabled ? 1 : 0.98, y: disabled ? 0 : -1 }}
       onClick={onClick}
       disabled={disabled}
       type={type}
       className={`btn ${getVariantClass()} ${getSizeClass()} d-inline-flex align-items-center gap-2 fw-medium ${className}`}
+      style={{ 
+        borderRadius: '1.5rem',
+        boxShadow: disabled ? 'none' : '0 4px 10px rgba(0, 0, 0, 0.05)'
+      }}
     >
       {Icon && <Icon size={16} />}
       <span>{children}</span>

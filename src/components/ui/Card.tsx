@@ -13,11 +13,15 @@ export function Card({ children, className = '', hover = false, onClick }: CardP
   
   return (
     <Component
-      whileHover={hover ? { scale: 1.02, y: -2 } : undefined}
+      whileHover={hover ? { scale: 1.02, y: -5 } : undefined}
       whileTap={onClick ? { scale: 0.98 } : undefined}
       onClick={onClick}
-      className={`card border-0 shadow-sm ${hover ? 'card-hover' : ''} ${className}`}
-      style={{ cursor: onClick ? 'pointer' : 'default' }}
+      className={`card paper-cutout border-0 ${hover ? 'card-hover' : ''} ${className}`}
+      style={{ 
+        cursor: onClick ? 'pointer' : 'default',
+        borderRadius: '1.5rem',
+        boxShadow: '0 10px 25px rgba(0, 0, 0, 0.08)'
+      }}
     >
       {children}
     </Component>

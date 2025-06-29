@@ -7,16 +7,19 @@ interface FooterProps {
 
 export function Footer({ onNavigate }: FooterProps) {
   return (
-    <footer className="bg-deep-red text-white py-5">
-      <div className="container-lg">
+    <footer className="bg-deep-purple text-white py-5 position-relative">
+      {/* Wavy divider at the top */}
+      <div className="wavy-divider wavy-divider-top"></div>
+      
+      <div className="container-lg position-relative" style={{ zIndex: 5 }}>
         <div className="row g-4">
           <div className="col-lg-3">
             <button 
               onClick={() => onNavigate('home')}
               className="d-flex align-items-center gap-2 mb-4 btn btn-link text-white text-decoration-none p-0"
             >
-              <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
-                   style={{ width: '32px', height: '32px' }}>
+              <div className="bg-primary-purple rounded-3 d-flex align-items-center justify-content-center"
+                   style={{ width: '32px', height: '32px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)' }}>
                 <BookOpen className="text-white" size={20} />
               </div>
               <span className="fw-bold h5 mb-0">CoreVerse</span>
@@ -109,6 +112,11 @@ export function Footer({ onNavigate }: FooterProps) {
           <p className="text-white-50 mb-0">&copy; 2024 CoreVerse. All rights reserved.</p>
         </div>
       </div>
+      
+      {/* Paper cut out decorative elements */}
+      <div className="star star-1 float-slow" style={{ top: '70%', left: '10%' }}></div>
+      <div className="star star-2 float" style={{ top: '80%', right: '15%' }}></div>
+      <div className="star star-3 float-fast" style={{ top: '60%', left: '50%' }}></div>
     </footer>
   );
 }

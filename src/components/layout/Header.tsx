@@ -17,7 +17,7 @@ export function Header({ onMenuToggle, isSidebarOpen, onNavigate }: HeaderProps)
     <motion.header
       initial={{ y: -50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="bg-white border-bottom shadow-sm"
+      className="bg-white border-bottom shadow-sm paper-layer-top"
     >
       <div className="container-fluid px-4 py-3">
         <div className="d-flex align-items-center justify-content-between">
@@ -34,11 +34,11 @@ export function Header({ onMenuToggle, isSidebarOpen, onNavigate }: HeaderProps)
               className="d-none d-sm-flex align-items-center gap-2 btn btn-link text-decoration-none"
               onClick={() => onNavigate('home')}
             >
-              <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
-                   style={{ width: '32px', height: '32px' }}>
+              <div className="bg-primary-purple rounded-3 d-flex align-items-center justify-content-center"
+                   style={{ width: '32px', height: '32px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' }}>
                 <span className="text-white fw-bold small">CV</span>
               </div>
-              <span className="fw-bold h4 text-deep-red mb-0">CoreVerse</span>
+              <span className="fw-bold h4 text-deep-purple mb-0">CoreVerse</span>
             </motion.button>
           </div>
 
@@ -80,17 +80,19 @@ export function Header({ onMenuToggle, isSidebarOpen, onNavigate }: HeaderProps)
 
             <div className="d-flex align-items-center gap-3 ps-3 border-start">
               <div className="d-none d-sm-block text-end">
-                <p className="small fw-medium text-deep-red mb-0">{user?.name}</p>
+                <p className="small fw-medium text-deep-purple mb-0">{user?.name}</p>
                 <p className="text-muted" style={{ fontSize: '0.75rem' }}>
                   {user?.role?.charAt(0).toUpperCase() + user?.role?.slice(1)}
                 </p>
               </div>
-              <img
-                src={user?.avatar || 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2'}
-                alt={user?.name}
-                className="rounded-circle object-fit-cover"
-                style={{ width: '32px', height: '32px' }}
-              />
+              <div className="paper-cutout" style={{ borderRadius: '50%', overflow: 'hidden', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' }}>
+                <img
+                  src={user?.avatar || 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2'}
+                  alt={user?.name}
+                  className="rounded-circle object-fit-cover"
+                  style={{ width: '32px', height: '32px' }}
+                />
+              </div>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

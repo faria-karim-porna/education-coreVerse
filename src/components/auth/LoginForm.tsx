@@ -33,14 +33,19 @@ export function LoginForm({ onNavigate }: LoginFormProps) {
   };
 
   return (
-    <div className="min-vh-100 bg-gradient-light d-flex align-items-center justify-content-center p-4">
+    <div className="min-vh-100 bg-gradient-light d-flex align-items-center justify-content-center p-4 position-relative">
+      {/* Paper cut out decorative elements */}
+      <div className="cloud cloud-1 float-slow"></div>
+      <div className="cloud cloud-2 float"></div>
+      <div className="cloud cloud-3 float-fast"></div>
+      
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="w-100"
-        style={{ maxWidth: '400px' }}
+        className="w-100 position-relative"
+        style={{ maxWidth: '400px', zIndex: 5 }}
       >
-        <div className="card shadow-lg border-0 rounded-4">
+        <div className="card paper-cutout shadow-custom-lg border-0 rounded-4">
           <div className="card-body p-5">
             <div className="d-flex align-items-center justify-content-between mb-4">
               <button
@@ -55,12 +60,12 @@ export function LoginForm({ onNavigate }: LoginFormProps) {
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="d-inline-flex align-items-center justify-content-center bg-primary-red rounded-4 mb-3"
-                  style={{ width: '64px', height: '64px' }}
+                  className="d-inline-flex align-items-center justify-content-center bg-primary-purple rounded-4 mb-3 hanging-element"
+                  style={{ width: '64px', height: '64px', boxShadow: '0 8px 20px rgba(0, 0, 0, 0.1)' }}
                 >
                   <BookOpen className="text-white" size={32} />
                 </motion.div>
-                <h1 className="h2 fw-bold text-deep-red">CoreVerse</h1>
+                <h1 className="h2 fw-bold text-deep-purple mb-0">CoreVerse</h1>
                 <p className="text-muted mt-2">Sign in to your educational platform</p>
               </div>
               <div style={{ width: '44px' }}></div>
@@ -68,7 +73,7 @@ export function LoginForm({ onNavigate }: LoginFormProps) {
 
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <label htmlFor="email" className="form-label fw-medium text-deep-red">
+                <label htmlFor="email" className="form-label fw-medium text-deep-purple">
                   Email Address
                 </label>
                 <div className="position-relative">
@@ -88,7 +93,7 @@ export function LoginForm({ onNavigate }: LoginFormProps) {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="password" className="form-label fw-medium text-deep-red">
+                <label htmlFor="password" className="form-label fw-medium text-deep-purple">
                   Password
                 </label>
                 <div className="position-relative">
