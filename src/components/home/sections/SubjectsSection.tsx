@@ -5,9 +5,9 @@ import {
   Atom, 
   Microscope, 
   Calculator, 
-  Code, 
+  Globe, 
   Languages, 
-  History, 
+  MapPin, 
   Palette,
   CheckCircle,
   Star
@@ -62,14 +62,14 @@ export function SubjectsSection({ onNavigate }: SubjectsSectionProps) {
       image: 'https://images.pexels.com/photos/6238297/pexels-photo-6238297.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     },
     {
-      icon: Code,
-      title: 'Computer Science',
-      description: 'Learn programming and computational thinking step by step',
-      features: ['Code Editor', 'Algorithm Visualizer', 'Project Builder', 'Debug Tools'],
+      icon: Globe,
+      title: 'Geography',
+      description: 'Explore countries, landforms, and global phenomena through interactive maps',
+      features: ['Interactive Maps', 'Climate Studies', 'Population Data', 'Cultural Geography'],
       color: 'from-purple-500 to-indigo-600',
       bgPattern: 'cs-pattern',
       students: '22.1K',
-      image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
+      image: 'https://images.pexels.com/photos/1098460/pexels-photo-1098460.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     },
     {
       icon: Languages,
@@ -82,10 +82,10 @@ export function SubjectsSection({ onNavigate }: SubjectsSectionProps) {
       image: 'https://images.pexels.com/photos/267669/pexels-photo-267669.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2'
     },
     {
-      icon: History,
-      title: 'History',
-      description: 'Explore civilizations and historical events through immersive experiences',
-      features: ['Timeline Explorer', 'Map Interactions', 'Document Analysis', 'Virtual Tours'],
+      icon: MapPin,
+      title: 'General Knowledge',
+      description: 'Expand your understanding of diverse topics from history to current events',
+      features: ['Current Affairs', 'Historical Events', 'Cultural Studies', 'Critical Thinking'],
       color: 'from-amber-500 to-orange-600',
       bgPattern: 'history-pattern',
       students: '6.4K',
