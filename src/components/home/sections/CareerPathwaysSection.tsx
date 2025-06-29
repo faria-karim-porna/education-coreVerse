@@ -57,7 +57,7 @@ export function CareerPathwaysSection({ onNavigate }: CareerPathwaysSectionProps
             Career Pathways
           </div>
           <h2 className="display-4 fw-bold text-deep-red mb-4">
-            Launch Your Dream Career
+            What You Can Be
           </h2>
           <p className="lead text-muted mx-auto" style={{ maxWidth: '600px' }}>
             Explore high-demand career paths and understand the skills needed 
