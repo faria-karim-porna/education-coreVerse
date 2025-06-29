@@ -5,7 +5,6 @@ import { StatsSection } from './sections/StatsSection';
 import { TiltCardSection } from './sections/TiltCardSection';
 import { GlobalImpactSection } from './sections/GlobalImpactSection';
 import { SubjectsSection } from './sections/SubjectsSection';
-import { CareerPathwaysSection } from './sections/CareerPathwaysSection';
 import { HowItWorksSection } from './sections/HowItWorksSection';
 import { UpcomingEventsSection } from './sections/UpcomingEventsSection';
 import { SuccessStoriesSection } from './sections/SuccessStoriesSection';
@@ -29,7 +28,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
       <TiltCardSection />
       <GlobalImpactSection />
       <SubjectsSection onNavigate={onNavigate} />
-      <CareerPathwaysSection onNavigate={onNavigate} />
       <HowItWorksSection />
       <UpcomingEventsSection />
       <SuccessStoriesSection />
