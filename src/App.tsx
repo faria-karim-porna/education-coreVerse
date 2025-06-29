@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { LoginForm } from './components/auth/LoginForm';
@@ -40,69 +41,92 @@ import { ProgressTracker } from './components/progress/ProgressTracker';
 
 function MainApp() {
   const { user } = useAuth();
-  const [activeView, setActiveView] = useState('home');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  const handleNavigate = (path: string) => {
+    navigate(`/${path}`);
+  };
+
+  // Public pages that don't need authentication
+  const publicPages = [
+    'home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 
+    'help-center', 'documentation', 'community', 'progress-tracking', 
+    'periodic-table', 'physics-formulas', 'biology-names', 'country-flags', 
+    'interactive-globe', 'scientific-calculator', 'unit-converter', 
+    'discussion-forum', 'live-classroom', 'drawing-tool', 'question-maker', 
+    'flashcard', 'wordbook', 'student-progress', 'chemistry-simulation', 
+    'physics-simulation', 'biology-simulation', '404'
+  ];
+
+  // Get current view from path
+  const getViewFromPath = () => {
+    const path = location.pathname.substring(1);
+    return path || 'home';
+  };
+
+  const currentView = getViewFromPath();
+
+  // Render content based on current view
   const renderContent = () => {
-    switch (activeView) {
+    switch (currentView) {
       case 'home':
-        return <HomePage onNavigate={setActiveView} />;
+        return <HomePage onNavigate={handleNavigate} />;
       case 'about':
-        return <AboutPage onNavigate={setActiveView} />;
+        return <AboutPage onNavigate={handleNavigate} />;
       case 'features':
-        return <FeaturesPage onNavigate={setActiveView} />;
+        return <FeaturesPage onNavigate={handleNavigate} />;
       case 'contact':
-        return <ContactPage onNavigate={setActiveView} />;
+        return <ContactPage onNavigate={handleNavigate} />;
       case 'careers':
-        return <CareersPage onNavigate={setActiveView} />;
+        return <CareersPage onNavigate={handleNavigate} />;
       case 'privacy':
-        return <PrivacyPage onNavigate={setActiveView} />;
+        return <PrivacyPage onNavigate={handleNavigate} />;
       case 'terms':
-        return <TermsPage onNavigate={setActiveView} />;
+        return <TermsPage onNavigate={handleNavigate} />;
       case 'help-center':
-        return <HelpCenterPage onNavigate={setActiveView} />;
+        return <HelpCenterPage onNavigate={handleNavigate} />;
       case 'documentation':
-        return <DocumentationPage onNavigate={setActiveView} />;
+        return <DocumentationPage onNavigate={handleNavigate} />;
       case 'community':
-        return <CommunityPage onNavigate={setActiveView} />;
+        return <CommunityPage onNavigate={handleNavigate} />;
       case 'progress-tracking':
-        return <ProgressTrackingPage onNavigate={setActiveView} />;
+        return <ProgressTrackingPage onNavigate={handleNavigate} />;
       case 'periodic-table':
-        return <PeriodicTablePage onNavigate={setActiveView} />;
+        return <PeriodicTablePage onNavigate={handleNavigate} />;
       case 'physics-formulas':
-        return <PhysicsFormulasPage onNavigate={setActiveView} />;
+        return <PhysicsFormulasPage onNavigate={handleNavigate} />;
       case 'biology-names':
-        return <BiologyNamesPage onNavigate={setActiveView} />;
+        return <BiologyNamesPage onNavigate={handleNavigate} />;
       case 'country-flags':
-        return <CountryFlagsPage onNavigate={setActiveView} />;
+        return <CountryFlagsPage onNavigate={handleNavigate} />;
       case 'interactive-globe':
-        return <InteractiveGlobePage onNavigate={setActiveView} />;
+        return <InteractiveGlobePage onNavigate={handleNavigate} />;
       case 'scientific-calculator':
-        return <ScientificCalculatorPage onNavigate={setActiveView} />;
+        return <ScientificCalculatorPage onNavigate={handleNavigate} />;
       case 'unit-converter':
-        return <UnitConverterPage onNavigate={setActiveView} />;
+        return <UnitConverterPage onNavigate={handleNavigate} />;
       case 'discussion-forum':
-        return <DiscussionForumPage onNavigate={setActiveView} />;
+        return <DiscussionForumPage onNavigate={handleNavigate} />;
       case 'live-classroom':
-        return <LiveClassroomPage onNavigate={setActiveView} />;
+        return <LiveClassroomPage onNavigate={handleNavigate} />;
       case 'drawing-tool':
-        return <DrawingToolPage onNavigate={setActiveView} />;
+        return <DrawingToolPage onNavigate={handleNavigate} />;
       case 'question-maker':
-        return <QuestionMakerPage onNavigate={setActiveView} />;
+        return <QuestionMakerPage onNavigate={handleNavigate} />;
       case 'flashcard':
-        return <FlashcardPage onNavigate={setActiveView} />;
+        return <FlashcardPage onNavigate={handleNavigate} />;
       case 'wordbook':
-        return <WordbookPage onNavigate={setActiveView} />;
+        return <WordbookPage onNavigate={handleNavigate} />;
       case 'student-progress':
-        return <StudentProgressPage onNavigate={setActiveView} />;
+        return <StudentProgressPage onNavigate={handleNavigate} />;
       case 'chemistry-simulation':
-        return <ChemistrySimulationPage onNavigate={setActiveView} />;
+        return <ChemistrySimulationPage onNavigate={handleNavigate} />;
       case 'physics-simulation':
-        return <PhysicsSimulationPage onNavigate={setActiveView} />;
+        return <PhysicsSimulationPage onNavigate={handleNavigate} />;
       case 'biology-simulation':
-        return <BiologySimulationPage onNavigate={setActiveView} />;
-      case '404':
-        return <NotFoundPage onNavigate={setActiveView} />;
+        return <BiologySimulationPage onNavigate={handleNavigate} />;
       case 'dashboard':
         return user?.role === 'teacher' ? <TeacherDashboard /> : <StudentDashboard />;
       case 'labs':
@@ -115,7 +139,7 @@ function MainApp() {
             <h1 className="display-5 fw-bold text-deep-red mb-4">My Classes</h1>
             <div className="row g-4">
               <div className="col-md-6 col-lg-4">
-                <div className="card h-100 card-hover" onClick={() => setActiveView('live-classroom')}>
+                <div className="card h-100 card-hover" onClick={() => handleNavigate('live-classroom')}>
                   <div className="card-body p-4 text-center">
                     <div className="bg-primary-red bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
                          style={{ width: '64px', height: '64px' }}>
@@ -127,7 +151,7 @@ function MainApp() {
                 </div>
               </div>
               <div className="col-md-6 col-lg-4">
-                <div className="card h-100 card-hover" onClick={() => setActiveView('drawing-tool')}>
+                <div className="card h-100 card-hover" onClick={() => handleNavigate('drawing-tool')}>
                   <div className="card-body p-4 text-center">
                     <div className="bg-accent-red bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
                          style={{ width: '64px', height: '64px' }}>
@@ -139,7 +163,7 @@ function MainApp() {
                 </div>
               </div>
               <div className="col-md-6 col-lg-4">
-                <div className="card h-100 card-hover" onClick={() => setActiveView('question-maker')}>
+                <div className="card h-100 card-hover" onClick={() => handleNavigate('question-maker')}>
                   <div className="card-body p-4 text-center">
                     <div className="bg-success bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
                          style={{ width: '64px', height: '64px' }}>
@@ -159,7 +183,7 @@ function MainApp() {
             <h1 className="display-5 fw-bold text-deep-red mb-4">Study Tools</h1>
             <div className="row g-4">
               <div className="col-md-6 col-lg-3">
-                <div className="card h-100 card-hover" onClick={() => setActiveView('periodic-table')}>
+                <div className="card h-100 card-hover" onClick={() => handleNavigate('periodic-table')}>
                   <div className="card-body p-4 text-center">
                     <div className="bg-primary-red bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
                          style={{ width: '64px', height: '64px' }}>
@@ -171,7 +195,7 @@ function MainApp() {
                 </div>
               </div>
               <div className="col-md-6 col-lg-3">
-                <div className="card h-100 card-hover" onClick={() => setActiveView('physics-formulas')}>
+                <div className="card h-100 card-hover" onClick={() => handleNavigate('physics-formulas')}>
                   <div className="card-body p-4 text-center">
                     <div className="bg-accent-red bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
                          style={{ width: '64px', height: '64px' }}>
@@ -183,7 +207,7 @@ function MainApp() {
                 </div>
               </div>
               <div className="col-md-6 col-lg-3">
-                <div className="card h-100 card-hover" onClick={() => setActiveView('biology-names')}>
+                <div className="card h-100 card-hover" onClick={() => handleNavigate('biology-names')}>
                   <div className="card-body p-4 text-center">
                     <div className="bg-success bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
                          style={{ width: '64px', height: '64px' }}>
@@ -195,7 +219,7 @@ function MainApp() {
                 </div>
               </div>
               <div className="col-md-6 col-lg-3">
-                <div className="card h-100 card-hover" onClick={() => setActiveView('country-flags')}>
+                <div className="card h-100 card-hover" onClick={() => handleNavigate('country-flags')}>
                   <div className="card-body p-4 text-center">
                     <div className="bg-info bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
                          style={{ width: '64px', height: '64px' }}>
@@ -207,7 +231,7 @@ function MainApp() {
                 </div>
               </div>
               <div className="col-md-6 col-lg-3">
-                <div className="card h-100 card-hover" onClick={() => setActiveView('interactive-globe')}>
+                <div className="card h-100 card-hover" onClick={() => handleNavigate('interactive-globe')}>
                   <div className="card-body p-4 text-center">
                     <div className="bg-primary bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
                          style={{ width: '64px', height: '64px' }}>
@@ -219,7 +243,7 @@ function MainApp() {
                 </div>
               </div>
               <div className="col-md-6 col-lg-3">
-                <div className="card h-100 card-hover" onClick={() => setActiveView('scientific-calculator')}>
+                <div className="card h-100 card-hover" onClick={() => handleNavigate('scientific-calculator')}>
                   <div className="card-body p-4 text-center">
                     <div className="bg-warning bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
                          style={{ width: '64px', height: '64px' }}>
@@ -231,7 +255,7 @@ function MainApp() {
                 </div>
               </div>
               <div className="col-md-6 col-lg-3">
-                <div className="card h-100 card-hover" onClick={() => setActiveView('unit-converter')}>
+                <div className="card h-100 card-hover" onClick={() => handleNavigate('unit-converter')}>
                   <div className="card-body p-4 text-center">
                     <div className="bg-danger bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
                          style={{ width: '64px', height: '64px' }}>
@@ -243,7 +267,7 @@ function MainApp() {
                 </div>
               </div>
               <div className="col-md-6 col-lg-3">
-                <div className="card h-100 card-hover" onClick={() => setActiveView('discussion-forum')}>
+                <div className="card h-100 card-hover" onClick={() => handleNavigate('discussion-forum')}>
                   <div className="card-body p-4 text-center">
                     <div className="bg-secondary bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
                          style={{ width: '64px', height: '64px' }}>
@@ -255,7 +279,7 @@ function MainApp() {
                 </div>
               </div>
               <div className="col-md-6 col-lg-3">
-                <div className="card h-100 card-hover" onClick={() => setActiveView('live-classroom')}>
+                <div className="card h-100 card-hover" onClick={() => handleNavigate('live-classroom')}>
                   <div className="card-body p-4 text-center">
                     <div className="bg-primary-red bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
                          style={{ width: '64px', height: '64px' }}>
@@ -267,7 +291,7 @@ function MainApp() {
                 </div>
               </div>
               <div className="col-md-6 col-lg-3">
-                <div className="card h-100 card-hover" onClick={() => setActiveView('drawing-tool')}>
+                <div className="card h-100 card-hover" onClick={() => handleNavigate('drawing-tool')}>
                   <div className="card-body p-4 text-center">
                     <div className="bg-accent-red bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
                          style={{ width: '64px', height: '64px' }}>
@@ -279,7 +303,7 @@ function MainApp() {
                 </div>
               </div>
               <div className="col-md-6 col-lg-3">
-                <div className="card h-100 card-hover" onClick={() => setActiveView('question-maker')}>
+                <div className="card h-100 card-hover" onClick={() => handleNavigate('question-maker')}>
                   <div className="card-body p-4 text-center">
                     <div className="bg-success bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
                          style={{ width: '64px', height: '64px' }}>
@@ -291,7 +315,7 @@ function MainApp() {
                 </div>
               </div>
               <div className="col-md-6 col-lg-3">
-                <div className="card h-100 card-hover" onClick={() => setActiveView('flashcard')}>
+                <div className="card h-100 card-hover" onClick={() => handleNavigate('flashcard')}>
                   <div className="card-body p-4 text-center">
                     <div className="bg-primary bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
                          style={{ width: '64px', height: '64px' }}>
@@ -303,7 +327,7 @@ function MainApp() {
                 </div>
               </div>
               <div className="col-md-6 col-lg-3">
-                <div className="card h-100 card-hover" onClick={() => setActiveView('wordbook')}>
+                <div className="card h-100 card-hover" onClick={() => handleNavigate('wordbook')}>
                   <div className="card-body p-4 text-center">
                     <div className="bg-warning bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
                          style={{ width: '64px', height: '64px' }}>
@@ -315,7 +339,7 @@ function MainApp() {
                 </div>
               </div>
               <div className="col-md-6 col-lg-3">
-                <div className="card h-100 card-hover" onClick={() => setActiveView('student-progress')}>
+                <div className="card h-100 card-hover" onClick={() => handleNavigate('student-progress')}>
                   <div className="card-body p-4 text-center">
                     <div className="bg-success bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
                          style={{ width: '64px', height: '64px' }}>
@@ -330,22 +354,22 @@ function MainApp() {
           </div>
         );
       default:
-        return user?.role === 'teacher' ? <TeacherDashboard /> : <StudentDashboard />;
+        return <NotFoundPage onNavigate={handleNavigate} />;
     }
   };
 
   // Show static pages without sidebar/header for non-authenticated users
-  if (!user && ['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', 'periodic-table', 'physics-formulas', 'biology-names', 'country-flags', 'interactive-globe', 'scientific-calculator', 'unit-converter', 'discussion-forum', 'live-classroom', 'drawing-tool', 'question-maker', 'flashcard', 'wordbook', 'student-progress', 'chemistry-simulation', 'physics-simulation', 'biology-simulation', '404'].includes(activeView)) {
+  if (!user && publicPages.includes(currentView)) {
     return renderContent();
   }
 
   // Show login form when trying to access protected routes without authentication
   if (!user) {
-    return <LoginForm onNavigate={setActiveView} />;
+    return <LoginForm onNavigate={handleNavigate} />;
   }
 
   // Show static pages without sidebar/header even for authenticated users
-  if (['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', 'periodic-table', 'physics-formulas', 'biology-names', 'country-flags', 'interactive-globe', 'scientific-calculator', 'unit-converter', 'discussion-forum', 'live-classroom', 'drawing-tool', 'question-maker', 'flashcard', 'wordbook', 'student-progress', 'chemistry-simulation', 'physics-simulation', 'biology-simulation', '404'].includes(activeView)) {
+  if (publicPages.includes(currentView)) {
     return renderContent();
   }
 
@@ -354,15 +378,15 @@ function MainApp() {
       <Sidebar
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
-        activeView={activeView}
-        onViewChange={setActiveView}
+        activeView={currentView}
+        onViewChange={handleNavigate}
       />
       
       <div className="flex-fill d-flex flex-column overflow-hidden">
         <Header
           onMenuToggle={() => setIsSidebarOpen(!isSidebarOpen)}
           isSidebarOpen={isSidebarOpen}
-          onNavigate={setActiveView}
+          onNavigate={handleNavigate}
         />
         
         <main className="flex-fill overflow-auto p-3">
@@ -377,7 +401,9 @@ function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <MainApp />
+        <Routes>
+          <Route path="/*" element={<MainApp />} />
+        </Routes>
       </AuthProvider>
     </ThemeProvider>
   );

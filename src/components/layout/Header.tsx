@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Bell, Menu, Search, User, LogOut, Home } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 interface HeaderProps {
   onMenuToggle: () => void;

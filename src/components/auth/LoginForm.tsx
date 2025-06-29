@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, BookOpen, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../ui/Button';
+import { Link } from 'react-router-dom';
 
 interface LoginFormProps {
   onNavigate: (view: string) => void;

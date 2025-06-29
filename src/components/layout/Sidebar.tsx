@@ -26,6 +26,7 @@ import {
   BookText
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -57,6 +58,12 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
     { id: 'tools', label: 'Teaching Tools', icon: Calculator },
   ];
 
+  const simulationItems = [
+    { id: 'chemistry-simulation', label: 'Chemistry Lab', icon: Beaker },
+    { id: 'physics-simulation', label: 'Physics Lab', icon: Zap },
+    { id: 'biology-simulation', label: 'Biology Lab', icon: Leaf },
+  ];
+
   const studyToolsItems = [
     { id: 'periodic-table', label: 'Periodic Table', icon: Atom },
     { id: 'physics-formulas', label: 'Physics Formulas', icon: Zap },
@@ -72,12 +79,6 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
     { id: 'flashcard', label: 'Flashcards', icon: BookOpenCheck },
     { id: 'wordbook', label: 'Word Book', icon: BookText },
     { id: 'student-progress', label: 'Student Progress', icon: BarChart3 },
-  ];
-
-  const simulationItems = [
-    { id: 'chemistry-simulation', label: 'Chemistry Lab', icon: Beaker },
-    { id: 'physics-simulation', label: 'Physics Lab', icon: Zap },
-    { id: 'biology-simulation', label: 'Biology Lab', icon: Leaf },
   ];
 
   const commonItems = [

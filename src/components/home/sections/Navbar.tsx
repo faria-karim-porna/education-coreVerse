@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { BookOpen } from 'lucide-react';
 import { Button } from '../../ui/Button';
 import { ThemeToggle } from '../../ui/ThemeToggle';
+import { Link } from 'react-router-dom';
 
 interface NavbarProps {
   onNavigate: (view: string) => void;

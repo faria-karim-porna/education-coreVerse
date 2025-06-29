@@ -4,10 +4,12 @@ import * as Icons from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { mockLabSimulators } from '../../data/mockData';
+import { useNavigate } from 'react-router-dom';
 
 export function LabSimulators() {
   const [selectedType, setSelectedType] = useState<string>('all');
   const [selectedSim, setSelectedSim] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const filteredSims = selectedType === 'all' 
     ? mockLabSimulators 
@@ -28,6 +30,16 @@ export function LabSimulators() {
       case 'chemistry': return 'bg-accent-red';
       case 'biology': return 'bg-success';
       default: return 'bg-secondary';
+    }
+  };
+
+  const handleLaunchClick = (type: string) => {
+    if (type === 'chemistry') {
+      navigate('/chemistry-simulation');
+    } else if (type === 'physics') {
+      navigate('/physics-simulation');
+    } else if (type === 'biology') {
+      navigate('/biology-simulation');
     }
   };
 
@@ -95,14 +107,9 @@ export function LabSimulators() {
                       <span className="text-muted small text-capitalize fw-medium">
                         {sim.type}
                       </span>
-                      <Button size="sm" onClick={() => {
-                        if (sim.type === 'chemistry') {
-                          window.location.href = '/chemistry-simulation';
-                        } else if (sim.type === 'physics') {
-                          window.location.href = '/physics-simulation';
-                        } else if (sim.type === 'biology') {
-                          window.location.href = '/biology-simulation';
-                        }
+                      <Button size="sm" onClick={(e) => {
+                        e.stopPropagation();
+                        handleLaunchClick(sim.type);
                       }}>
                         Launch
                       </Button>
