@@ -22,7 +22,7 @@ export function TiltCardSection() {
                   </div>
                 </div>
                 <div className="col-6">
-                  <div className="bg-card-bg p-3 rounded-3 text-center">
+                  <div className="bg-primary-red bg-opacity-10 p-3 rounded-3 text-center">
                     <Calculator className="text-accent-red mb-2" size={32} />
                     <h6 className="fw-semibold text-deep-red mb-0">Sci Tools</h6>
                   </div>
