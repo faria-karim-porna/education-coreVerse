@@ -13,7 +13,11 @@ import {
   Settings,
   X,
   HelpCircle,
-  FileText
+  FileText,
+  Atom,
+  Zap,
+  Leaf,
+  Flag
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -45,6 +49,13 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
     { id: 'assignments', label: 'Assignments', icon: PenTool },
     { id: 'analytics', label: 'Analytics', icon: BarChart3 },
     { id: 'tools', label: 'Teaching Tools', icon: Calculator },
+  ];
+
+  const studyToolsItems = [
+    { id: 'periodic-table', label: 'Periodic Table', icon: Atom },
+    { id: 'physics-formulas', label: 'Physics Formulas', icon: Zap },
+    { id: 'biology-names', label: 'Scientific Names', icon: Leaf },
+    { id: 'country-flags', label: 'Country Flags', icon: Flag },
   ];
 
   const commonItems = [
@@ -92,7 +103,7 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
               </button>
             </div>
 
-            <nav className="p-4 flex-fill">
+            <nav className="p-4 flex-fill overflow-auto">
               <div className="d-flex flex-column gap-1">
                 {menuItems.map((item) => (
                   <motion.button
@@ -113,6 +124,31 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
                     <span className="fw-medium">{item.label}</span>
                   </motion.button>
                 ))}
+              </div>
+
+              <div className="mt-4 pt-4 border-top">
+                <h6 className="fw-semibold text-deep-red mb-3 px-3">Study Tools</h6>
+                <div className="d-flex flex-column gap-1">
+                  {studyToolsItems.map((item) => (
+                    <motion.button
+                      key={item.id}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => {
+                        onViewChange(item.id);
+                        onClose();
+                      }}
+                      className={`btn text-start d-flex align-items-center gap-3 px-3 py-2 rounded-3 ${
+                        activeView === item.id
+                          ? 'bg-light-bg text-primary-red border border-card-bg'
+                          : 'btn-link text-dark'
+                      }`}
+                    >
+                      <item.icon size={20} />
+                      <span className="fw-medium">{item.label}</span>
+                    </motion.button>
+                  ))}
+                </div>
               </div>
 
               <div className="mt-4 pt-4 border-top">

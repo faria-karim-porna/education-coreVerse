@@ -14,6 +14,10 @@ import { HelpCenterPage } from './components/pages/HelpCenterPage';
 import { DocumentationPage } from './components/pages/DocumentationPage';
 import { CommunityPage } from './components/pages/CommunityPage';
 import { ProgressTrackingPage } from './components/pages/ProgressTrackingPage';
+import { PeriodicTablePage } from './components/pages/PeriodicTablePage';
+import { PhysicsFormulasPage } from './components/pages/PhysicsFormulasPage';
+import { BiologyNamesPage } from './components/pages/BiologyNamesPage';
+import { CountryFlagsPage } from './components/pages/CountryFlagsPage';
 import { Header } from './components/layout/Header';
 import { Sidebar } from './components/layout/Sidebar';
 import { StudentDashboard } from './components/dashboard/StudentDashboard';
@@ -50,6 +54,14 @@ function MainApp() {
         return <CommunityPage onNavigate={setActiveView} />;
       case 'progress-tracking':
         return <ProgressTrackingPage onNavigate={setActiveView} />;
+      case 'periodic-table':
+        return <PeriodicTablePage onNavigate={setActiveView} />;
+      case 'physics-formulas':
+        return <PhysicsFormulasPage onNavigate={setActiveView} />;
+      case 'biology-names':
+        return <BiologyNamesPage onNavigate={setActiveView} />;
+      case 'country-flags':
+        return <CountryFlagsPage onNavigate={setActiveView} />;
       case '404':
         return <NotFoundPage onNavigate={setActiveView} />;
       case 'dashboard':
@@ -69,7 +81,56 @@ function MainApp() {
         return (
           <div className="p-4">
             <h1 className="display-5 fw-bold text-deep-red mb-4">Study Tools</h1>
-            <p className="text-muted">Tools content coming soon...</p>
+            <div className="row g-4">
+              <div className="col-md-6 col-lg-3">
+                <div className="card h-100 card-hover" onClick={() => setActiveView('periodic-table')}>
+                  <div className="card-body p-4 text-center">
+                    <div className="bg-primary-red bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
+                         style={{ width: '64px', height: '64px' }}>
+                      <span className="text-primary-red fw-bold">H</span>
+                    </div>
+                    <h5 className="fw-bold text-deep-red mb-2">Periodic Table</h5>
+                    <p className="text-muted small">Interactive element explorer</p>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-6 col-lg-3">
+                <div className="card h-100 card-hover" onClick={() => setActiveView('physics-formulas')}>
+                  <div className="card-body p-4 text-center">
+                    <div className="bg-accent-red bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
+                         style={{ width: '64px', height: '64px' }}>
+                      <span className="text-accent-red fw-bold">F=ma</span>
+                    </div>
+                    <h5 className="fw-bold text-deep-red mb-2">Physics Formulas</h5>
+                    <p className="text-muted small">Essential physics equations</p>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-6 col-lg-3">
+                <div className="card h-100 card-hover" onClick={() => setActiveView('biology-names')}>
+                  <div className="card-body p-4 text-center">
+                    <div className="bg-success bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
+                         style={{ width: '64px', height: '64px' }}>
+                      <span className="text-success fw-bold">🧬</span>
+                    </div>
+                    <h5 className="fw-bold text-deep-red mb-2">Scientific Names</h5>
+                    <p className="text-muted small">Biology nomenclature</p>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-6 col-lg-3">
+                <div className="card h-100 card-hover" onClick={() => setActiveView('country-flags')}>
+                  <div className="card-body p-4 text-center">
+                    <div className="bg-info bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
+                         style={{ width: '64px', height: '64px' }}>
+                      <span className="text-info fw-bold">🌍</span>
+                    </div>
+                    <h5 className="fw-bold text-deep-red mb-2">Country Flags</h5>
+                    <p className="text-muted small">World geography reference</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         );
       default:
@@ -78,7 +139,7 @@ function MainApp() {
   };
 
   // Show static pages without sidebar/header for non-authenticated users
-  if (!user && ['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', '404'].includes(activeView)) {
+  if (!user && ['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', 'periodic-table', 'physics-formulas', 'biology-names', 'country-flags', '404'].includes(activeView)) {
     return renderContent();
   }
 
@@ -88,7 +149,7 @@ function MainApp() {
   }
 
   // Show static pages without sidebar/header even for authenticated users
-  if (['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', '404'].includes(activeView)) {
+  if (['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', 'periodic-table', 'physics-formulas', 'biology-names', 'country-flags', '404'].includes(activeView)) {
     return renderContent();
   }
 
