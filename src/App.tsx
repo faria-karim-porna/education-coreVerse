@@ -25,6 +25,9 @@ import { DiscussionForumPage } from './components/pages/DiscussionForumPage';
 import { LiveClassroomPage } from './components/pages/LiveClassroomPage';
 import { DrawingToolPage } from './components/pages/DrawingToolPage';
 import { QuestionMakerPage } from './components/pages/QuestionMakerPage';
+import { FlashcardPage } from './components/pages/FlashcardPage';
+import { WordbookPage } from './components/pages/WordbookPage';
+import { StudentProgressPage } from './components/pages/StudentProgressPage';
 import { Header } from './components/layout/Header';
 import { Sidebar } from './components/layout/Sidebar';
 import { StudentDashboard } from './components/dashboard/StudentDashboard';
@@ -83,6 +86,12 @@ function MainApp() {
         return <DrawingToolPage onNavigate={setActiveView} />;
       case 'question-maker':
         return <QuestionMakerPage onNavigate={setActiveView} />;
+      case 'flashcard':
+        return <FlashcardPage onNavigate={setActiveView} />;
+      case 'wordbook':
+        return <WordbookPage onNavigate={setActiveView} />;
+      case 'student-progress':
+        return <StudentProgressPage onNavigate={setActiveView} />;
       case '404':
         return <NotFoundPage onNavigate={setActiveView} />;
       case 'dashboard':
@@ -272,6 +281,42 @@ function MainApp() {
                   </div>
                 </div>
               </div>
+              <div className="col-md-6 col-lg-3">
+                <div className="card h-100 card-hover" onClick={() => setActiveView('flashcard')}>
+                  <div className="card-body p-4 text-center">
+                    <div className="bg-primary bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
+                         style={{ width: '64px', height: '64px' }}>
+                      <span className="text-primary fw-bold">FC</span>
+                    </div>
+                    <h5 className="fw-bold text-deep-red mb-2">Flashcards</h5>
+                    <p className="text-muted small">Study with flashcards</p>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-6 col-lg-3">
+                <div className="card h-100 card-hover" onClick={() => setActiveView('wordbook')}>
+                  <div className="card-body p-4 text-center">
+                    <div className="bg-warning bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
+                         style={{ width: '64px', height: '64px' }}>
+                      <span className="text-warning fw-bold">WB</span>
+                    </div>
+                    <h5 className="fw-bold text-deep-red mb-2">Word Book</h5>
+                    <p className="text-muted small">Build your vocabulary</p>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-6 col-lg-3">
+                <div className="card h-100 card-hover" onClick={() => setActiveView('student-progress')}>
+                  <div className="card-body p-4 text-center">
+                    <div className="bg-success bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
+                         style={{ width: '64px', height: '64px' }}>
+                      <span className="text-success fw-bold">SP</span>
+                    </div>
+                    <h5 className="fw-bold text-deep-red mb-2">Student Progress</h5>
+                    <p className="text-muted small">Track student performance</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         );
@@ -281,7 +326,7 @@ function MainApp() {
   };
 
   // Show static pages without sidebar/header for non-authenticated users
-  if (!user && ['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', 'periodic-table', 'physics-formulas', 'biology-names', 'country-flags', 'interactive-globe', 'scientific-calculator', 'unit-converter', 'discussion-forum', 'live-classroom', 'drawing-tool', 'question-maker', '404'].includes(activeView)) {
+  if (!user && ['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', 'periodic-table', 'physics-formulas', 'biology-names', 'country-flags', 'interactive-globe', 'scientific-calculator', 'unit-converter', 'discussion-forum', 'live-classroom', 'drawing-tool', 'question-maker', 'flashcard', 'wordbook', 'student-progress', '404'].includes(activeView)) {
     return renderContent();
   }
 
@@ -291,7 +336,7 @@ function MainApp() {
   }
 
   // Show static pages without sidebar/header even for authenticated users
-  if (['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', 'periodic-table', 'physics-formulas', 'biology-names', 'country-flags', 'interactive-globe', 'scientific-calculator', 'unit-converter', 'discussion-forum', 'live-classroom', 'drawing-tool', 'question-maker', '404'].includes(activeView)) {
+  if (['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', 'periodic-table', 'physics-formulas', 'biology-names', 'country-flags', 'interactive-globe', 'scientific-calculator', 'unit-converter', 'discussion-forum', 'live-classroom', 'drawing-tool', 'question-maker', 'flashcard', 'wordbook', 'student-progress', '404'].includes(activeView)) {
     return renderContent();
   }
 

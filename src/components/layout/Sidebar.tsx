@@ -21,7 +21,9 @@ import {
   ArrowLeftRight,
   Video,
   Pencil,
-  HelpCircleIcon
+  HelpCircleIcon,
+  BookOpenCheck,
+  BookText
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -67,6 +69,9 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
     { id: 'live-classroom', label: 'Live Classroom', icon: Video },
     { id: 'drawing-tool', label: 'Drawing Tool', icon: Pencil },
     { id: 'question-maker', label: 'Question Maker', icon: HelpCircleIcon },
+    { id: 'flashcard', label: 'Flashcards', icon: BookOpenCheck },
+    { id: 'wordbook', label: 'Word Book', icon: BookText },
+    { id: 'student-progress', label: 'Student Progress', icon: BarChart3 },
   ];
 
   const commonItems = [
