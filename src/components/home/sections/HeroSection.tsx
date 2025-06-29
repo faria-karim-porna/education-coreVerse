@@ -21,6 +21,62 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
               Experience interactive STEM education with virtual labs, scientific tools, and collaborative classrooms designed for modern
               learners.
             </p>
+            
+            {/* Animated Book */}
+            <div className="d-flex justify-content-center mb-5 position-relative" style={{ height: "350px" }}>
+              <div className="book">
+                <div className="gap"></div>
+                <div className="outer-covers">
+                  <div className="outer-cover"></div>
+                  <div className="outer-cover"></div>
+                </div>
+                <div className="gap"></div>
+                <div className="covers">
+                  <div className="cover"></div>
+                  <div className="cover"></div>
+                </div>
+                <div className="gap"></div>
+                <div className="pages">
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                  <div className="page"></div>
+                </div>
+                <div className="flips">
+                  <div className="flip flip1">
+                    <div className="flip flip2">
+                      <div className="flip flip3">
+                        <div className="flip flip4">
+                          <div className="flip flip5">
+                            <div className="flip flip6">
+                              <div className="flip flip7">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
               <Button size="lg" className="justify-content-center" onClick={() => onNavigate("dashboard")}>
                 Start Learning Today
