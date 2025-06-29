@@ -38,7 +38,9 @@ import {
   AlignRight,
   Bold,
   Italic,
-  Underline
+  Underline,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
