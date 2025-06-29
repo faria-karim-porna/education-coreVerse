@@ -85,85 +85,95 @@ $btn-border-radius-lg: 0.75rem;
 .dark-theme {
   background-color: $dark-bg !important;
   color: $dark-text !important;
-  
+
   .bg-light-bg {
     background-color: $dark-bg !important;
   }
-  
+
   .bg-white {
     background-color: $dark-card-bg !important;
   }
-  
+
   .card {
     background-color: $dark-card-bg !important;
     border-color: $dark-border !important;
     color: $dark-text !important;
   }
-  
+
   .navbar {
     background-color: $dark-card-bg !important;
     border-color: $dark-border !important;
-    
+
     .navbar-brand {
       color: $dark-text !important;
     }
-    
+
     .nav-link {
       color: $dark-text-muted !important;
-      
+
       &:hover {
         color: $primary-red !important;
       }
     }
   }
-  
+
   .text-muted {
     color: $dark-text-muted !important;
   }
-  
+
   .text-deep-red {
     color: $dark-text !important;
   }
-  
+
   .border-bottom {
     border-color: $dark-border !important;
   }
-  
+
   .border-top {
     border-color: $dark-border !important;
   }
-  
+
   .bg-gradient-light {
     background: linear-gradient(135deg, $dark-bg, $dark-card-bg) !important;
   }
-  
+
   .badge {
     &.bg-primary-red {
       background-color: $primary-red !important;
     }
-    
+
     &.bg-success {
       background-color: $success !important;
     }
-    
+
     &.bg-warning {
       background-color: $warning !important;
     }
-    
+
     &.bg-info {
       background-color: $info !important;
     }
   }
-  
+
   .btn-custom-secondary {
     background-color: transparent !important;
     border-color: $primary-red !important;
     color: $primary-red !important;
-    
+
     &:hover {
       background-color: rgba($primary-red, 0.1) !important;
       border-color: $primary-red !important;
       color: $primary-red !important;
+    }
+  }
+
+  .btn-custom-white {
+    border-color: white !important;
+    color: white !important;
+
+    &:hover {
+      color: white !important;
+      border-color: white !important;
     }
   }
 }
@@ -173,8 +183,8 @@ $btn-border-radius-lg: 0.75rem;
   background-color: $light-bg !important;
   color: $dark !important;
 
-  .subject-wise-icon{
-    svg{
+  .subject-wise-icon {
+    svg {
       color: $primary-red !important;
     }
   }
@@ -252,7 +262,7 @@ $btn-border-radius-lg: 0.75rem;
 // Custom component styles
 .card-hover {
   transition: all 0.3s ease;
-  
+
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
@@ -276,11 +286,11 @@ $btn-border-radius-lg: 0.75rem;
 // Tilt card container responsive width
 .tilt-card-container {
   max-width: 400px;
-  
+
   @media (min-width: 768px) {
     max-width: 80vw;
   }
-  
+
   @media (min-width: 1200px) {
     max-width: 60vw;
   }
@@ -290,7 +300,7 @@ $btn-border-radius-lg: 0.75rem;
   background-color: $primary-red;
   border-color: $primary-red;
   color: white;
-  
+
   &:hover {
     background-color: $accent-red;
     border-color: $accent-red;
@@ -302,11 +312,21 @@ $btn-border-radius-lg: 0.75rem;
   background-color: transparent;
   border-color: $accent-red;
   color: $deep-red;
-  
+
   &:hover {
     background-color: $light-bg;
     border-color: $accent-red;
     color: $deep-red;
+  }
+}
+
+.btn-custom-white {
+  background-color: white;
+  border-color: white;
+  color: $primary-red;
+
+  &:hover {
+    color: $primary-red !important;
   }
 }
 
@@ -343,8 +363,12 @@ $btn-border-radius-lg: 0.75rem;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .slide-up {
@@ -352,13 +376,13 @@ $btn-border-radius-lg: 0.75rem;
 }
 
 @keyframes slideUp {
-  from { 
-    transform: translateY(10px); 
-    opacity: 0; 
+  from {
+    transform: translateY(10px);
+    opacity: 0;
   }
-  to { 
-    transform: translateY(0); 
-    opacity: 1; 
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
@@ -366,9 +390,9 @@ $btn-border-radius-lg: 0.75rem;
 .subject-card-gradient {
   position: relative;
   overflow: hidden;
-  
+
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -388,7 +412,7 @@ $btn-border-radius-lg: 0.75rem;
 // Enhanced card hover effects
 .card {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   &.card-hover:hover {
     transform: translateY(-8px) scale(1.02);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
@@ -400,11 +424,11 @@ $btn-border-radius-lg: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.025em;
   transition: all 0.2s ease;
-  
+
   &:hover {
     transform: translateY(-1px);
   }
-  
+
   &:active {
     transform: translateY(0);
   }
