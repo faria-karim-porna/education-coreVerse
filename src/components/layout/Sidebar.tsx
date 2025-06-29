@@ -18,7 +18,10 @@ import {
   Zap,
   Leaf,
   Flag,
-  ArrowLeftRight
+  ArrowLeftRight,
+  Video,
+  Pencil,
+  HelpCircleIcon
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -61,6 +64,9 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
     { id: 'scientific-calculator', label: 'Scientific Calculator', icon: Calculator },
     { id: 'unit-converter', label: 'Unit Converter', icon: ArrowLeftRight },
     { id: 'discussion-forum', label: 'Discussion Forum', icon: MessageCircle },
+    { id: 'live-classroom', label: 'Live Classroom', icon: Video },
+    { id: 'drawing-tool', label: 'Drawing Tool', icon: Pencil },
+    { id: 'question-maker', label: 'Question Maker', icon: HelpCircleIcon },
   ];
 
   const commonItems = [
