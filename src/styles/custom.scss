@@ -456,7 +456,7 @@ $btn-border-radius-lg: 0.75rem;
 .page {
   width: 210px;
   height: 300px;
-  background-color: #fff;
+  background-color: #bbb;
   position: absolute;
   top: 0px;
   left: 50%;
@@ -465,69 +465,6 @@ $btn-border-radius-lg: 0.75rem;
   background-size: 420px 300px;
   background-position: center;
   transform-style: preserve-3d;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  font-family: 'Georgia', serif;
-  color: #333;
-  overflow: hidden;
-}
-
-.page::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.1;
-  z-index: -1;
-}
-
-.page:nth-child(1)::before {
-  background-image: url('https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2');
-}
-
-.page:nth-child(2)::before {
-  background-image: url('https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2');
-}
-
-.page:nth-child(3)::before {
-  background-image: url('https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2');
-}
-
-.page:nth-child(4)::before {
-  background-image: url('https://images.pexels.com/photos/2280568/pexels-photo-2280568.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2');
-}
-
-.page:nth-child(5)::before {
-  background-image: url('https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2');
-}
-
-.page:nth-child(6)::before {
-  background-image: url('https://images.pexels.com/photos/4144923/pexels-photo-4144923.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=2');
-}
-
-.page-content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-}
-
-.page-title {
-  font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 10px;
-  color: $deep-red;
-}
-
-.page-text {
-  font-size: 12px;
-  line-height: 1.4;
 }
 
 .cover {
@@ -541,22 +478,6 @@ $btn-border-radius-lg: 0.75rem;
   background-size: 420px 300px;
   background-position: center;
   transform-style: preserve-3d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-family: 'Georgia', serif;
-  font-weight: bold;
-  font-size: 24px;
-  text-align: center;
-  padding: 20px;
-}
-
-.cover::after {
-  content: "CoreVerse";
-  position: absolute;
-  bottom: 30px;
-  font-size: 18px;
 }
 
 .outer-cover {
