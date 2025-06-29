@@ -446,6 +446,7 @@ $btn-border-radius-lg: 0.75rem;
   perspective-origin: center 50px;
   transform: scale(1.2);
   filter: drop-shadow(0px 10px 5px rgba(0, 0, 0, 0.25));
+  margin: 0 auto 50px;
 }
 
 .page {
@@ -454,8 +455,8 @@ $btn-border-radius-lg: 0.75rem;
   background-color: #bbb;
   position: absolute;
   top: 0px;
-  right: 50%;
-  transform-origin: 100% 100%;
+  left: 50%;
+  transform-origin: 0% 100%;
   border: solid #d3d3d3 2px;
   background-size: 420px 300px;
   background-position: center;
@@ -465,79 +466,89 @@ $btn-border-radius-lg: 0.75rem;
 .cover {
   width: 222px;
   height: 308px;
-  background-color: #037391;
+  background-color: $primary-red;
   position: absolute;
   top: 0px;
-  right: 50%;
-  transform-origin: 100% 100%;
-  /* border: solid #d3d3d3 2px; */
+  left: 50%;
+  transform-origin: 0% 100%;
   background-size: 420px 300px;
   background-position: center;
   transform-style: preserve-3d;
 }
+
 .outer-cover {
   width: 222px;
   height: 308px;
-  background-color: red;
+  background-color: $accent-red;
   position: absolute;
   top: 0px;
-  right: 50%;
-  transform-origin: 100% 100%;
-  /* border: solid #d3d3d3 2px; */
+  left: 50%;
+  transform-origin: 0% 100%;
   background-size: 420px 300px;
   background-position: center;
   transform-style: preserve-3d;
 }
+
 .outer-cover:nth-child(1) {
-  transform: rotateX(60deg) rotateY(3deg) translateZ(1px);
+  transform: rotateX(60deg) rotateY(-3deg) translateZ(1px);
 }
+
 .outer-cover:nth-child(2) {
-  transform: rotateX(60deg) rotateY(177deg);
+  transform: rotateX(60deg) rotateY(-177deg);
 }
+
 .cover:nth-child(1) {
-  transform: rotateX(60deg) rotateY(3deg);
+  transform: rotateX(60deg) rotateY(-3deg);
 }
+
 .cover:nth-child(2) {
-  transform: rotateX(60deg) rotateY(177deg);
+  transform: rotateX(60deg) rotateY(-177deg);
 }
+
 .page:nth-child(1) {
-  transform: rotateX(60deg) rotateY(3deg);
+  transform: rotateX(60deg) rotateY(-3deg);
 }
+
 .page:nth-child(2) {
-  transform: rotateX(60deg) rotateY(4.5deg);
+  transform: rotateX(60deg) rotateY(-4.5deg);
 }
+
 .page:nth-child(3) {
-  transform: rotateX(60deg) rotateY(6deg);
+  transform: rotateX(60deg) rotateY(-6deg);
   -webkit-animation: nextPage 25s infinite -24s steps(1);
   animation: nextPage 25s infinite -24s steps(1);
   background-size: 420px 300px;
   background-position: -2px -2px;
 }
+
 .page:nth-child(4) {
-  transform: rotateX(60deg) rotateY(177deg);
-  /* border: 2px solid red; */
+  transform: rotateX(60deg) rotateY(-177deg);
 }
+
 .page:nth-child(5) {
-  transform: rotateX(60deg) rotateY(175.5deg);
+  transform: rotateX(60deg) rotateY(-175.5deg);
 }
+
 .page:nth-child(6) {
-  transform: rotateX(60deg) rotateY(174deg);
+  transform: rotateX(60deg) rotateY(-174deg);
   overflow: hidden;
 }
+
 .page:nth-child(6)::after {
   content: "";
   width: 210px;
   height: 300px;
   position: absolute;
   top: 0px;
-  right: 0%;
+  left: 0%;
   transform-origin: center;
-  transform: rotateY(180deg);
+  transform: rotateY(-180deg);
   -webkit-animation: nextPage 25s -20s infinite steps(1);
   animation: nextPage 25s -20s infinite steps(1);
   background-size: 420px 300px;
   background-position: 100% -2px;
 }
+
 @keyframes nextPage {
   0% {
     background-color: #f2f2f2;
@@ -566,6 +577,7 @@ $btn-border-radius-lg: 0.75rem;
   top: 0px;
   left: calc(50% - 5px);
 }
+
 .gap::after {
   content: "";
   position: absolute;
@@ -590,8 +602,8 @@ $btn-border-radius-lg: 0.75rem;
   height: 300px;
   position: absolute;
   top: 0px;
-  transform-origin: 100% 100%;
-  right: 100%;
+  transform-origin: 0% 100%;
+  left: 100%;
   border: 2px solid #d3d3d3;
   border-width: 2px 0px;
   perspective: 4200px;
@@ -599,452 +611,466 @@ $btn-border-radius-lg: 0.75rem;
   transform-style: preserve-3d;
   background-size: 420px 300px;
 }
+
 .flip::after {
   content: "";
   position: absolute;
   top: 0px;
-  right: 0%;
+  left: 0%;
   width: 100%;
   height: 100%;
   transform-origin: center;
   background-size: 420px 300px;
 }
+
 .flip.flip1 {
-  right: 50%;
+  left: 50%;
   -webkit-animation: flip1 5s infinite ease-in-out;
   animation: flip1 5s infinite ease-in-out;
-  border-width: 2px 2px 2px 0;
+  border-width: 2px 0 2px 2px;
 }
+
 .flip.flip1::after {
   -webkit-animation: nextFlip1 25s -20s infinite steps(1);
   animation: nextFlip1 25s -20s infinite steps(1);
 }
+
 .flip:not(.flip1) {
-  right: calc(100% - 2px);
+  left: calc(100% - 2px);
   top: -2px;
-  transform-origin: right;
+  transform-origin: left;
   -webkit-animation: flip2 5s ease-in-out infinite;
   animation: flip2 5s ease-in-out infinite;
 }
+
 .flip.flip2::after {
   -webkit-animation: nextFlip2 25s -20s infinite steps(1);
   animation: nextFlip2 25s -20s infinite steps(1);
 }
+
 .flip.flip3::after {
   -webkit-animation: nextFlip3 25s -20s infinite steps(1);
   animation: nextFlip3 25s -20s infinite steps(1);
 }
+
 .flip.flip4::after {
   -webkit-animation: nextFlip4 25s -20s infinite steps(1);
   animation: nextFlip4 25s -20s infinite steps(1);
 }
+
 .flip.flip5::after {
   -webkit-animation: nextFlip5 25s -20s infinite steps(1);
   animation: nextFlip5 25s -20s infinite steps(1);
 }
+
 .flip.flip6::after {
   -webkit-animation: nextFlip6 25s -20s infinite steps(1);
   animation: nextFlip6 25s -20s infinite steps(1);
 }
+
 .flip.flip7::after {
   -webkit-animation: nextFlip7 25s -20s infinite steps(1);
   animation: nextFlip7 25s -20s infinite steps(1);
 }
+
 .flip.flip7 {
   width: 30px;
-  border-width: 2px 0px 2px 2px;
+  border-width: 2px 2px 2px 0;
 }
+
 .flip.flip7::after {
   -webkit-animation: nextFlip7 25s -20s infinite steps(1);
   animation: nextFlip7 25s -20s infinite steps(1);
 }
+
 @keyframes flip1 {
   0%,
   20% {
-    transform: rotateX(60deg) rotateY(6deg);
+    transform: rotateX(60deg) rotateY(-6deg);
   }
   80%,
   100% {
-    transform: rotateX(60deg) rotateY(174deg);
+    transform: rotateX(60deg) rotateY(-174deg);
   }
 }
+
 @keyframes flip2 {
   0%,
   20% {
     transform: rotateY(0deg) translateY(0px);
   }
   50% {
-    transform: rotateY(-15deg) translateY(0px);
+    transform: rotateY(15deg) translateY(0px);
   }
 }
 
 @keyframes nextFlip1 {
   0% {
     background-color: #f2f2f2;
-    background-position: -178px -2px;
+    background-position: 178px -2px;
     transform: rotateY(0deg);
   }
   10% {
     background-color: #f2f2f2;
-    background-position: -210px -2px;
-    transform: rotateY(180deg);
+    background-position: 210px -2px;
+    transform: rotateY(-180deg);
   }
   20% {
     background-color: #f2f2f2;
-    background-position: -178px -2px;
+    background-position: 178px -2px;
     transform: rotateY(0deg);
   }
   30% {
     background-color: #f2f2f2;
-    background-position: -210px -2px;
-    transform: rotateY(180deg);
+    background-position: 210px -2px;
+    transform: rotateY(-180deg);
   }
   40% {
     background-color: #f2f2f2;
-    background-position: -178px -2px;
+    background-position: 178px -2px;
     transform: rotateY(0deg);
   }
   50% {
     background-color: #f2f2f2;
-    background-position: -210px -2px;
-    transform: rotateY(180deg);
+    background-position: 210px -2px;
+    transform: rotateY(-180deg);
   }
   60% {
     background-color: #f2f2f2;
-    background-position: -178px -2px;
+    background-position: 178px -2px;
     transform: rotateY(0deg);
   }
   70% {
     background-color: #f2f2f2;
-    background-position: -210px -2px;
-    transform: rotateY(180deg);
+    background-position: 210px -2px;
+    transform: rotateY(-180deg);
   }
   80% {
     background-color: #f2f2f2;
-    background-position: -178px -2px;
+    background-position: 178px -2px;
     transform: rotateY(0deg);
   }
   90% {
     background-color: #f2f2f2;
-    background-position: -210px -2px;
-    transform: rotateY(180deg);
+    background-position: 210px -2px;
+    transform: rotateY(-180deg);
   }
 }
 
 @keyframes nextFlip2 {
   0% {
     background-color: #f2f2f2;
-    background-position: -148px -2px;
+    background-position: 148px -2px;
     transform: rotateY(0deg);
   }
   10.5% {
     background-color: #f2f2f2;
-    background-position: -238px -2px;
-    transform: rotateY(180deg);
+    background-position: 238px -2px;
+    transform: rotateY(-180deg);
   }
   20% {
     background-color: #f2f2f2;
-    background-position: -148px -2px;
+    background-position: 148px -2px;
     transform: rotateY(0deg);
   }
   30.5% {
     background-color: #f2f2f2;
-    background-position: -238px -2px;
-    transform: rotateY(180deg);
+    background-position: 238px -2px;
+    transform: rotateY(-180deg);
   }
   40% {
     background-color: #f2f2f2;
-    background-position: -148px -2px;
+    background-position: 148px -2px;
     transform: rotateY(0deg);
   }
   50.5% {
     background-color: #f2f2f2;
-    background-position: -238px -2px;
-    transform: rotateY(180deg);
+    background-position: 238px -2px;
+    transform: rotateY(-180deg);
   }
   60% {
     background-color: #f2f2f2;
-    background-position: -148px -2px;
+    background-position: 148px -2px;
     transform: rotateY(0deg);
   }
   70.5% {
     background-color: #f2f2f2;
-    background-position: -238px -2px;
-    transform: rotateY(180deg);
+    background-position: 238px -2px;
+    transform: rotateY(-180deg);
   }
   80% {
     background-color: #f2f2f2;
-    background-position: -148px -2px;
+    background-position: 148px -2px;
     transform: rotateY(0deg);
   }
   90.5% {
     background-color: #f2f2f2;
-    background-position: -238px -2px;
-    transform: rotateY(180deg);
+    background-position: 238px -2px;
+    transform: rotateY(-180deg);
   }
 }
 
 @keyframes nextFlip3 {
   0% {
     background-color: #f2f2f2;
-    background-position: -118px -2px;
+    background-position: 118px -2px;
     transform: rotateY(0deg);
   }
   11% {
     background-color: #f2f2f2;
-    background-position: -268px -2px;
-    transform: rotateY(180deg);
+    background-position: 268px -2px;
+    transform: rotateY(-180deg);
   }
   20% {
     background-color: #f2f2f2;
-    background-position: -118px -2px;
+    background-position: 118px -2px;
     transform: rotateY(0deg);
   }
   31% {
     background-color: #f2f2f2;
-    background-position: -268px -2px;
-    transform: rotateY(180deg);
+    background-position: 268px -2px;
+    transform: rotateY(-180deg);
   }
   40% {
     background-color: #f2f2f2;
-    background-position: -118px -2px;
+    background-position: 118px -2px;
     transform: rotateY(0deg);
   }
   51% {
     background-color: #f2f2f2;
-    background-position: -268px -2px;
-    transform: rotateY(180deg);
+    background-position: 268px -2px;
+    transform: rotateY(-180deg);
   }
   60% {
     background-color: #f2f2f2;
-    background-position: -118px -2px;
+    background-position: 118px -2px;
     transform: rotateY(0deg);
   }
   71% {
     background-color: #f2f2f2;
-    background-position: -268px -2px;
-    transform: rotateY(180deg);
+    background-position: 268px -2px;
+    transform: rotateY(-180deg);
   }
   80% {
     background-color: #f2f2f2;
-    background-position: -118px -2px;
+    background-position: 118px -2px;
     transform: rotateY(0deg);
   }
   91% {
     background-color: #f2f2f2;
-    background-position: -268px -2px;
-    transform: rotateY(180deg);
+    background-position: 268px -2px;
+    transform: rotateY(-180deg);
   }
 }
 
 @keyframes nextFlip4 {
   0% {
     background-color: #f2f2f2;
-    background-position: -88px -2px;
+    background-position: 88px -2px;
     transform: rotateY(0deg);
   }
   11.5% {
     background-color: #f2f2f2;
-    background-position: -298px -2px;
-    transform: rotateY(180deg);
+    background-position: 298px -2px;
+    transform: rotateY(-180deg);
   }
   20% {
     background-color: #f2f2f2;
-    background-position: -88px -2px;
+    background-position: 88px -2px;
     transform: rotateY(0deg);
   }
   31.5% {
     background-color: #f2f2f2;
-    background-position: -298px -2px;
-    transform: rotateY(180deg);
+    background-position: 298px -2px;
+    transform: rotateY(-180deg);
   }
   40% {
     background-color: #f2f2f2;
-    background-position: -88px -2px;
+    background-position: 88px -2px;
     transform: rotateY(0deg);
   }
   51.5% {
     background-color: #f2f2f2;
-    background-position: -298px -2px;
-    transform: rotateY(180deg);
+    background-position: 298px -2px;
+    transform: rotateY(-180deg);
   }
   60% {
     background-color: #f2f2f2;
-    background-position: -88px -2px;
+    background-position: 88px -2px;
     transform: rotateY(0deg);
   }
   71.5% {
     background-color: #f2f2f2;
-    background-position: -298px -2px;
-    transform: rotateY(180deg);
+    background-position: 298px -2px;
+    transform: rotateY(-180deg);
   }
   80% {
     background-color: #f2f2f2;
-    background-position: -88px -2px;
+    background-position: 88px -2px;
     transform: rotateY(0deg);
   }
   91.5% {
     background-color: #f2f2f2;
-    background-position: -298px -2px;
-    transform: rotateY(180deg);
+    background-position: 298px -2px;
+    transform: rotateY(-180deg);
   }
 }
 
 @keyframes nextFlip5 {
   0% {
     background-color: #f2f2f2;
-    background-position: -58px -2px;
+    background-position: 58px -2px;
     transform: rotateY(0deg);
   }
   12% {
     background-color: #f2f2f2;
-    background-position: -328px -2px;
-    transform: rotateY(180deg);
+    background-position: 328px -2px;
+    transform: rotateY(-180deg);
   }
   20% {
     background-color: #f2f2f2;
-    background-position: -58px -2px;
+    background-position: 58px -2px;
     transform: rotateY(0deg);
   }
   32% {
     background-color: #f2f2f2;
-    background-position: -328px -2px;
-    transform: rotateY(180deg);
+    background-position: 328px -2px;
+    transform: rotateY(-180deg);
   }
   40% {
     background-color: #f2f2f2;
-    background-position: -58px -2px;
+    background-position: 58px -2px;
     transform: rotateY(0deg);
   }
   52% {
     background-color: #f2f2f2;
-    background-position: -328px -2px;
-    transform: rotateY(180deg);
+    background-position: 328px -2px;
+    transform: rotateY(-180deg);
   }
   60% {
     background-color: #f2f2f2;
-    background-position: -58px -2px;
+    background-position: 58px -2px;
     transform: rotateY(0deg);
   }
   72% {
     background-color: #f2f2f2;
-    background-position: -328px -2px;
-    transform: rotateY(180deg);
+    background-position: 328px -2px;
+    transform: rotateY(-180deg);
   }
   80% {
     background-color: #f2f2f2;
-    background-position: -58px -2px;
+    background-position: 58px -2px;
     transform: rotateY(0deg);
   }
   92% {
     background-color: #f2f2f2;
-    background-position: -328px -2px;
-    transform: rotateY(180deg);
+    background-position: 328px -2px;
+    transform: rotateY(-180deg);
   }
 }
 
 @keyframes nextFlip6 {
   0% {
     background-color: #f2f2f2;
-    background-position: -28px -2px;
+    background-position: 28px -2px;
     transform: rotateY(0deg);
   }
   12.5% {
     background-color: #f2f2f2;
-    background-position: -358px -2px;
-    transform: rotateY(180deg);
+    background-position: 358px -2px;
+    transform: rotateY(-180deg);
   }
   20% {
     background-color: #f2f2f2;
-    background-position: -28px -2px;
+    background-position: 28px -2px;
     transform: rotateY(0deg);
   }
   32.5% {
     background-color: #f2f2f2;
-    background-position: -358px -2px;
-    transform: rotateY(180deg);
+    background-position: 358px -2px;
+    transform: rotateY(-180deg);
   }
   40% {
     background-color: #f2f2f2;
-    background-position: -28px -2px;
+    background-position: 28px -2px;
     transform: rotateY(0deg);
   }
   52.5% {
     background-color: #f2f2f2;
-    background-position: -358px -2px;
-    transform: rotateY(180deg);
+    background-position: 358px -2px;
+    transform: rotateY(-180deg);
   }
   60% {
     background-color: #f2f2f2;
-    background-position: -28px -2px;
+    background-position: 28px -2px;
     transform: rotateY(0deg);
   }
   72.5% {
     background-color: #f2f2f2;
-    background-position: -358px -2px;
-    transform: rotateY(180deg);
+    background-position: 358px -2px;
+    transform: rotateY(-180deg);
   }
   80% {
     background-color: #f2f2f2;
-    background-position: -28px -2px;
+    background-position: 28px -2px;
     transform: rotateY(0deg);
   }
   92.5% {
     background-color: #f2f2f2;
-    background-position: -358px -2px;
-    transform: rotateY(180deg);
+    background-position: 358px -2px;
+    transform: rotateY(-180deg);
   }
 }
 
 @keyframes nextFlip7 {
   0% {
     background-color: #f2f2f2;
-    background-position: -2px -2px;
+    background-position: 2px -2px;
     transform: rotateY(0deg);
   }
   13% {
     background-color: #f2f2f2;
-    background-position: -388px -2px;
-    transform: rotateY(180deg);
+    background-position: 388px -2px;
+    transform: rotateY(-180deg);
   }
   20% {
     background-color: #f2f2f2;
-    background-position: -2px -2px;
+    background-position: 2px -2px;
     transform: rotateY(0deg);
   }
   33% {
     background-color: #f2f2f2;
-    background-position: -388px -2px;
-    transform: rotateY(180deg);
+    background-position: 388px -2px;
+    transform: rotateY(-180deg);
   }
   40% {
     background-color: #f2f2f2;
-    background-position: -2px -2px;
+    background-position: 2px -2px;
     transform: rotateY(0deg);
   }
   53% {
     background-color: #f2f2f2;
-    background-position: -388px -2px;
-    transform: rotateY(180deg);
+    background-position: 388px -2px;
+    transform: rotateY(-180deg);
   }
   60% {
     background-color: #f2f2f2;
-    background-position: -2px -2px;
+    background-position: 2px -2px;
     transform: rotateY(0deg);
   }
   73% {
     background-color: #f2f2f2;
-    background-position: -388px -2px;
-    transform: rotateY(180deg);
+    background-position: 388px -2px;
+    transform: rotateY(-180deg);
   }
   80% {
     background-color: #f2f2f2;
-    background-position: -2px -2px;
+    background-position: 2px -2px;
     transform: rotateY(0deg);
   }
   93% {
     background-color: #f2f2f2;
-    background-position: -388px -2px;
-    transform: rotateY(180deg);
+    background-position: 388px -2px;
+    transform: rotateY(-180deg);
   }
 }
