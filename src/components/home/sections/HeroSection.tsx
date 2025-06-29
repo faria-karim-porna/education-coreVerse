@@ -23,7 +23,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
             </p>
             
             {/* Animated Book */}
-            <div className="d-flex justify-content-center mb-5">
+            <div className="d-flex justify-content-center mb-5 position-relative" style={{ height: "350px" }}>
               <div className="book">
                 <div className="gap"></div>
                 <div className="outer-covers">

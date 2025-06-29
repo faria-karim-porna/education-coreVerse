@@ -10,7 +10,7 @@ export function StatsSection() {
   ];
 
   return (
-    <section className="py-5 bg-white">
+    <section className="py-5 bg-white position-relative" style={{ zIndex: 2 }}>
       <div className="container-lg">
         <div className="row g-4">
           {stats.map((stat, index) => (
