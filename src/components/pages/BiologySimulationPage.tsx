@@ -1,36 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  BookOpen,
-  Layers,
-  Dna,
-  Heart,
-  Leaf,
-  Play,
-  Pause,
-  RotateCcw,
-  Download,
-  Share2,
-  Info,
-  Plus,
-  Minus,
-  X,
-  Settings,
-  HelpCircle,
-  Save,
-  Eye,
-  Beaker,
-  Zap,
-  Search,
-  ZoomIn,
-  ZoomOut,
-  Maximize,
-  Minimize,
-  Microscope,
-  Droplet,
-  Virus,
-  Brain
-} from 'lucide-react';
+import { BookOpen, Layers, Dna, Heart, Leaf, Play, Pause, RotateCcw, Download, Share2, Info, Plus, Minus, X, Settings, HelpCircle, Save, Eye, Beaker, Zap, Search, ZoomIn, ZoomOut, Maximize, Minimize, Microscope, Droplet, Brush as Virus, Brain } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { ThemeToggle } from '../ui/ThemeToggle';
