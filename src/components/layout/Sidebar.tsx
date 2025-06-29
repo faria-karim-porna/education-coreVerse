@@ -17,7 +17,8 @@ import {
   Atom,
   Zap,
   Leaf,
-  Flag
+  Flag,
+  ArrowLeftRight
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -56,6 +57,10 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
     { id: 'physics-formulas', label: 'Physics Formulas', icon: Zap },
     { id: 'biology-names', label: 'Scientific Names', icon: Leaf },
     { id: 'country-flags', label: 'Country Flags', icon: Flag },
+    { id: 'interactive-globe', label: 'Interactive Globe', icon: Globe },
+    { id: 'scientific-calculator', label: 'Scientific Calculator', icon: Calculator },
+    { id: 'unit-converter', label: 'Unit Converter', icon: ArrowLeftRight },
+    { id: 'discussion-forum', label: 'Discussion Forum', icon: MessageCircle },
   ];
 
   const commonItems = [

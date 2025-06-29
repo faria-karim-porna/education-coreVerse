@@ -18,6 +18,10 @@ import { PeriodicTablePage } from './components/pages/PeriodicTablePage';
 import { PhysicsFormulasPage } from './components/pages/PhysicsFormulasPage';
 import { BiologyNamesPage } from './components/pages/BiologyNamesPage';
 import { CountryFlagsPage } from './components/pages/CountryFlagsPage';
+import { InteractiveGlobePage } from './components/pages/InteractiveGlobePage';
+import { ScientificCalculatorPage } from './components/pages/ScientificCalculatorPage';
+import { UnitConverterPage } from './components/pages/UnitConverterPage';
+import { DiscussionForumPage } from './components/pages/DiscussionForumPage';
 import { Header } from './components/layout/Header';
 import { Sidebar } from './components/layout/Sidebar';
 import { StudentDashboard } from './components/dashboard/StudentDashboard';
@@ -62,6 +66,14 @@ function MainApp() {
         return <BiologyNamesPage onNavigate={setActiveView} />;
       case 'country-flags':
         return <CountryFlagsPage onNavigate={setActiveView} />;
+      case 'interactive-globe':
+        return <InteractiveGlobePage onNavigate={setActiveView} />;
+      case 'scientific-calculator':
+        return <ScientificCalculatorPage onNavigate={setActiveView} />;
+      case 'unit-converter':
+        return <UnitConverterPage onNavigate={setActiveView} />;
+      case 'discussion-forum':
+        return <DiscussionForumPage onNavigate={setActiveView} />;
       case '404':
         return <NotFoundPage onNavigate={setActiveView} />;
       case 'dashboard':
@@ -130,6 +142,54 @@ function MainApp() {
                   </div>
                 </div>
               </div>
+              <div className="col-md-6 col-lg-3">
+                <div className="card h-100 card-hover" onClick={() => setActiveView('interactive-globe')}>
+                  <div className="card-body p-4 text-center">
+                    <div className="bg-primary bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
+                         style={{ width: '64px', height: '64px' }}>
+                      <span className="text-primary fw-bold">🌐</span>
+                    </div>
+                    <h5 className="fw-bold text-deep-red mb-2">Interactive Globe</h5>
+                    <p className="text-muted small">Explore world geography</p>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-6 col-lg-3">
+                <div className="card h-100 card-hover" onClick={() => setActiveView('scientific-calculator')}>
+                  <div className="card-body p-4 text-center">
+                    <div className="bg-warning bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
+                         style={{ width: '64px', height: '64px' }}>
+                      <span className="text-warning fw-bold">π</span>
+                    </div>
+                    <h5 className="fw-bold text-deep-red mb-2">Scientific Calculator</h5>
+                    <p className="text-muted small">Advanced math functions</p>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-6 col-lg-3">
+                <div className="card h-100 card-hover" onClick={() => setActiveView('unit-converter')}>
+                  <div className="card-body p-4 text-center">
+                    <div className="bg-danger bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
+                         style={{ width: '64px', height: '64px' }}>
+                      <span className="text-danger fw-bold">↔️</span>
+                    </div>
+                    <h5 className="fw-bold text-deep-red mb-2">Unit Converter</h5>
+                    <p className="text-muted small">Convert between units</p>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-6 col-lg-3">
+                <div className="card h-100 card-hover" onClick={() => setActiveView('discussion-forum')}>
+                  <div className="card-body p-4 text-center">
+                    <div className="bg-secondary bg-opacity-10 rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
+                         style={{ width: '64px', height: '64px' }}>
+                      <span className="text-secondary fw-bold">💬</span>
+                    </div>
+                    <h5 className="fw-bold text-deep-red mb-2">Discussion Forum</h5>
+                    <p className="text-muted small">Connect with peers</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         );
@@ -139,7 +199,7 @@ function MainApp() {
   };
 
   // Show static pages without sidebar/header for non-authenticated users
-  if (!user && ['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', 'periodic-table', 'physics-formulas', 'biology-names', 'country-flags', '404'].includes(activeView)) {
+  if (!user && ['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', 'periodic-table', 'physics-formulas', 'biology-names', 'country-flags', 'interactive-globe', 'scientific-calculator', 'unit-converter', 'discussion-forum', '404'].includes(activeView)) {
     return renderContent();
   }
 
@@ -149,7 +209,7 @@ function MainApp() {
   }
 
   // Show static pages without sidebar/header even for authenticated users
-  if (['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', 'periodic-table', 'physics-formulas', 'biology-names', 'country-flags', '404'].includes(activeView)) {
+  if (['home', 'about', 'features', 'contact', 'careers', 'privacy', 'terms', 'help-center', 'documentation', 'community', 'progress-tracking', 'periodic-table', 'physics-formulas', 'biology-names', 'country-flags', 'interactive-globe', 'scientific-calculator', 'unit-converter', 'discussion-forum', '404'].includes(activeView)) {
     return renderContent();
   }
 
