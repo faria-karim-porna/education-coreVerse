@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Button } from '../ui/Button';
+import React from "react";
+import { motion } from "framer-motion";
+import { Button } from "../ui/Button";
 
 interface AboutHeroProps {
   onNavigate: (view: string) => void;
@@ -12,21 +12,14 @@ export function AboutHero({ onNavigate }: AboutHeroProps) {
       <div className="container-lg py-5">
         <div className="row align-items-center">
           <div className="col-lg-6">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
+            <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
               <h1 className="display-3 fw-bold mb-4">About CoreVerse</h1>
               <p className="lead mb-4">
-                We're on a mission to transform education through innovative technology, 
-                making quality STEM learning accessible to students worldwide.
+                We're on a mission to transform education through innovative technology, making quality STEM learning accessible to students
+                worldwide.
               </p>
               <div className="d-flex flex-wrap gap-3">
-                <Button variant="secondary" className="bg-white text-primary-red border-white">
-                  Our Story
-                </Button>
-                <Button variant="outline-secondary" className="border-white text-white" onClick={() => onNavigate('contact')}>
+                <Button variant="outline-secondary" className="border-white text-white" onClick={() => onNavigate("careers")}>
                   Join Our Team
                 </Button>
               </div>
