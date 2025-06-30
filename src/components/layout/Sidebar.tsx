@@ -39,10 +39,8 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
   const { user } = useAuth();
 
   const studentMenuItems = [
-    { id: "home", label: "Home", icon: Home },
     { id: "dashboard", label: "Dashboard", icon: BarChart3 },
     { id: "classes", label: "My Classes", icon: BookOpen },
-    { id: "labs", label: "STEM Labs", icon: Beaker },
     { id: "tools", label: "Study Tools", icon: Calculator },
     { id: "progress", label: "Progress", icon: BarChart3 },
     { id: "portfolio", label: "Portfolio", icon: PenTool },
@@ -72,8 +70,6 @@ export function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarPr
     { id: "interactive-globe", label: "Interactive Globe", icon: Globe },
     { id: "scientific-calculator", label: "Scientific Calculator", icon: Calculator },
     { id: "unit-converter", label: "Unit Converter", icon: ArrowLeftRight },
-    { id: "discussion-forum", label: "Discussion Forum", icon: MessageCircle },
-    { id: "live-classroom", label: "Live Classroom", icon: Video },
     { id: "drawing-tool", label: "Drawing Tool", icon: Pencil },
     { id: "question-maker", label: "Question Maker", icon: HelpCircleIcon },
     { id: "flashcard", label: "Flashcards", icon: BookOpenCheck },
