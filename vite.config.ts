@@ -14,7 +14,6 @@ export default defineConfig({
   resolve: {
     alias: {
       'three/tsl': path.resolve(__dirname, 'node_modules/three/examples/jsm/nodes/Nodes.js'),
-      'three/webgpu': path.resolve(__dirname, 'node_modules/three/examples/jsm/renderers/webgpu/WebGPURenderer.js'),
     },
   },
 });
