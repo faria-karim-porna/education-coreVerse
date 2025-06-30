@@ -16,7 +16,9 @@ import {
 } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
-import { ThemeToggle } from '../ui/ThemeToggle';
+import { Header } from '../layout/Header';
+import { Sidebar } from '../layout/Sidebar';
+import { useNavigate } from 'react-router-dom';
 
 interface BiologyNamesPageProps {
   onNavigate: (view: string) => void;
@@ -45,6 +47,8 @@ export function BiologyNamesPage({ onNavigate }: BiologyNamesPageProps) {
   const [selectedOrganism, setSelectedOrganism] = useState<Organism | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const organisms: Organism[] = [
     {
@@ -221,369 +225,237 @@ export function BiologyNamesPage({ onNavigate }: BiologyNamesPageProps) {
   };
 
   return (
-    <div className="min-vh-100 bg-light-bg">
-      {/* Navigation */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
-        <div className="container-lg">
-          <motion.button
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="navbar-brand d-flex align-items-center gap-2 btn btn-link text-decoration-none"
-            onClick={() => onNavigate('home')}
-          >
-            <div className="bg-primary-red rounded-4 d-flex align-items-center justify-content-center"
-                 style={{ width: '40px', height: '40px' }}>
-              <BookOpen className="text-white" size={24} />
-            </div>
-            <span className="fw-bold h3 text-deep-red mb-0">CoreVerse</span>
-          </motion.button>
-          
-          <div className="d-none d-md-flex align-items-center gap-4">
-            <button 
-              onClick={() => onNavigate('features')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              Features
-            </button>
-            <button 
-              onClick={() => onNavigate('about')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              About
-            </button>
-            <button 
-              onClick={() => onNavigate('contact')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              Contact
-            </button>
-            <ThemeToggle />
-            <Button variant="secondary" className="me-2" onClick={() => onNavigate('dashboard')}>
-              Sign In
-            </Button>
-            <Button onClick={() => onNavigate('dashboard')}>Get Started</Button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <section className="position-relative overflow-hidden bg-gradient-primary text-white py-5">
-        <div className="container-lg py-5">
-          <div className="text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
-                   style={{ width: '80px', height: '80px' }}>
-                <Leaf className="text-white" size={40} />
-              </div>
-              <h1 className="display-3 fw-bold mb-4">Scientific Names Database</h1>
-              <p className="lead mb-5 mx-auto" style={{ maxWidth: '600px' }}>
-                Explore the scientific classification and nomenclature of organisms 
-                from across the tree of life. Learn taxonomy with detailed information.
-              </p>
-              <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-                <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white">
-                  <Download size={20} className="me-2" />
-                  Download Guide
-                </Button>
-                <Button variant="outline-secondary" size="lg" className="border-white text-white">
-                  <Share2 size={20} className="me-2" />
-                  Share Database
-                </Button>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Search and Filters */}
-      <section className="py-4 bg-white border-bottom">
-        <div className="container-lg">
-          <div className="row align-items-center">
-            <div className="col-md-6">
-              <div className="position-relative">
-                <Search className="position-absolute text-muted" 
-                        style={{ left: '12px', top: '50%', transform: 'translateY(-50%)', width: '16px', height: '16px' }} />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search by common name, scientific name, or genus..."
-                  className="form-control ps-5"
-                  style={{ paddingLeft: '2.5rem' }}
-                />
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="d-flex align-items-center gap-3 justify-content-md-end">
-                <span className="fw-medium text-deep-red">Category:</span>
-                <select 
-                  className="form-select"
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  style={{ maxWidth: '200px' }}
-                >
-                  {categories.map(category => (
-                    <option key={category.id} value={category.id}>{category.label}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Organisms Grid */}
-      <section className="py-5 bg-light-bg">
-        <div className="container-lg">
-          <div className="row g-4">
-            {filteredOrganisms.map((organism, index) => (
-              <div key={organism.id} className="col-md-6 col-lg-4">
+    <div className="min-vh-100 bg-light-bg d-flex">
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        activeView="biology-names"
+        onViewChange={onNavigate}
+      />
+      
+      <div className="flex-fill d-flex flex-column overflow-hidden">
+        <Header
+          onMenuToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+          isSidebarOpen={isSidebarOpen}
+          onNavigate={onNavigate}
+        />
+        
+        <main className="flex-fill overflow-auto">
+          {/* Hero Section */}
+          <section className="position-relative overflow-hidden bg-gradient-primary text-white py-5">
+            <div className="container-lg py-5">
+              <div className="text-center">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ duration: 0.8 }}
                 >
-                  <Card hover className="h-100" onClick={() => setSelectedOrganism(organism)}>
-                    <img
-                      src={organism.image}
-                      alt={organism.commonName}
-                      className="card-img-top object-fit-cover"
-                      style={{ height: '200px' }}
-                    />
-                    <div className="card-body p-4">
-                      <div className="d-flex align-items-center justify-content-between mb-2">
-                        <span className="badge bg-primary-red text-white text-capitalize">
-                          {organism.category}
-                        </span>
-                        <span className={`badge ${getConservationColor(organism.conservation)} text-white`}>
-                          {organism.conservation}
-                        </span>
-                      </div>
-                      
-                      <h4 className="fw-bold text-deep-red mb-1">{organism.commonName}</h4>
-                      <p className="text-muted fst-italic mb-2">{organism.scientificName}</p>
-                      <p className="text-muted small mb-3">{organism.description}</p>
-                      
-                      <div className="d-flex align-items-center justify-content-between">
-                        <small className="text-muted">
-                          {organism.genus} {organism.species}
-                        </small>
-                        <Button size="sm">
-                          <Eye size={14} className="me-1" />
-                          Details
-                        </Button>
-                      </div>
-                    </div>
-                  </Card>
+                  <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
+                       style={{ width: '80px', height: '80px' }}>
+                    <Leaf className="text-white" size={40} />
+                  </div>
+                  <h1 className="display-3 fw-bold mb-4">Scientific Names Database</h1>
+                  <p className="lead mb-5 mx-auto" style={{ maxWidth: '600px' }}>
+                    Explore the scientific classification and nomenclature of organisms 
+                    from across the tree of life. Learn taxonomy with detailed information.
+                  </p>
+                  <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                    <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white">
+                      <Download size={20} className="me-2" />
+                      Download Guide
+                    </Button>
+                    <Button variant="outline-secondary" size="lg" className="border-white text-white">
+                      <Share2 size={20} className="me-2" />
+                      Share Database
+                    </Button>
+                  </div>
                 </motion.div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Organism Details Modal */}
-      {selectedOrganism && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-4"
-          style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}
-          onClick={() => setSelectedOrganism(null)}
-        >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="bg-white rounded-4 p-5 w-100"
-            style={{ maxWidth: '800px', maxHeight: '90vh', overflowY: 'auto' }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="d-flex align-items-center justify-content-between mb-4">
-              <div>
-                <h2 className="h3 fw-bold text-deep-red mb-0">{selectedOrganism.commonName}</h2>
-                <p className="text-muted fst-italic mb-0">{selectedOrganism.scientificName}</p>
-              </div>
-              <Button variant="secondary" onClick={() => setSelectedOrganism(null)}>
-                <X size={16} />
-              </Button>
             </div>
+          </section>
 
-            <div className="row g-4 mb-4">
-              <div className="col-md-6">
-                <img
-                  src={selectedOrganism.image}
-                  alt={selectedOrganism.commonName}
-                  className="img-fluid rounded-3"
-                />
-              </div>
-              <div className="col-md-6">
-                <h5 className="fw-bold text-deep-red mb-3">Taxonomic Classification</h5>
-                <div className="d-flex flex-column gap-2">
-                  {[
-                    { label: 'Kingdom', value: selectedOrganism.kingdom },
-                    { label: 'Phylum', value: selectedOrganism.phylum },
-                    { label: 'Class', value: selectedOrganism.class },
-                    { label: 'Order', value: selectedOrganism.order },
-                    { label: 'Family', value: selectedOrganism.family },
-                    { label: 'Genus', value: selectedOrganism.genus },
-                    { label: 'Species', value: selectedOrganism.species }
-                  ].map((item, idx) => (
-                    <div key={idx} className="d-flex justify-content-between border-bottom pb-1">
-                      <span className="fw-medium text-deep-red">{item.label}:</span>
-                      <span className="text-muted">{item.value}</span>
-                    </div>
-                  ))}
+          {/* Search and Filters */}
+          <section className="py-4 bg-white border-bottom">
+            <div className="container-lg">
+              <div className="row align-items-center">
+                <div className="col-md-6">
+                  <div className="position-relative">
+                    <Search className="position-absolute text-muted" 
+                            style={{ left: '12px', top: '50%', transform: 'translateY(-50%)', width: '16px', height: '16px' }} />
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search by common name, scientific name, or genus..."
+                      className="form-control ps-5"
+                      style={{ paddingLeft: '2.5rem' }}
+                    />
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="d-flex align-items-center gap-3 justify-content-md-end">
+                    <span className="fw-medium text-deep-red">Category:</span>
+                    <select 
+                      className="form-select"
+                      value={selectedCategory}
+                      onChange={(e) => setSelectedCategory(e.target.value)}
+                      style={{ maxWidth: '200px' }}
+                    >
+                      {categories.map(category => (
+                        <option key={category.id} value={category.id}>{category.label}</option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
+          </section>
 
-            <div className="mb-4">
-              <h5 className="fw-bold text-deep-red mb-2">Description</h5>
-              <p className="text-muted">{selectedOrganism.description}</p>
-            </div>
-
-            <div className="mb-4">
-              <h5 className="fw-bold text-deep-red mb-2">Habitat</h5>
-              <p className="text-muted">{selectedOrganism.habitat}</p>
-            </div>
-
-            <div className="mb-4">
-              <h5 className="fw-bold text-deep-red mb-2">Key Characteristics</h5>
-              <div className="d-flex flex-wrap gap-2">
-                {selectedOrganism.characteristics.map((char, idx) => (
-                  <span key={idx} className="badge bg-light-bg text-deep-red">{char}</span>
+          {/* Organisms Grid */}
+          <section className="py-5 bg-light-bg">
+            <div className="container-lg">
+              <div className="row g-4">
+                {filteredOrganisms.map((organism, index) => (
+                  <div key={organism.id} className="col-md-6 col-lg-4">
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <Card hover className="h-100" onClick={() => setSelectedOrganism(organism)}>
+                        <img
+                          src={organism.image}
+                          alt={organism.commonName}
+                          className="card-img-top object-fit-cover"
+                          style={{ height: '200px' }}
+                        />
+                        <div className="card-body p-4">
+                          <div className="d-flex align-items-center justify-content-between mb-2">
+                            <span className="badge bg-primary-red text-white text-capitalize">
+                              {organism.category}
+                            </span>
+                            <span className={`badge ${getConservationColor(organism.conservation)} text-white`}>
+                              {organism.conservation}
+                            </span>
+                          </div>
+                          
+                          <h4 className="fw-bold text-deep-red mb-1">{organism.commonName}</h4>
+                          <p className="text-muted fst-italic mb-2">{organism.scientificName}</p>
+                          <p className="text-muted small mb-3">{organism.description}</p>
+                          
+                          <div className="d-flex align-items-center justify-content-between">
+                            <small className="text-muted">
+                              {organism.genus} {organism.species}
+                            </small>
+                            <Button size="sm">
+                              <Eye size={14} className="me-1" />
+                              Details
+                            </Button>
+                          </div>
+                        </div>
+                      </Card>
+                    </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
+          </section>
 
-            <div className="bg-light-bg rounded-3 p-3">
-              <div className="d-flex align-items-center justify-content-between">
-                <div>
-                  <h6 className="fw-bold text-deep-red mb-1">Conservation Status</h6>
-                  <span className={`badge ${getConservationColor(selectedOrganism.conservation)} text-white`}>
-                    {selectedOrganism.conservation}
-                  </span>
-                </div>
-                <div className="text-end">
-                  <small className="text-muted d-block">Category</small>
-                  <span className="badge bg-primary-red text-white text-capitalize">
-                    {selectedOrganism.category}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-
-      {/* Footer */}
-      <footer className="bg-deep-red text-white py-5">
-        <div className="container-lg">
-          <div className="row g-4">
-            <div className="col-lg-3">
-              <button 
-                onClick={() => onNavigate('home')}
-                className="d-flex align-items-center gap-2 mb-4 btn btn-link text-white text-decoration-none p-0"
+          {/* Organism Details Modal */}
+          {selectedOrganism && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-4"
+              style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}
+              onClick={() => setSelectedOrganism(null)}
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="bg-white rounded-4 p-5 w-100"
+                style={{ maxWidth: '800px', maxHeight: '90vh', overflowY: 'auto' }}
+                onClick={(e) => e.stopPropagation()}
               >
-                <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
-                     style={{ width: '32px', height: '32px' }}>
-                  <BookOpen className="text-white" size={20} />
+                <div className="d-flex align-items-center justify-content-between mb-4">
+                  <div>
+                    <h2 className="h3 fw-bold text-deep-red mb-0">{selectedOrganism.commonName}</h2>
+                    <p className="text-muted fst-italic mb-0">{selectedOrganism.scientificName}</p>
+                  </div>
+                  <Button variant="secondary" onClick={() => setSelectedOrganism(null)}>
+                    <X size={16} />
+                  </Button>
                 </div>
-                <span className="fw-bold h5 mb-0">CoreVerse</span>
-              </button>
-              <p className="text-white-50">
-                Transforming education through interactive technology and innovative learning experiences.
-              </p>
-            </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Study Tools</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('periodic-table')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Periodic Table
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('physics-formulas')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Physics Formulas
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('biology-names')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Scientific Names
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('country-flags')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Country Flags
-                  </button>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Support</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('help-center')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Help Center
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('documentation')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Documentation
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('community')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Community
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Contact Us
-                  </button>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Company</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('about')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    About
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('careers')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Careers
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('privacy')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Privacy
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('terms')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Terms
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-top border-white border-opacity-25 mt-5 pt-4 text-center">
-            <p className="text-white-50 mb-0">&copy; 2024 CoreVerse. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+
+                <div className="row g-4 mb-4">
+                  <div className="col-md-6">
+                    <img
+                      src={selectedOrganism.image}
+                      alt={selectedOrganism.commonName}
+                      className="img-fluid rounded-3"
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <h5 className="fw-bold text-deep-red mb-3">Taxonomic Classification</h5>
+                    <div className="d-flex flex-column gap-2">
+                      {[
+                        { label: 'Kingdom', value: selectedOrganism.kingdom },
+                        { label: 'Phylum', value: selectedOrganism.phylum },
+                        { label: 'Class', value: selectedOrganism.class },
+                        { label: 'Order', value: selectedOrganism.order },
+                        { label: 'Family', value: selectedOrganism.family },
+                        { label: 'Genus', value: selectedOrganism.genus },
+                        { label: 'Species', value: selectedOrganism.species }
+                      ].map((item, idx) => (
+                        <div key={idx} className="d-flex justify-content-between border-bottom pb-1">
+                          <span className="fw-medium text-deep-red">{item.label}:</span>
+                          <span className="text-muted">{item.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mb-4">
+                  <h5 className="fw-bold text-deep-red mb-2">Description</h5>
+                  <p className="text-muted">{selectedOrganism.description}</p>
+                </div>
+
+                <div className="mb-4">
+                  <h5 className="fw-bold text-deep-red mb-2">Habitat</h5>
+                  <p className="text-muted">{selectedOrganism.habitat}</p>
+                </div>
+
+                <div className="mb-4">
+                  <h5 className="fw-bold text-deep-red mb-2">Key Characteristics</h5>
+                  <div className="d-flex flex-wrap gap-2">
+                    {selectedOrganism.characteristics.map((char, idx) => (
+                      <span key={idx} className="badge bg-light-bg text-deep-red">{char}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-light-bg rounded-3 p-3">
+                  <div className="d-flex align-items-center justify-content-between">
+                    <div>
+                      <h6 className="fw-bold text-deep-red mb-1">Conservation Status</h6>
+                      <span className={`badge ${getConservationColor(selectedOrganism.conservation)} text-white`}>
+                        {selectedOrganism.conservation}
+                      </span>
+                    </div>
+                    <div className="text-end">
+                      <small className="text-muted d-block">Category</small>
+                      <span className="badge bg-primary-red text-white text-capitalize">
+                        {selectedOrganism.category}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </main>
+      </div>
     </div>
   );
 }
