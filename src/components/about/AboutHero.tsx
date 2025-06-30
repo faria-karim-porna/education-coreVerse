@@ -18,7 +18,7 @@ export function AboutHero({ onNavigate }: AboutHeroProps) {
                 We're on a mission to transform education through innovative technology, making quality STEM learning accessible to students
                 worldwide.
               </p>
-              <div className="d-flex flex-wrap gap-3">
+              <div className="d-flex flex-wrap gap-3 mb-4 mb-lg-0">
                 <Button variant="outline-secondary" className="border-white text-white" onClick={() => onNavigate("careers")}>
                   Join Our Team
                 </Button>
