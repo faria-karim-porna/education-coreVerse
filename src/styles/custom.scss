@@ -1,6 +1,6 @@
 // CoreVerse Custom Bootstrap Theme
 // Import Bootstrap functions first
-@use "bootstrap/scss/functions" as *;
+@import "bootstrap/scss/functions";
 
 // Custom color variables
 $primary: #ff7474;
@@ -42,7 +42,7 @@ $btn-border-radius-sm: 0.375rem;
 $btn-border-radius-lg: 0.75rem;
 
 // Import Bootstrap
-@use "bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap";
 
 // Custom utility classes
 .bg-light-bg {

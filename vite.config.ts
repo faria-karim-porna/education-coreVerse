@@ -7,10 +7,4 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
-  resolve: {
-    alias: {
-      'three/tsl': 'three/examples/jsm/nodes/Nodes.js',
-      'three/webgpu': 'three/examples/jsm/renderers/webgpu/WebGPURenderer.js',
-    },
-  },
 });
