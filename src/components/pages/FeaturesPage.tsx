@@ -18,12 +18,16 @@ import {
   Cloud,
   Brain,
   Target,
-  Play,
-  CheckCircle
+  Play
 } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { ThemeToggle } from '../ui/ThemeToggle';
+import { FeatureCard } from '../features/FeatureCard';
+import { PlatformAdvantage } from '../features/PlatformAdvantage';
+import { IntegrationSection } from '../features/IntegrationSection';
+import { FeatureCategories } from '../features/FeatureCategories';
+import { CTASection } from '../features/CTASection';
 
 interface FeaturesPageProps {
   onNavigate: (view: string) => void;
@@ -262,75 +266,20 @@ export function FeaturesPage({ onNavigate }: FeaturesPageProps) {
       {/* Feature Categories */}
       <section className="py-5 bg-white">
         <div className="container-lg">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-5"
-          >
-            <h2 className="display-4 fw-bold text-deep-red mb-4">Explore by Category</h2>
-            <p className="lead text-muted">
-              Choose a category to explore specific features in detail
-            </p>
-          </motion.div>
-
-          <div className="d-flex flex-wrap justify-content-center gap-3 mb-5">
-            {featureCategories.map((category) => (
-              <Button
-                key={category.id}
-                variant={activeCategory === category.id ? 'primary' : 'secondary'}
-                onClick={() => setActiveCategory(category.id)}
-                className="d-flex align-items-center gap-2"
-              >
-                <category.icon size={16} />
-                {category.label}
-              </Button>
-            ))}
-          </div>
+          <FeatureCategories 
+            categories={featureCategories} 
+            activeCategory={activeCategory} 
+            setActiveCategory={setActiveCategory} 
+          />
 
           <div className="row g-4">
             {filteredFeatures.map((feature, index) => (
               <div key={feature.id} className="col-lg-6">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="h-100"
-                >
-                  <Card hover className="h-100">
-                    <div className="row g-0 h-100">
-                      <div className="col-md-5">
-                        <div className="position-relative h-100">
-                          <img
-                            src={feature.image}
-                            alt={feature.title}
-                            className="img-fluid h-100 object-fit-cover rounded-start"
-                          />
-                          <div className={`position-absolute top-0 start-0 m-3 ${feature.color} rounded-3 d-flex align-items-center justify-content-center`}
-                               style={{ width: '48px', height: '48px' }}>
-                            <feature.icon className="text-white" size={24} />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md-7">
-                        <div className="card-body p-4 h-100 d-flex flex-column">
-                          <h4 className="fw-bold text-deep-red mb-3">{feature.title}</h4>
-                          <p className="text-muted mb-4 flex-fill">{feature.description}</p>
-                          <div className="mb-4">
-                            {feature.features.map((item, idx) => (
-                              <div key={idx} className="d-flex align-items-center mb-2">
-                                <CheckCircle className="text-success me-2 flex-shrink-0" size={16} />
-                                <small className="text-muted">{item}</small>
-                              </div>
-                            ))}
-                          </div>
-                          <Button size="sm" className="align-self-start" onClick={() => onNavigate('dashboard')}>
-                            Learn More
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </Card>
-                </motion.div>
+                <FeatureCard 
+                  feature={feature} 
+                  index={index} 
+                  onNavigate={onNavigate} 
+                />
               </div>
             ))}
           </div>
@@ -354,22 +303,7 @@ export function FeaturesPage({ onNavigate }: FeaturesPageProps) {
           <div className="row g-4">
             {platformFeatures.map((feature, index) => (
               <div key={feature.title} className="col-md-6 col-lg-3">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Card className="text-center h-100">
-                    <div className="card-body p-4">
-                      <div className="bg-primary-red bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
-                           style={{ width: '64px', height: '64px' }}>
-                        <feature.icon className="text-primary-red" size={32} />
-                      </div>
-                      <h4 className="fw-bold text-deep-red mb-3">{feature.title}</h4>
-                      <p className="text-muted">{feature.description}</p>
-                    </div>
-                  </Card>
-                </motion.div>
+                <PlatformAdvantage feature={feature} index={index} />
               </div>
             ))}
           </div>
@@ -377,82 +311,10 @@ export function FeaturesPage({ onNavigate }: FeaturesPageProps) {
       </section>
 
       {/* Integration Section */}
-      <section className="py-5 bg-white">
-        <div className="container-lg">
-          <div className="row align-items-center">
-            <div className="col-lg-6">
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-              >
-                <h2 className="display-4 fw-bold text-deep-red mb-4">Seamless Integration</h2>
-                <p className="lead text-muted mb-4">
-                  CoreVerse integrates with your existing educational infrastructure, 
-                  making adoption smooth and efficient.
-                </p>
-                <div className="d-flex flex-column gap-3 mb-4">
-                  <div className="d-flex align-items-center">
-                    <CheckCircle className="text-success me-3" size={20} />
-                    <span>LMS Integration (Canvas, Blackboard, Moodle)</span>
-                  </div>
-                  <div className="d-flex align-items-center">
-                    <CheckCircle className="text-success me-3" size={20} />
-                    <span>Single Sign-On (SSO) Support</span>
-                  </div>
-                  <div className="d-flex align-items-center">
-                    <CheckCircle className="text-success me-3" size={20} />
-                    <span>Grade Passback Functionality</span>
-                  </div>
-                  <div className="d-flex align-items-center">
-                    <CheckCircle className="text-success me-3" size={20} />
-                    <span>API Access for Custom Integrations</span>
-                  </div>
-                </div>
-                <Button onClick={() => onNavigate('contact')}>
-                  View Integration Guide
-                </Button>
-              </motion.div>
-            </div>
-            <div className="col-lg-6">
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="text-center"
-              >
-                <img
-                  src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=2"
-                  alt="Integration"
-                  className="img-fluid rounded-4 shadow-lg"
-                />
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <IntegrationSection onNavigate={onNavigate} />
 
       {/* CTA Section */}
-      <section className="py-5 bg-gradient-secondary text-white">
-        <div className="container-lg text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <h2 className="display-4 fw-bold mb-4">Ready to Experience CoreVerse?</h2>
-            <p className="lead mb-5 opacity-75">
-              Start your free trial today and discover how our features can 
-              transform your educational experience.
-            </p>
-            <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-              <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white" onClick={() => onNavigate('dashboard')}>
-                Start Free Trial
-              </Button>
-              <Button variant="outline-secondary" size="lg" className="border-white text-white" onClick={() => onNavigate('contact')}>
-                Schedule Demo
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <CTASection onNavigate={onNavigate} />
 
       {/* Footer */}
       <footer className="bg-deep-red text-white py-5">
