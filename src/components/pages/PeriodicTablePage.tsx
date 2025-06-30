@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  BookOpen,
-  Search,
   Atom,
   Download,
   Share2
 } from 'lucide-react';
-import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
-import { ThemeToggle } from '../ui/ThemeToggle';
 import { ElementGrid } from '../periodic-table/ElementGrid';
 import { CategoryLegend } from '../periodic-table/CategoryLegend';
 import { SearchAndFilters } from '../periodic-table/SearchAndFilters';
 import { ElementDetails } from '../periodic-table/ElementDetails';
+import { Header } from '../layout/Header';
+import { Sidebar } from '../layout/Sidebar';
 
 interface PeriodicTablePageProps {
   onNavigate: (view: string) => void;
@@ -38,6 +36,7 @@ export function PeriodicTablePage({ onNavigate }: PeriodicTablePageProps) {
   const [selectedElement, setSelectedElement] = useState<Element | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const elements: Element[] = [
     {
@@ -235,228 +234,96 @@ export function PeriodicTablePage({ onNavigate }: PeriodicTablePageProps) {
   });
 
   return (
-    <div className="min-vh-100 bg-light-bg">
-      {/* Navigation */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
-        <div className="container-lg">
-          <motion.button
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="navbar-brand d-flex align-items-center gap-2 btn btn-link text-decoration-none"
-            onClick={() => onNavigate('home')}
-          >
-            <div className="bg-primary-red rounded-4 d-flex align-items-center justify-content-center"
-                 style={{ width: '40px', height: '40px' }}>
-              <BookOpen className="text-white" size={24} />
-            </div>
-            <span className="fw-bold h3 text-deep-red mb-0">CoreVerse</span>
-          </motion.button>
-          
-          <div className="d-none d-md-flex align-items-center gap-4">
-            <button 
-              onClick={() => onNavigate('features')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              Features
-            </button>
-            <button 
-              onClick={() => onNavigate('about')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              About
-            </button>
-            <button 
-              onClick={() => onNavigate('contact')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              Contact
-            </button>
-            <ThemeToggle />
-            <Button variant="secondary" className="me-2" onClick={() => onNavigate('dashboard')}>
-              Sign In
-            </Button>
-            <Button onClick={() => onNavigate('dashboard')}>Get Started</Button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <section className="position-relative overflow-hidden bg-gradient-primary text-white py-5">
-        <div className="container-lg py-5">
-          <div className="text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
-                   style={{ width: '80px', height: '80px' }}>
-                <Atom className="text-white" size={40} />
-              </div>
-              <h1 className="display-3 fw-bold mb-4">Interactive Periodic Table</h1>
-              <p className="lead mb-5 mx-auto" style={{ maxWidth: '600px' }}>
-                Explore the elements that make up our universe. Click on any element 
-                to discover its properties, uses, and fascinating history.
-              </p>
-              <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-                <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white">
-                  <Download size={20} className="me-2" />
-                  Download Reference
-                </Button>
-                <Button variant="outline-secondary" size="lg" className="border-white text-white">
-                  <Share2 size={20} className="me-2" />
-                  Share Table
-                </Button>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Search and Filters */}
-      <section className="py-4 bg-white border-bottom">
-        <div className="container-lg">
-          <SearchAndFilters 
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            categories={categories}
-          />
-        </div>
-      </section>
-
-      {/* Category Legend */}
-      <section className="py-4 bg-light-bg">
-        <div className="container-lg">
-          <CategoryLegend categories={categories} />
-        </div>
-      </section>
-
-      {/* Periodic Table Grid */}
-      <section className="py-5 bg-white">
-        <div className="container-lg">
-          <ElementGrid 
-            elements={filteredElements} 
-            onElementClick={setSelectedElement} 
-            getCategoryColor={getCategoryColor} 
-          />
-        </div>
-      </section>
-
-      {/* Element Details Modal */}
-      {selectedElement && (
-        <ElementDetails 
-          element={selectedElement} 
-          onClose={() => setSelectedElement(null)} 
-          getCategoryColor={getCategoryColor} 
+    <div className="min-vh-100 bg-light-bg d-flex">
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        activeView="periodic-table"
+        onViewChange={onNavigate}
+      />
+      
+      <div className="flex-fill d-flex flex-column overflow-hidden">
+        <Header
+          onMenuToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+          isSidebarOpen={isSidebarOpen}
+          onNavigate={onNavigate}
         />
-      )}
+        
+        <main className="flex-fill overflow-auto">
+          {/* Hero Section */}
+          <section className="position-relative overflow-hidden bg-gradient-primary text-white py-5">
+            <div className="container-lg py-5">
+              <div className="text-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
+                       style={{ width: '80px', height: '80px' }}>
+                    <Atom className="text-white" size={40} />
+                  </div>
+                  <h1 className="display-3 fw-bold mb-4">Interactive Periodic Table</h1>
+                  <p className="lead mb-5 mx-auto" style={{ maxWidth: '600px' }}>
+                    Explore the elements that make up our universe. Click on any element 
+                    to discover its properties, uses, and fascinating history.
+                  </p>
+                  <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                    <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white">
+                      <Download size={20} className="me-2" />
+                      Download Reference
+                    </Button>
+                    <Button variant="outline-secondary" size="lg" className="border-white text-white">
+                      <Share2 size={20} className="me-2" />
+                      Share Table
+                    </Button>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </section>
 
-      {/* Footer */}
-      <footer className="bg-deep-red text-white py-5">
-        <div className="container-lg">
-          <div className="row g-4">
-            <div className="col-lg-3">
-              <button 
-                onClick={() => onNavigate('home')}
-                className="d-flex align-items-center gap-2 mb-4 btn btn-link text-white text-decoration-none p-0"
-              >
-                <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
-                     style={{ width: '32px', height: '32px' }}>
-                  <BookOpen className="text-white" size={20} />
-                </div>
-                <span className="fw-bold h5 mb-0">CoreVerse</span>
-              </button>
-              <p className="text-white-50">
-                Transforming education through interactive technology and innovative learning experiences.
-              </p>
+          {/* Search and Filters */}
+          <section className="py-4 bg-white border-bottom">
+            <div className="container-lg">
+              <SearchAndFilters 
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
+                categories={categories}
+              />
             </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Study Tools</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('periodic-table')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Periodic Table
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('physics-formulas')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Physics Formulas
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('biology-names')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Scientific Names
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('country-flags')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Country Flags
-                  </button>
-                </li>
-              </ul>
+          </section>
+
+          {/* Category Legend */}
+          <section className="py-4 bg-light-bg">
+            <div className="container-lg">
+              <CategoryLegend categories={categories} />
             </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Support</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('help-center')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Help Center
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('documentation')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Documentation
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('community')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Community
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Contact Us
-                  </button>
-                </li>
-              </ul>
+          </section>
+
+          {/* Periodic Table Grid */}
+          <section className="py-5 bg-white">
+            <div className="container-lg">
+              <ElementGrid 
+                elements={filteredElements} 
+                onElementClick={setSelectedElement} 
+                getCategoryColor={getCategoryColor} 
+              />
             </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Company</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('about')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    About
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('careers')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Careers
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('privacy')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Privacy
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('terms')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Terms
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-top border-white border-opacity-25 mt-5 pt-4 text-center">
-            <p className="text-white-50 mb-0">&copy; 2024 CoreVerse. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+          </section>
+
+          {/* Element Details Modal */}
+          {selectedElement && (
+            <ElementDetails 
+              element={selectedElement} 
+              onClose={() => setSelectedElement(null)} 
+              getCategoryColor={getCategoryColor} 
+            />
+          )}
+        </main>
+      </div>
     </div>
   );
 }

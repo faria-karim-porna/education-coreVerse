@@ -14,6 +14,8 @@ import { ControlsBar } from '../drawing-tool/ControlsBar';
 import { LayersPanel } from '../drawing-tool/LayersPanel';
 import { SavedDrawings } from '../drawing-tool/SavedDrawings';
 import { QuickActions } from '../drawing-tool/QuickActions';
+import { Header } from '../layout/Header';
+import { Sidebar } from '../layout/Sidebar';
 
 interface DrawingToolPageProps {
   onNavigate: (view: string) => void;
@@ -41,6 +43,7 @@ export function DrawingToolPage({ onNavigate }: DrawingToolPageProps) {
   const [showSavedDrawings, setShowSavedDrawings] = useState(false);
   const [drawingName, setDrawingName] = useState('Untitled Drawing');
   const [isRenaming, setIsRenaming] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -56,6 +59,122 @@ export function DrawingToolPage({ onNavigate }: DrawingToolPageProps) {
     '#000000', // black
     '#ffffff'  // white
   ];
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw grid if enabled
+    if (showGrid) {
+      drawGrid(ctx);
+    }
+
+    // Draw all shapes
+    shapes.forEach((shape, index) => {
+      drawShape(ctx, shape, index === selectedShape);
+    });
+
+    // Draw current shape being created
+    if (currentShape) {
+      drawShape(ctx, currentShape, false);
+    }
+  }, [shapes, currentShape, showGrid, selectedShape, zoom]);
+
+  const drawGrid = (ctx: CanvasRenderingContext2D) => {
+    const gridSize = 20;
+    const width = canvasSize.width;
+    const height = canvasSize.height;
+
+    ctx.beginPath();
+    ctx.strokeStyle = '#e0e0e0';
+    ctx.lineWidth = 0.5;
+
+    // Draw vertical lines
+    for (let x = 0; x <= width; x += gridSize) {
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, height);
+    }
+
+    // Draw horizontal lines
+    for (let y = 0; y <= height; y += gridSize) {
+      ctx.moveTo(0, y);
+      ctx.lineTo(width, y);
+    }
+
+    ctx.stroke();
+  };
+
+  const drawShape = (ctx: CanvasRenderingContext2D, shape: any, isSelected: boolean) => {
+    const { type, x, y, width, height, points, color, lineWidth, text, fontSize, fontStyle, textAlign } = shape;
+
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = lineWidth;
+
+    if (isSelected) {
+      // Draw selection outline
+      ctx.save();
+      ctx.strokeStyle = '#3b82f6';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([5, 5]);
+      ctx.strokeRect(x - 5, y - 5, width + 10, height + 10);
+      ctx.restore();
+    }
+
+    switch (type) {
+      case 'pencil':
+        if (points.length < 2) return;
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        for (let i = 1; i < points.length; i++) {
+          ctx.lineTo(points[i].x, points[i].y);
+        }
+        ctx.stroke();
+        break;
+      case 'rectangle':
+        ctx.beginPath();
+        ctx.rect(x, y, width, height);
+        ctx.stroke();
+        break;
+      case 'circle':
+        ctx.beginPath();
+        const radius = Math.sqrt(width * width + height * height) / 2;
+        ctx.arc(x + width / 2, y + height / 2, radius, 0, Math.PI * 2);
+        ctx.stroke();
+        break;
+      case 'text':
+        ctx.font = `${fontStyle.italic ? 'italic ' : ''}${fontStyle.bold ? 'bold ' : ''}${fontSize}px Arial`;
+        ctx.textAlign = textAlign as CanvasTextAlign;
+        ctx.fillText(text, x, y + fontSize);
+        if (fontStyle.underline) {
+          const textWidth = ctx.measureText(text).width;
+          ctx.beginPath();
+          ctx.moveTo(x, y + fontSize + 3);
+          ctx.lineTo(x + textWidth, y + fontSize + 3);
+          ctx.stroke();
+        }
+        break;
+      case 'eraser':
+        if (points.length < 2) return;
+        ctx.save();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = lineWidth * 2;
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        for (let i = 1; i < points.length; i++) {
+          ctx.lineTo(points[i].x, points[i].y);
+        }
+        ctx.stroke();
+        ctx.restore();
+        break;
+    }
+  };
 
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (!canvasRef.current) return;
@@ -281,263 +400,162 @@ export function DrawingToolPage({ onNavigate }: DrawingToolPageProps) {
   };
 
   return (
-    <div className="min-vh-100 bg-light-bg">
-      {/* Navigation */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
-        <div className="container-lg">
-          <motion.button
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="navbar-brand d-flex align-items-center gap-2 btn btn-link text-decoration-none"
-            onClick={() => onNavigate('home')}
-          >
-            <div className="bg-primary-red rounded-4 d-flex align-items-center justify-content-center"
-                 style={{ width: '40px', height: '40px' }}>
-              <BookOpen className="text-white" size={24} />
-            </div>
-            <span className="fw-bold h3 text-deep-red mb-0">CoreVerse</span>
-          </motion.button>
-          
-          <div className="d-none d-md-flex align-items-center gap-4">
-            <div className="d-flex align-items-center">
-              {isRenaming ? (
-                <input
-                  type="text"
-                  className="form-control form-control-sm"
-                  value={drawingName}
-                  onChange={(e) => setDrawingName(e.target.value)}
-                  onBlur={() => setIsRenaming(false)}
-                  onKeyPress={(e) => e.key === 'Enter' && setIsRenaming(false)}
-                  autoFocus
-                />
-              ) : (
-                <h5 className="mb-0 text-deep-red" onClick={() => setIsRenaming(true)}>
-                  {drawingName}
-                </h5>
-              )}
-            </div>
-            <div className="d-flex align-items-center gap-2">
-              <Button variant="secondary" className="me-2" onClick={saveDrawing}>
-                <Save size={16} className="me-1" />
-                Save
-              </Button>
-              <Button variant="secondary" className="me-2" onClick={downloadDrawing}>
-                <Download size={16} className="me-1" />
-                Download
-              </Button>
-              <Button onClick={() => onNavigate('dashboard')}>
-                <X size={16} className="me-1" />
-                Close
-              </Button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <div className="container-fluid py-4">
-        <div className="row g-4">
-          {/* Left Toolbar */}
-          <div className="col-auto">
-            <ToolsPanel 
-              activeTool={activeTool}
-              setActiveTool={setActiveTool}
-              undo={undo}
-              redo={redo}
-              clearCanvas={clearCanvas}
-              toggleGrid={toggleGrid}
-              showGrid={showGrid}
-              historyIndex={historyIndex}
-              history={history}
-            />
-          </div>
-
-          {/* Canvas Area */}
-          <div className="col">
-            <div className="bg-white rounded-3 shadow-sm p-3">
-              {/* Controls Bar */}
-              <ControlsBar 
-                color={color}
-                setColor={setColor}
-                lineWidth={lineWidth}
-                setLineWidth={setLineWidth}
-                activeTool={activeTool}
-                textInput={textInput}
-                setTextInput={setTextInput}
-                fontStyle={fontStyle}
-                setFontStyle={setFontStyle}
-                textAlign={textAlign}
-                setTextAlign={setTextAlign}
-                colors={colors}
-              />
-
-              {/* Canvas Container */}
-              <CanvasArea 
-                canvasRef={canvasRef}
-                containerRef={containerRef}
-                canvasSize={canvasSize}
-                zoom={zoom}
-                showGrid={showGrid}
-                isDrawing={isDrawing}
-                currentShape={currentShape}
-                shapes={shapes}
-                selectedShape={selectedShape}
-                activeTool={activeTool}
-                startDrawing={startDrawing}
-                draw={draw}
-                endDrawing={endDrawing}
-                zoomIn={zoomIn}
-                zoomOut={zoomOut}
-                resetZoom={resetZoom}
-                isAddingText={isAddingText}
-                textInput={textInput}
-                setTextInput={setTextInput}
-                handleTextSubmit={handleTextSubmit}
-                setIsAddingText={setIsAddingText}
-                setCurrentShape={setCurrentShape}
-                fontStyle={fontStyle}
-                setFontStyle={setFontStyle}
-                textAlign={textAlign}
-                setTextAlign={setTextAlign}
-                fontSize={fontSize}
-                setFontSize={setFontSize}
-              />
-            </div>
-          </div>
-
-          {/* Right Sidebar - Layers and Saved Drawings */}
-          <div className="col-auto">
-            <div className="d-flex flex-column gap-3">
-              {/* Layers Panel */}
-              <LayersPanel 
-                shapes={shapes}
-                selectedShape={selectedShape}
-                setSelectedShape={setSelectedShape}
-                deleteSelectedShape={deleteSelectedShape}
-              />
-
-              {/* Saved Drawings */}
-              <SavedDrawings 
-                showSavedDrawings={showSavedDrawings}
-                setShowSavedDrawings={setShowSavedDrawings}
-                savedDrawings={savedDrawings}
-              />
-
-              {/* Quick Actions */}
-              <QuickActions 
-                saveDrawing={saveDrawing}
-                downloadDrawing={downloadDrawing}
-                clearCanvas={clearCanvas}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <footer className="bg-deep-red text-white py-5 mt-5">
-        <div className="container-lg">
-          <div className="row g-4">
-            <div className="col-lg-3">
-              <button 
-                onClick={() => onNavigate('home')}
-                className="d-flex align-items-center gap-2 mb-4 btn btn-link text-white text-decoration-none p-0"
-              >
-                <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
-                     style={{ width: '32px', height: '32px' }}>
-                  <BookOpen className="text-white" size={20} />
+    <div className="min-vh-100 bg-light-bg d-flex">
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        activeView="drawing-tool"
+        onViewChange={onNavigate}
+      />
+      
+      <div className="flex-fill d-flex flex-column overflow-hidden">
+        <Header
+          onMenuToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+          isSidebarOpen={isSidebarOpen}
+          onNavigate={onNavigate}
+        />
+        
+        <main className="flex-fill overflow-auto">
+          {/* Drawing Tool Header */}
+          <div className="bg-white border-bottom p-3">
+            <div className="container-fluid">
+              <div className="d-flex align-items-center justify-content-between">
+                <div className="d-flex align-items-center">
+                  {isRenaming ? (
+                    <input
+                      type="text"
+                      className="form-control form-control-sm"
+                      value={drawingName}
+                      onChange={(e) => setDrawingName(e.target.value)}
+                      onBlur={() => setIsRenaming(false)}
+                      onKeyPress={(e) => e.key === 'Enter' && setIsRenaming(false)}
+                      autoFocus
+                    />
+                  ) : (
+                    <h5 className="mb-0 text-deep-red" onClick={() => setIsRenaming(true)}>
+                      {drawingName}
+                    </h5>
+                  )}
                 </div>
-                <span className="fw-bold h5 mb-0">CoreVerse</span>
-              </button>
-              <p className="text-white-50">
-                Transforming education through interactive technology and innovative learning experiences.
-              </p>
-            </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Educational Tools</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('live-classroom')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Live Classroom
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('drawing-tool')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Drawing Tool
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('question-maker')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Question Maker
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('interactive-globe')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Interactive Globe
-                  </button>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Support</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('help-center')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Help Center
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('documentation')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Documentation
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('community')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Community
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Contact Us
-                  </button>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Company</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('about')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    About
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('careers')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Careers
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('privacy')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Privacy
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('terms')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Terms
-                  </button>
-                </li>
-              </ul>
+                <div className="d-flex align-items-center gap-2">
+                  <Button variant="secondary" className="me-2" onClick={saveDrawing}>
+                    <Save size={16} className="me-1" />
+                    Save
+                  </Button>
+                  <Button variant="secondary" className="me-2" onClick={downloadDrawing}>
+                    <Download size={16} className="me-1" />
+                    Download
+                  </Button>
+                  <Button onClick={() => onNavigate('dashboard')}>
+                    <X size={16} className="me-1" />
+                    Close
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
-          
-          <div className="border-top border-white border-opacity-25 mt-5 pt-4 text-center">
-            <p className="text-white-50 mb-0">&copy; 2024 CoreVerse. All rights reserved.</p>
+
+          {/* Main Content */}
+          <div className="container-fluid py-4">
+            <div className="row g-4">
+              {/* Left Toolbar */}
+              <div className="col-auto">
+                <ToolsPanel 
+                  activeTool={activeTool}
+                  setActiveTool={setActiveTool}
+                  undo={undo}
+                  redo={redo}
+                  clearCanvas={clearCanvas}
+                  toggleGrid={toggleGrid}
+                  showGrid={showGrid}
+                  historyIndex={historyIndex}
+                  history={history}
+                />
+              </div>
+
+              {/* Canvas Area */}
+              <div className="col">
+                <div className="bg-white rounded-3 shadow-sm p-3">
+                  {/* Controls Bar */}
+                  <ControlsBar 
+                    color={color}
+                    setColor={setColor}
+                    lineWidth={lineWidth}
+                    setLineWidth={setLineWidth}
+                    activeTool={activeTool}
+                    textInput={textInput}
+                    setTextInput={setTextInput}
+                    fontStyle={fontStyle}
+                    setFontStyle={setFontStyle}
+                    textAlign={textAlign}
+                    setTextAlign={setTextAlign}
+                    colors={colors}
+                  />
+
+                  {/* Canvas Container */}
+                  <CanvasArea 
+                    canvasRef={canvasRef}
+                    containerRef={containerRef}
+                    canvasSize={canvasSize}
+                    zoom={zoom}
+                    showGrid={showGrid}
+                    isDrawing={isDrawing}
+                    currentShape={currentShape}
+                    shapes={shapes}
+                    selectedShape={selectedShape}
+                    activeTool={activeTool}
+                    startDrawing={startDrawing}
+                    draw={draw}
+                    endDrawing={endDrawing}
+                    zoomIn={zoomIn}
+                    zoomOut={zoomOut}
+                    resetZoom={resetZoom}
+                    isAddingText={isAddingText}
+                    textInput={textInput}
+                    setTextInput={setTextInput}
+                    handleTextSubmit={handleTextSubmit}
+                    setIsAddingText={setIsAddingText}
+                    setCurrentShape={setCurrentShape}
+                    fontStyle={fontStyle}
+                    setFontStyle={setFontStyle}
+                    textAlign={textAlign}
+                    setTextAlign={setTextAlign}
+                    fontSize={fontSize}
+                    setFontSize={setFontSize}
+                  />
+                </div>
+              </div>
+
+              {/* Right Sidebar - Layers and Saved Drawings */}
+              <div className="col-auto">
+                <div className="d-flex flex-column gap-3">
+                  {/* Layers Panel */}
+                  <LayersPanel 
+                    shapes={shapes}
+                    selectedShape={selectedShape}
+                    setSelectedShape={setSelectedShape}
+                    deleteSelectedShape={deleteSelectedShape}
+                  />
+
+                  {/* Saved Drawings */}
+                  <SavedDrawings 
+                    showSavedDrawings={showSavedDrawings}
+                    setShowSavedDrawings={setShowSavedDrawings}
+                    savedDrawings={savedDrawings}
+                  />
+
+                  {/* Quick Actions */}
+                  <QuickActions 
+                    saveDrawing={saveDrawing}
+                    downloadDrawing={downloadDrawing}
+                    clearCanvas={clearCanvas}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </footer>
+        </main>
+      </div>
     </div>
   );
 }

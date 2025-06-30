@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { 
   Pencil, 
   Square, 
@@ -13,6 +12,7 @@ import {
   Trash2 
 } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { Card } from '../ui/Card';
 
 interface ToolsPanelProps {
   activeTool: string;

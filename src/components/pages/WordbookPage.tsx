@@ -7,10 +7,11 @@ import {
   Share2
 } from 'lucide-react';
 import { Button } from '../ui/Button';
-import { ThemeToggle } from '../ui/ThemeToggle';
 import { SearchAndFilters } from '../wordbook/SearchAndFilters';
 import { WordList } from '../wordbook/WordList';
 import { AddWordForm } from '../wordbook/AddWordForm';
+import { Header } from '../layout/Header';
+import { Sidebar } from '../layout/Sidebar';
 
 interface WordbookPageProps {
   onNavigate: (view: string) => void;
@@ -153,6 +154,7 @@ export function WordbookPage({ onNavigate }: WordbookPageProps) {
   const [synonymInput, setSynonymInput] = useState('');
   const [antonymInput, setAntonymInput] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Extract all unique tags from words
   const allTags = Array.from(new Set(words.flatMap(word => word.tags)));
@@ -334,258 +336,126 @@ export function WordbookPage({ onNavigate }: WordbookPageProps) {
   ];
 
   return (
-    <div className="min-vh-100 bg-light-bg">
-      {/* Navigation */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
-        <div className="container-lg">
-          <motion.button
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="navbar-brand d-flex align-items-center gap-2 btn btn-link text-decoration-none"
-            onClick={() => onNavigate('home')}
-          >
-            <div className="bg-primary-red rounded-4 d-flex align-items-center justify-content-center"
-                 style={{ width: '40px', height: '40px' }}>
-              <BookOpen className="text-white" size={24} />
-            </div>
-            <span className="fw-bold h3 text-deep-red mb-0">CoreVerse</span>
-          </motion.button>
-          
-          <div className="d-none d-md-flex align-items-center gap-4">
-            <button 
-              onClick={() => onNavigate('features')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              Features
-            </button>
-            <button 
-              onClick={() => onNavigate('about')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              About
-            </button>
-            <button 
-              onClick={() => onNavigate('contact')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              Contact
-            </button>
-            <ThemeToggle />
-            <Button variant="secondary" className="me-2" onClick={() => onNavigate('dashboard')}>
-              Sign In
-            </Button>
-            <Button onClick={() => onNavigate('dashboard')}>Get Started</Button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <section className="position-relative overflow-hidden bg-gradient-primary text-white py-5">
-        <div className="container-lg py-5">
-          <div className="text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
-                   style={{ width: '80px', height: '80px' }}>
-                <BookOpen className="text-white" size={40} />
-              </div>
-              <h1 className="display-3 fw-bold mb-4">Word Book</h1>
-              <p className="lead mb-5 mx-auto" style={{ maxWidth: '600px' }}>
-                Build your personal vocabulary collection with definitions, examples, 
-                and study tools. Perfect for language learning and academic studies.
-              </p>
-              <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-                <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white" onClick={() => setIsAddingWord(true)}>
-                  <Plus size={20} className="me-2" />
-                  Add New Word
-                </Button>
-                <Button variant="outline-secondary" size="lg" className="border-white text-white">
-                  <Download size={20} className="me-2" />
-                  Export Vocabulary
-                </Button>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Main Content */}
-      <section className="py-5 bg-white">
-        <div className="container-lg">
-          {/* Search and Filters */}
-          <SearchAndFilters 
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            selectedTag={selectedTag}
-            setSelectedTag={setSelectedTag}
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-            sortDirection={sortDirection}
-            setSortDirection={setSortDirection}
-            showFavoritesOnly={showFavoritesOnly}
-            setShowFavoritesOnly={setShowFavoritesOnly}
-            onAddWordClick={() => setIsAddingWord(true)}
-            categories={categories}
-            allTags={allTags}
-          />
-
-          {/* Words List */}
-          <WordList 
-            words={sortedWords}
-            expandedWord={expandedWord}
-            toggleExpand={toggleExpand}
-            toggleFavorite={toggleFavorite}
-            deleteWord={deleteWord}
-            copyToClipboard={copyToClipboard}
-            playPronunciation={playPronunciation}
-            copied={copied}
-          />
-
-          {sortedWords.length === 0 && (
-            <div className="text-center py-5">
-              <h3 className="text-muted">No words found</h3>
-              <p className="text-muted">Try adjusting your search or add a new word</p>
-              <Button className="mt-3" onClick={() => setIsAddingWord(true)}>
-                <Plus size={16} className="me-1" />
-                Add New Word
-              </Button>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Add Word Modal */}
-      {isAddingWord && (
-        <AddWordForm 
-          onClose={() => setIsAddingWord(false)}
-          onAddWord={addWord}
-          newWord={newWord}
-          setNewWord={setNewWord}
-          tagInput={tagInput}
-          setTagInput={setTagInput}
-          synonymInput={synonymInput}
-          setSynonymInput={setSynonymInput}
-          antonymInput={antonymInput}
-          setAntonymInput={setAntonymInput}
-          addTag={addTag}
-          removeTag={removeTag}
-          addSynonym={addSynonym}
-          removeSynonym={removeSynonym}
-          addAntonym={addAntonym}
-          removeAntonym={removeAntonym}
-          addExample={addExample}
-          updateExample={updateExample}
-          removeExample={removeExample}
+    <div className="min-vh-100 bg-light-bg d-flex">
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        activeView="wordbook"
+        onViewChange={onNavigate}
+      />
+      
+      <div className="flex-fill d-flex flex-column overflow-hidden">
+        <Header
+          onMenuToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+          isSidebarOpen={isSidebarOpen}
+          onNavigate={onNavigate}
         />
-      )}
+        
+        <main className="flex-fill overflow-auto">
+          {/* Hero Section */}
+          <section className="position-relative overflow-hidden bg-gradient-primary text-white py-5">
+            <div className="container-lg py-5">
+              <div className="text-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
+                       style={{ width: '80px', height: '80px' }}>
+                    <BookOpen className="text-white" size={40} />
+                  </div>
+                  <h1 className="display-3 fw-bold mb-4">Word Book</h1>
+                  <p className="lead mb-5 mx-auto" style={{ maxWidth: '600px' }}>
+                    Build your personal vocabulary collection with definitions, examples, 
+                    and study tools. Perfect for language learning and academic studies.
+                  </p>
+                  <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                    <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white" onClick={() => setIsAddingWord(true)}>
+                      <Plus size={20} className="me-2" />
+                      Add New Word
+                    </Button>
+                    <Button variant="outline-secondary" size="lg" className="border-white text-white">
+                      <Download size={20} className="me-2" />
+                      Export Vocabulary
+                    </Button>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </section>
 
-      {/* Footer */}
-      <footer className="bg-deep-red text-white py-5">
-        <div className="container-lg">
-          <div className="row g-4">
-            <div className="col-lg-3">
-              <button 
-                onClick={() => onNavigate('home')}
-                className="d-flex align-items-center gap-2 mb-4 btn btn-link text-white text-decoration-none p-0"
-              >
-                <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
-                     style={{ width: '32px', height: '32px' }}>
-                  <BookOpen className="text-white" size={20} />
+          {/* Main Content */}
+          <section className="py-5 bg-white">
+            <div className="container-lg">
+              {/* Search and Filters */}
+              <SearchAndFilters 
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                selectedTag={selectedTag}
+                setSelectedTag={setSelectedTag}
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                sortDirection={sortDirection}
+                setSortDirection={setSortDirection}
+                showFavoritesOnly={showFavoritesOnly}
+                setShowFavoritesOnly={setShowFavoritesOnly}
+                onAddWordClick={() => setIsAddingWord(true)}
+                categories={categories}
+                allTags={allTags}
+              />
+
+              {/* Words List */}
+              <WordList 
+                words={sortedWords}
+                expandedWord={expandedWord}
+                toggleExpand={toggleExpand}
+                toggleFavorite={toggleFavorite}
+                deleteWord={deleteWord}
+                copyToClipboard={copyToClipboard}
+                playPronunciation={playPronunciation}
+                copied={copied}
+              />
+
+              {sortedWords.length === 0 && (
+                <div className="text-center py-5">
+                  <h3 className="text-muted">No words found</h3>
+                  <p className="text-muted">Try adjusting your search or add a new word</p>
+                  <Button className="mt-3" onClick={() => setIsAddingWord(true)}>
+                    <Plus size={16} className="me-1" />
+                    Add New Word
+                  </Button>
                 </div>
-                <span className="fw-bold h5 mb-0">CoreVerse</span>
-              </button>
-              <p className="text-white-50">
-                Transforming education through interactive technology and innovative learning experiences.
-              </p>
+              )}
             </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Study Tools</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('flashcard')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Flashcards
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('wordbook')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Word Book
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('periodic-table')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Periodic Table
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('physics-formulas')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Physics Formulas
-                  </button>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Support</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('help-center')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Help Center
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('documentation')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Documentation
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('community')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Community
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Contact Us
-                  </button>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Company</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('about')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    About
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('careers')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Careers
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('privacy')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Privacy
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('terms')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Terms
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-top border-white border-opacity-25 mt-5 pt-4 text-center">
-            <p className="text-white-50 mb-0">&copy; 2024 CoreVerse. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+          </section>
+
+          {/* Add Word Modal */}
+          {isAddingWord && (
+            <AddWordForm 
+              onClose={() => setIsAddingWord(false)}
+              onAddWord={addWord}
+              newWord={newWord}
+              setNewWord={setNewWord}
+              tagInput={tagInput}
+              setTagInput={setTagInput}
+              synonymInput={synonymInput}
+              setSynonymInput={setSynonymInput}
+              antonymInput={antonymInput}
+              setAntonymInput={setAntonymInput}
+              addTag={addTag}
+              removeTag={removeTag}
+              addSynonym={addSynonym}
+              removeSynonym={removeSynonym}
+              addAntonym={addAntonym}
+              removeAntonym={removeAntonym}
+              addExample={addExample}
+              updateExample={updateExample}
+              removeExample={removeExample}
+            />
+          )}
+        </main>
+      </div>
     </div>
   );
 }

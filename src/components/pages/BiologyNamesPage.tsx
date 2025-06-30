@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  BookOpen,
-  Search,
   Leaf,
   Eye,
   X,
-  Filter,
   Download,
   Share2,
   TreePine,
@@ -18,7 +15,6 @@ import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Header } from '../layout/Header';
 import { Sidebar } from '../layout/Sidebar';
-import { useNavigate } from 'react-router-dom';
 
 interface BiologyNamesPageProps {
   onNavigate: (view: string) => void;
@@ -48,7 +44,6 @@ export function BiologyNamesPage({ onNavigate }: BiologyNamesPageProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const navigate = useNavigate();
 
   const organisms: Organism[] = [
     {
@@ -280,8 +275,6 @@ export function BiologyNamesPage({ onNavigate }: BiologyNamesPageProps) {
               <div className="row align-items-center">
                 <div className="col-md-6">
                   <div className="position-relative">
-                    <Search className="position-absolute text-muted" 
-                            style={{ left: '12px', top: '50%', transform: 'translateY(-50%)', width: '16px', height: '16px' }} />
                     <input
                       type="text"
                       value={searchQuery}
