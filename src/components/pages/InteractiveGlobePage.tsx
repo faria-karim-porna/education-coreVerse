@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   BookOpen,
@@ -17,16 +17,11 @@ import {
   Clock,
   Info,
   Compass,
-  Navigation,
-  ZoomIn,
-  ZoomOut,
-  RotateCw
+  Navigation
 } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { ThemeToggle } from '../ui/ThemeToggle';
-import GlobeGL from 'react-globe.gl';
-import * as THREE from 'three';
 
 interface InteractiveGlobePageProps {
   onNavigate: (view: string) => void;
@@ -53,13 +48,6 @@ export function InteractiveGlobePage({ onNavigate }: InteractiveGlobePageProps) 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState('all');
   const [viewMode, setViewMode] = useState('satellite');
-  const [globeReady, setGlobeReady] = useState(false);
-  const [highlightedCountry, setHighlightedCountry] = useState<any>(null);
-  const [countries, setCountries] = useState<any[]>([]);
-  const [points, setPoints] = useState<any[]>([]);
-  
-  const globeRef = useRef<any>();
-  const globeContainerRef = useRef<HTMLDivElement>(null);
 
   const locations: Location[] = [
     {
@@ -226,63 +214,6 @@ export function InteractiveGlobePage({ onNavigate }: InteractiveGlobePageProps) 
     { id: 'climate', label: 'Climate' }
   ];
 
-  // Fetch countries GeoJSON data
-  useEffect(() => {
-    fetch('https://raw.githubusercontent.com/vasturiano/react-globe.gl/master/example/datasets/ne_110m_admin_0_countries.geojson')
-      .then(res => res.json())
-      .then(({ features }) => {
-        setCountries(features);
-      });
-  }, []);
-
-  // Convert locations to globe points
-  useEffect(() => {
-    const newPoints = locations.map(location => ({
-      lat: location.coordinates.lat,
-      lng: location.coordinates.lng,
-      size: 0.5,
-      color: getLocationColor(location.type),
-      name: location.name,
-      location: location
-    }));
-    setPoints(newPoints);
-  }, [locations]);
-
-  // Set globe size based on container
-  useEffect(() => {
-    const handleResize = () => {
-      if (globeRef.current && globeContainerRef.current) {
-        const width = globeContainerRef.current.clientWidth;
-        const height = globeContainerRef.current.clientHeight;
-        globeRef.current.width(width);
-        globeRef.current.height(height);
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [globeReady]);
-
-  const getLocationColor = (type: string) => {
-    switch (type) {
-      case 'mountain': return 'rgba(139, 69, 19, 1)'; // Brown
-      case 'natural-wonder': return 'rgba(0, 128, 0, 1)'; // Green
-      case 'forest': return 'rgba(34, 139, 34, 1)'; // Forest Green
-      case 'desert': return 'rgba(210, 180, 140, 1)'; // Tan
-      case 'city': return 'rgba(255, 0, 0, 1)'; // Red
-      case 'ocean-feature': return 'rgba(0, 0, 255, 1)'; // Blue
-      case 'continent': return 'rgba(128, 0, 128, 1)'; // Purple
-      case 'phenomenon': return 'rgba(255, 215, 0, 1)'; // Gold
-      default: return 'rgba(255, 255, 255, 1)'; // White
-    }
-  };
-
-  const getTypeIcon = (type: string) => {
-    const typeData = locationTypes.find(t => t.id === type);
-    return typeData?.icon || Globe;
-  };
-
   const filteredLocations = locations.filter(location => {
     const matchesSearch = location.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          location.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -291,38 +222,9 @@ export function InteractiveGlobePage({ onNavigate }: InteractiveGlobePageProps) 
     return matchesSearch && matchesType;
   });
 
-  const handlePointClick = (point: any) => {
-    setSelectedLocation(point.location);
-  };
-
-  const handleCountryClick = (country: any) => {
-    setHighlightedCountry(country);
-    // Center the globe on the clicked country
-    if (globeRef.current) {
-      const { lat, lng } = country.properties.centroid || { lat: 0, lng: 0 };
-      globeRef.current.pointOfView({ lat, lng, altitude: 1.5 }, 1000);
-    }
-  };
-
-  const zoomIn = () => {
-    if (globeRef.current) {
-      const { lat, lng, altitude } = globeRef.current.pointOfView();
-      globeRef.current.pointOfView({ lat, lng, altitude: altitude * 0.7 }, 300);
-    }
-  };
-
-  const zoomOut = () => {
-    if (globeRef.current) {
-      const { lat, lng, altitude } = globeRef.current.pointOfView();
-      globeRef.current.pointOfView({ lat, lng, altitude: altitude * 1.3 }, 300);
-    }
-  };
-
-  const resetView = () => {
-    if (globeRef.current) {
-      globeRef.current.pointOfView({ lat: 0, lng: 0, altitude: 2.5 }, 1000);
-      setHighlightedCountry(null);
-    }
+  const getTypeIcon = (type: string) => {
+    const typeData = locationTypes.find(t => t.id === type);
+    return typeData?.icon || Globe;
   };
 
   return (
@@ -466,127 +368,45 @@ export function InteractiveGlobePage({ onNavigate }: InteractiveGlobePageProps) 
               >
                 <Card>
                   <div className="card-body p-0">
-                    <div 
-                      ref={globeContainerRef}
-                      className="position-relative rounded-top-3"
-                      style={{ height: '500px', overflow: 'hidden' }}
-                    >
-                      {/* 3D Globe */}
-                      <GlobeGL
-                        ref={globeRef}
-                        globeImageUrl={
-                          viewMode === 'satellite' 
-                            ? "//unpkg.com/three-globe/example/img/earth-blue-marble.jpg" 
-                            : viewMode === 'terrain' 
-                              ? "//unpkg.com/three-globe/example/img/earth-topology.png"
-                              : viewMode === 'political'
-                                ? "//unpkg.com/three-globe/example/img/earth-political.png"
-                                : "//unpkg.com/three-globe/example/img/earth-night.jpg"
-                        }
-                        bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
-                        backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
-                        pointsData={points}
-                        pointAltitude={0.01}
-                        pointColor="color"
-                        pointLabel="name"
-                        pointRadius="size"
-                        pointsMerge={true}
-                        onPointClick={handlePointClick}
-                        polygonsData={countries}
-                        polygonCapColor={() => 'rgba(200, 200, 200, 0.1)'}
-                        polygonSideColor={() => 'rgba(150, 150, 150, 0.3)'}
-                        polygonStrokeColor={() => '#111'}
-                        polygonLabel={({ properties: d }: any) => `
-                          <b>${d.ADMIN} (${d.ISO_A2})</b>
-                        `}
-                        polygonsTransitionDuration={300}
-                        onPolygonClick={handleCountryClick}
-                        polygonAltitude={d => d === highlightedCountry ? 0.06 : 0.01}
-                        polygonCapColor={d => d === highlightedCountry ? 'rgba(255, 116, 116, 0.8)' : 'rgba(200, 200, 200, 0.1)'}
-                        onGlobeReady={() => setGlobeReady(true)}
-                        width={globeContainerRef.current?.clientWidth || 800}
-                        height={500}
-                      />
-
-                      {/* Globe Controls */}
-                      <div className="position-absolute top-0 end-0 p-3">
-                        <div className="d-flex flex-column gap-2">
-                          <Button 
-                            size="sm" 
-                            variant="secondary"
-                            onClick={zoomIn}
-                            className="p-2"
-                          >
-                            <ZoomIn size={16} />
-                          </Button>
-                          <Button 
-                            size="sm" 
-                            variant="secondary"
-                            onClick={zoomOut}
-                            className="p-2"
-                          >
-                            <ZoomOut size={16} />
-                          </Button>
-                          <Button 
-                            size="sm" 
-                            variant="secondary"
-                            onClick={resetView}
-                            className="p-2"
-                          >
-                            <RotateCw size={16} />
-                          </Button>
+                    <div className="bg-gradient-to-br from-blue-500 to-green-600 rounded-top-3 p-5 text-white text-center position-relative"
+                         style={{ height: '500px', background: 'linear-gradient(135deg, #3b82f6, #22c55e)' }}>
+                      <div className="position-absolute top-50 start-50 translate-middle">
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                          className="bg-white bg-opacity-20 rounded-circle d-flex align-items-center justify-content-center"
+                          style={{ width: '200px', height: '200px' }}
+                        >
+                          <Globe size={100} className="text-white" />
+                        </motion.div>
+                      </div>
+                      <div className="position-absolute top-0 start-0 p-3">
+                        <div className="d-flex align-items-center gap-2">
+                          <Compass className="text-white" size={20} />
+                          <span className="fw-medium">Interactive Globe</span>
                         </div>
                       </div>
-
-                      {/* Compass */}
-                      <div className="position-absolute bottom-0 start-0 p-3">
-                        <div className="bg-white rounded-circle shadow-sm d-flex align-items-center justify-content-center"
-                             style={{ width: '40px', height: '40px' }}>
-                          <Compass className="text-primary-red" size={24} />
-                        </div>
-                      </div>
-
-                      {/* Info */}
                       <div className="position-absolute bottom-0 end-0 p-3">
-                        <div className="bg-white bg-opacity-75 rounded-3 p-2 shadow-sm">
-                          <div className="d-flex align-items-center gap-2">
-                            <Navigation className="text-primary-red" size={16} />
-                            <span className="small">Click locations or countries to explore</span>
-                          </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <Navigation className="text-white" size={16} />
+                          <span className="small">Click locations to explore</span>
                         </div>
                       </div>
                     </div>
                     <div className="p-4">
-                      <h4 className="fw-bold text-deep-red mb-3">Globe Controls</h4>
+                      <h4 className="fw-bold text-deep-red mb-2">Globe Controls</h4>
                       <div className="row g-3">
-                        <div className="col-md-3">
-                          <Button size="sm" className="w-100" onClick={zoomIn}>
-                            <ZoomIn size={14} className="me-1" />
+                        <div className="col-6">
+                          <Button size="sm" className="w-100">
+                            <Eye size={14} className="me-1" />
                             Zoom In
                           </Button>
                         </div>
-                        <div className="col-md-3">
-                          <Button size="sm" className="w-100" onClick={zoomOut}>
-                            <ZoomOut size={14} className="me-1" />
-                            Zoom Out
-                          </Button>
-                        </div>
-                        <div className="col-md-3">
-                          <Button size="sm" variant="secondary" className="w-100" onClick={resetView}>
-                            <RotateCw size={14} className="me-1" />
+                        <div className="col-6">
+                          <Button size="sm" variant="secondary" className="w-100">
+                            <Globe size={14} className="me-1" />
                             Reset View
                           </Button>
-                        </div>
-                        <div className="col-md-3">
-                          <select 
-                            className="form-select form-select-sm"
-                            value={viewMode}
-                            onChange={(e) => setViewMode(e.target.value)}
-                          >
-                            {viewModes.map(mode => (
-                              <option key={mode.id} value={mode.id}>{mode.label}</option>
-                            ))}
-                          </select>
                         </div>
                       </div>
                     </div>
@@ -614,17 +434,7 @@ export function InteractiveGlobePage({ onNavigate }: InteractiveGlobePageProps) 
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.4 + index * 0.1 }}
                             className="p-3 border rounded-3 cursor-pointer hover-bg-light"
-                            onClick={() => {
-                              setSelectedLocation(location);
-                              // Center the globe on the selected location
-                              if (globeRef.current) {
-                                globeRef.current.pointOfView({
-                                  lat: location.coordinates.lat,
-                                  lng: location.coordinates.lng,
-                                  altitude: 1.5
-                                }, 1000);
-                              }
-                            }}
+                            onClick={() => setSelectedLocation(location)}
                           >
                             <div className="d-flex align-items-center gap-3">
                               <div className="bg-primary-red bg-opacity-10 rounded-3 d-flex align-items-center justify-content-center"
@@ -662,17 +472,7 @@ export function InteractiveGlobePage({ onNavigate }: InteractiveGlobePageProps) 
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Card hover className="h-100" onClick={() => {
-                      setSelectedLocation(location);
-                      // Center the globe on the selected location
-                      if (globeRef.current) {
-                        globeRef.current.pointOfView({
-                          lat: location.coordinates.lat,
-                          lng: location.coordinates.lng,
-                          altitude: 1.5
-                        }, 1000);
-                      }
-                    }}>
+                    <Card hover className="h-100" onClick={() => setSelectedLocation(location)}>
                       <img
                         src={location.image}
                         alt={location.name}
