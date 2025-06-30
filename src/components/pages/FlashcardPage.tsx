@@ -25,7 +25,8 @@ import {
 } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
-import { ThemeToggle } from '../ui/ThemeToggle';
+import { Header } from '../layout/Header';
+import { Sidebar } from '../layout/Sidebar';
 
 interface FlashcardPageProps {
   onNavigate: (view: string) => void;
@@ -197,6 +198,7 @@ export function FlashcardPage({ onNavigate }: FlashcardPageProps) {
     difficulty: 'medium'
   });
   const [tagInput, setTagInput] = useState('');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const categories = [
     { id: 'all', label: 'All Categories' },
@@ -398,562 +400,430 @@ export function FlashcardPage({ onNavigate }: FlashcardPageProps) {
   };
 
   return (
-    <div className="min-vh-100 bg-light-bg">
-      {/* Navigation */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
-        <div className="container-lg">
-          <motion.button
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="navbar-brand d-flex align-items-center gap-2 btn btn-link text-decoration-none"
-            onClick={() => onNavigate('home')}
-          >
-            <div className="bg-primary-red rounded-4 d-flex align-items-center justify-content-center"
-                 style={{ width: '40px', height: '40px' }}>
-              <BookOpen className="text-white" size={24} />
-            </div>
-            <span className="fw-bold h3 text-deep-red mb-0">CoreVerse</span>
-          </motion.button>
-          
-          <div className="d-none d-md-flex align-items-center gap-4">
-            <button 
-              onClick={() => onNavigate('features')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              Features
-            </button>
-            <button 
-              onClick={() => onNavigate('about')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              About
-            </button>
-            <button 
-              onClick={() => onNavigate('contact')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              Contact
-            </button>
-            <ThemeToggle />
-            <Button variant="secondary" className="me-2" onClick={() => onNavigate('dashboard')}>
-              Sign In
-            </Button>
-            <Button onClick={() => onNavigate('dashboard')}>Get Started</Button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <section className="position-relative overflow-hidden bg-gradient-primary text-white py-5">
-        <div className="container-lg py-5">
-          <div className="text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
-                   style={{ width: '80px', height: '80px' }}>
-                <BookOpen className="text-white" size={40} />
-              </div>
-              <h1 className="display-3 fw-bold mb-4">Flashcards</h1>
-              <p className="lead mb-5 mx-auto" style={{ maxWidth: '600px' }}>
-                Create, study, and master your subjects with our interactive flashcard system. 
-                Perfect for memorization, test prep, and spaced repetition learning.
-              </p>
-              <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-                <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white" onClick={() => setIsCreatingDeck(true)}>
-                  <Plus size={20} className="me-2" />
-                  Create New Deck
-                </Button>
-                <Button variant="outline-secondary" size="lg" className="border-white text-white">
-                  <Download size={20} className="me-2" />
-                  Import Deck
-                </Button>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Main Content */}
-      {studyMode ? (
-        // Study Mode
-        <section className="py-5 bg-white">
-          <div className="container-lg">
-            <div className="d-flex align-items-center justify-content-between mb-4">
-              <div className="d-flex align-items-center gap-3">
-                <Button variant="secondary" onClick={exitStudyMode}>
-                  <ChevronLeft size={16} className="me-1" />
-                  Back to Decks
-                </Button>
-                <h2 className="h4 fw-bold text-deep-red mb-0">{selectedDeck?.name}</h2>
-              </div>
-              <div className="d-flex align-items-center gap-2">
-                <span className="text-muted">
-                  Card {currentCardIndex + 1} of {selectedDeck?.cards.length}
-                </span>
-                <Button variant="secondary" onClick={shuffleDeck}>
-                  <Shuffle size={16} />
-                </Button>
-              </div>
-            </div>
-
-            {selectedDeck && selectedDeck.cards.length > 0 ? (
-              <div className="row justify-content-center">
-                <div className="col-lg-8">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    key={currentCardIndex + (showCardBack ? '-back' : '-front')}
-                  >
-                    <Card 
-                      className="text-center cursor-pointer" 
-                      onClick={() => setShowCardBack(!showCardBack)}
-                      hover
-                    >
-                      <div className="card-body p-5" style={{ minHeight: '300px' }}>
-                        <div className="d-flex align-items-center justify-content-between mb-4">
-                          <div className="d-flex align-items-center gap-2">
-                            {selectedDeck.cards[currentCardIndex].tags.map((tag, index) => (
-                              <span key={index} className="badge bg-light-bg text-deep-red">
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                          <span className={`badge ${getDifficultyColor(selectedDeck.cards[currentCardIndex].difficulty)} text-white`}>
-                            {selectedDeck.cards[currentCardIndex].difficulty}
-                          </span>
-                        </div>
-                        
-                        <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '200px' }}>
-                          <h3 className="display-6 fw-bold text-deep-red">
-                            {showCardBack 
-                              ? selectedDeck.cards[currentCardIndex].back 
-                              : selectedDeck.cards[currentCardIndex].front}
-                          </h3>
-                        </div>
-                        
-                        <div className="mt-4">
-                          <p className="text-muted small">
-                            {showCardBack ? 'Click to see front' : 'Click to see back'}
-                          </p>
-                        </div>
-                      </div>
-                    </Card>
-                  </motion.div>
-
-                  <div className="d-flex align-items-center justify-content-between mt-4">
-                    <Button variant="secondary" onClick={prevCard}>
-                      <ChevronLeft size={20} className="me-1" />
-                      Previous
+    <div className="min-vh-100 bg-light-bg d-flex">
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        activeView="flashcard"
+        onViewChange={onNavigate}
+      />
+      
+      <div className="flex-fill d-flex flex-column overflow-hidden">
+        <Header
+          onMenuToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+          isSidebarOpen={isSidebarOpen}
+          onNavigate={onNavigate}
+        />
+        
+        <main className="flex-fill overflow-auto">
+          {/* Hero Section */}
+          <section className="position-relative overflow-hidden bg-gradient-primary text-white py-5">
+            <div className="container-lg py-5">
+              <div className="text-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
+                       style={{ width: '80px', height: '80px' }}>
+                    <BookOpen className="text-white" size={40} />
+                  </div>
+                  <h1 className="display-3 fw-bold mb-4">Flashcards</h1>
+                  <p className="lead mb-5 mx-auto" style={{ maxWidth: '600px' }}>
+                    Create, study, and master your subjects with our interactive flashcard system. 
+                    Perfect for memorization, test prep, and spaced repetition learning.
+                  </p>
+                  <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                    <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white" onClick={() => setIsCreatingDeck(true)}>
+                      <Plus size={20} className="me-2" />
+                      Create New Deck
                     </Button>
-                    
-                    <div className="d-flex gap-2">
-                      {showCardBack && (
-                        <>
-                          <Button variant="danger" onClick={() => markCardMastery(false)}>
-                            <X size={20} className="me-1" />
-                            Still Learning
-                          </Button>
-                          <Button variant="success" onClick={() => markCardMastery(true)}>
-                            <Check size={20} className="me-1" />
-                            Mastered
-                          </Button>
-                        </>
-                      )}
-                    </div>
-                    
-                    <Button onClick={nextCard}>
-                      Next
-                      <ChevronRight size={20} className="ms-1" />
+                    <Button variant="outline-secondary" size="lg" className="border-white text-white">
+                      <Download size={20} className="me-2" />
+                      Import Deck
+                    </Button>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </section>
+
+          {/* Main Content */}
+          {studyMode ? (
+            // Study Mode
+            <section className="py-5 bg-white">
+              <div className="container-lg">
+                <div className="d-flex align-items-center justify-content-between mb-4">
+                  <div className="d-flex align-items-center gap-3">
+                    <Button variant="secondary" onClick={exitStudyMode}>
+                      <ChevronLeft size={16} className="me-1" />
+                      Back to Decks
+                    </Button>
+                    <h2 className="h4 fw-bold text-deep-red mb-0">{selectedDeck?.name}</h2>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <span className="text-muted">
+                      Card {currentCardIndex + 1} of {selectedDeck?.cards.length}
+                    </span>
+                    <Button variant="secondary" onClick={shuffleDeck}>
+                      <Shuffle size={16} />
                     </Button>
                   </div>
                 </div>
+
+                {selectedDeck && selectedDeck.cards.length > 0 ? (
+                  <div className="row justify-content-center">
+                    <div className="col-lg-8">
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        key={currentCardIndex + (showCardBack ? '-back' : '-front')}
+                      >
+                        <Card 
+                          className="text-center cursor-pointer" 
+                          onClick={() => setShowCardBack(!showCardBack)}
+                          hover
+                        >
+                          <div className="card-body p-5" style={{ minHeight: '300px' }}>
+                            <div className="d-flex align-items-center justify-content-between mb-4">
+                              <div className="d-flex align-items-center gap-2">
+                                {selectedDeck.cards[currentCardIndex].tags.map((tag, index) => (
+                                  <span key={index} className="badge bg-light-bg text-deep-red">
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
+                              <span className={`badge ${getDifficultyColor(selectedDeck.cards[currentCardIndex].difficulty)} text-white`}>
+                                {selectedDeck.cards[currentCardIndex].difficulty}
+                              </span>
+                            </div>
+                            
+                            <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '200px' }}>
+                              <h3 className="display-6 fw-bold text-deep-red">
+                                {showCardBack 
+                                  ? selectedDeck.cards[currentCardIndex].back 
+                                  : selectedDeck.cards[currentCardIndex].front}
+                              </h3>
+                            </div>
+                            
+                            <div className="mt-4">
+                              <p className="text-muted small">
+                                {showCardBack ? 'Click to see front' : 'Click to see back'}
+                              </p>
+                            </div>
+                          </div>
+                        </Card>
+                      </motion.div>
+
+                      <div className="d-flex align-items-center justify-content-between mt-4">
+                        <Button variant="secondary" onClick={prevCard}>
+                          <ChevronLeft size={20} className="me-1" />
+                          Previous
+                        </Button>
+                        
+                        <div className="d-flex gap-2">
+                          {showCardBack && (
+                            <>
+                              <Button variant="danger" onClick={() => markCardMastery(false)}>
+                                <X size={20} className="me-1" />
+                                Still Learning
+                              </Button>
+                              <Button variant="success" onClick={() => markCardMastery(true)}>
+                                <Check size={20} className="me-1" />
+                                Mastered
+                              </Button>
+                            </>
+                          )}
+                        </div>
+                        
+                        <Button onClick={nextCard}>
+                          Next
+                          <ChevronRight size={20} className="ms-1" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center py-5">
+                    <h3 className="text-muted">No cards in this deck</h3>
+                    <Button className="mt-3" onClick={() => setIsEditingCard(true)}>
+                      <Plus size={16} className="me-1" />
+                      Add Card
+                    </Button>
+                  </div>
+                )}
               </div>
-            ) : (
-              <div className="text-center py-5">
-                <h3 className="text-muted">No cards in this deck</h3>
-                <Button className="mt-3" onClick={() => setIsEditingCard(true)}>
-                  <Plus size={16} className="me-1" />
-                  Add Card
-                </Button>
+            </section>
+          ) : (
+            // Deck Selection Mode
+            <section className="py-5 bg-white">
+              <div className="container-lg">
+                {/* Search and Filters */}
+                <div className="row g-3 mb-4">
+                  <div className="col-md-6">
+                    <div className="position-relative">
+                      <Search className="position-absolute text-muted" 
+                              style={{ left: '12px', top: '50%', transform: 'translateY(-50%)', width: '16px', height: '16px' }} />
+                      <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Search decks..."
+                        className="form-control ps-5"
+                        style={{ paddingLeft: '2.5rem' }}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-4">
+                    <select 
+                      className="form-select"
+                      value={selectedCategory}
+                      onChange={(e) => setSelectedCategory(e.target.value)}
+                    >
+                      {categories.map(category => (
+                        <option key={category.id} value={category.id}>{category.label}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="col-md-2">
+                    <Button className="w-100" onClick={() => setIsCreatingDeck(true)}>
+                      <Plus size={16} className="me-1" />
+                      New Deck
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Decks Grid */}
+                <div className="row g-4">
+                  {filteredDecks.map((deck, index) => (
+                    <div key={deck.id} className="col-md-6 col-lg-4">
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <Card hover className="h-100">
+                          <div className="card-body p-4">
+                            <div className="d-flex align-items-start justify-content-between mb-3">
+                              <div className="bg-primary-red bg-opacity-10 rounded-3 d-flex align-items-center justify-content-center"
+                                   style={{ width: '48px', height: '48px' }}>
+                                <BookOpen className="text-primary-red" size={24} />
+                              </div>
+                              <span className="badge bg-accent-red text-white">
+                                {deck.category}
+                              </span>
+                            </div>
+                            
+                            <h4 className="fw-bold text-deep-red mb-2">{deck.name}</h4>
+                            <p className="text-muted small mb-3">{deck.description}</p>
+                            
+                            <div className="d-flex align-items-center justify-content-between mb-3">
+                              <span className="text-muted small">
+                                {deck.cards.length} cards
+                              </span>
+                              <div className="d-flex align-items-center gap-2 text-muted small">
+                                <Clock size={14} />
+                                <span>
+                                  {deck.lastStudied 
+                                    ? `Last studied: ${deck.lastStudied.toLocaleDateString()}`
+                                    : 'Not studied yet'}
+                                </span>
+                              </div>
+                            </div>
+                            
+                            <div className="d-flex align-items-center justify-content-between">
+                              <div>
+                                <span className="badge bg-success text-white me-1">
+                                  {deck.cards.filter(card => card.mastered).length} mastered
+                                </span>
+                                <span className="badge bg-warning text-dark">
+                                  {deck.cards.length - deck.cards.filter(card => card.mastered).length} learning
+                                </span>
+                              </div>
+                              <Button onClick={() => startStudyMode(deck)}>
+                                Study Now
+                              </Button>
+                            </div>
+                          </div>
+                        </Card>
+                      </motion.div>
+                    </div>
+                  ))}
+                </div>
+
+                {filteredDecks.length === 0 && (
+                  <div className="text-center py-5">
+                    <h3 className="text-muted">No decks found</h3>
+                    <p className="text-muted">Try adjusting your search or create a new deck</p>
+                    <Button className="mt-3" onClick={() => setIsCreatingDeck(true)}>
+                      <Plus size={16} className="me-1" />
+                      Create New Deck
+                    </Button>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </section>
-      ) : (
-        // Deck Selection Mode
-        <section className="py-5 bg-white">
-          <div className="container-lg">
-            {/* Search and Filters */}
-            <div className="row g-3 mb-4">
-              <div className="col-md-6">
-                <div className="position-relative">
-                  <Search className="position-absolute text-muted" 
-                          style={{ left: '12px', top: '50%', transform: 'translateY(-50%)', width: '16px', height: '16px' }} />
+            </section>
+          )}
+
+          {/* Create Deck Modal */}
+          {isCreatingDeck && (
+            <div className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50" style={{ zIndex: 1050 }}>
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="bg-white rounded-4 p-4 w-100"
+                style={{ maxWidth: '500px' }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="d-flex align-items-center justify-content-between mb-4">
+                  <h3 className="h4 fw-bold text-deep-red mb-0">Create New Deck</h3>
+                  <Button variant="secondary" onClick={() => setIsCreatingDeck(false)}>
+                    <X size={16} />
+                  </Button>
+                </div>
+                
+                <div className="mb-3">
+                  <label className="form-label fw-medium text-deep-red">Deck Name</label>
                   <input
                     type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search decks..."
-                    className="form-control ps-5"
-                    style={{ paddingLeft: '2.5rem' }}
+                    className="form-control"
+                    placeholder="Enter deck name"
+                    value={newDeck.name}
+                    onChange={(e) => setNewDeck({...newDeck, name: e.target.value})}
                   />
                 </div>
-              </div>
-              <div className="col-md-4">
-                <select 
-                  className="form-select"
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                >
-                  {categories.map(category => (
-                    <option key={category.id} value={category.id}>{category.label}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="col-md-2">
-                <Button className="w-100" onClick={() => setIsCreatingDeck(true)}>
-                  <Plus size={16} className="me-1" />
-                  New Deck
-                </Button>
-              </div>
-            </div>
-
-            {/* Decks Grid */}
-            <div className="row g-4">
-              {filteredDecks.map((deck, index) => (
-                <div key={deck.id} className="col-md-6 col-lg-4">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
+                
+                <div className="mb-3">
+                  <label className="form-label fw-medium text-deep-red">Description</label>
+                  <textarea
+                    className="form-control"
+                    placeholder="Enter deck description"
+                    value={newDeck.description}
+                    onChange={(e) => setNewDeck({...newDeck, description: e.target.value})}
+                    rows={3}
+                  />
+                </div>
+                
+                <div className="mb-4">
+                  <label className="form-label fw-medium text-deep-red">Category</label>
+                  <select
+                    className="form-select"
+                    value={newDeck.category}
+                    onChange={(e) => setNewDeck({...newDeck, category: e.target.value})}
                   >
-                    <Card hover className="h-100">
-                      <div className="card-body p-4">
-                        <div className="d-flex align-items-start justify-content-between mb-3">
-                          <div className="bg-primary-red bg-opacity-10 rounded-3 d-flex align-items-center justify-content-center"
-                               style={{ width: '48px', height: '48px' }}>
-                            <BookOpen className="text-primary-red" size={24} />
-                          </div>
-                          <span className="badge bg-accent-red text-white">
-                            {deck.category}
-                          </span>
-                        </div>
-                        
-                        <h4 className="fw-bold text-deep-red mb-2">{deck.name}</h4>
-                        <p className="text-muted small mb-3">{deck.description}</p>
-                        
-                        <div className="d-flex align-items-center justify-content-between mb-3">
-                          <span className="text-muted small">
-                            {deck.cards.length} cards
-                          </span>
-                          <div className="d-flex align-items-center gap-2 text-muted small">
-                            <Clock size={14} />
-                            <span>
-                              {deck.lastStudied 
-                                ? `Last studied: ${deck.lastStudied.toLocaleDateString()}`
-                                : 'Not studied yet'}
-                            </span>
-                          </div>
-                        </div>
-                        
-                        <div className="d-flex align-items-center justify-content-between">
-                          <div>
-                            <span className="badge bg-success text-white me-1">
-                              {deck.cards.filter(card => card.mastered).length} mastered
-                            </span>
-                            <span className="badge bg-warning text-dark">
-                              {deck.cards.length - deck.cards.filter(card => card.mastered).length} learning
-                            </span>
-                          </div>
-                          <Button onClick={() => startStudyMode(deck)}>
-                            Study Now
-                          </Button>
-                        </div>
-                      </div>
-                    </Card>
-                  </motion.div>
+                    {categories.filter(c => c.id !== 'all').map(category => (
+                      <option key={category.id} value={category.id}>{category.label}</option>
+                    ))}
+                  </select>
                 </div>
-              ))}
-            </div>
-
-            {filteredDecks.length === 0 && (
-              <div className="text-center py-5">
-                <h3 className="text-muted">No decks found</h3>
-                <p className="text-muted">Try adjusting your search or create a new deck</p>
-                <Button className="mt-3" onClick={() => setIsCreatingDeck(true)}>
-                  <Plus size={16} className="me-1" />
-                  Create New Deck
-                </Button>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* Create Deck Modal */}
-      {isCreatingDeck && (
-        <div className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50" style={{ zIndex: 1050 }}>
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="bg-white rounded-4 p-4 w-100"
-            style={{ maxWidth: '500px' }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="d-flex align-items-center justify-content-between mb-4">
-              <h3 className="h4 fw-bold text-deep-red mb-0">Create New Deck</h3>
-              <Button variant="secondary" onClick={() => setIsCreatingDeck(false)}>
-                <X size={16} />
-              </Button>
-            </div>
-            
-            <div className="mb-3">
-              <label className="form-label fw-medium text-deep-red">Deck Name</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Enter deck name"
-                value={newDeck.name}
-                onChange={(e) => setNewDeck({...newDeck, name: e.target.value})}
-              />
-            </div>
-            
-            <div className="mb-3">
-              <label className="form-label fw-medium text-deep-red">Description</label>
-              <textarea
-                className="form-control"
-                placeholder="Enter deck description"
-                value={newDeck.description}
-                onChange={(e) => setNewDeck({...newDeck, description: e.target.value})}
-                rows={3}
-              />
-            </div>
-            
-            <div className="mb-4">
-              <label className="form-label fw-medium text-deep-red">Category</label>
-              <select
-                className="form-select"
-                value={newDeck.category}
-                onChange={(e) => setNewDeck({...newDeck, category: e.target.value})}
-              >
-                {categories.filter(c => c.id !== 'all').map(category => (
-                  <option key={category.id} value={category.id}>{category.label}</option>
-                ))}
-              </select>
-            </div>
-            
-            <div className="d-flex gap-2">
-              <Button className="flex-fill" onClick={createNewDeck} disabled={!newDeck.name}>
-                Create Deck
-              </Button>
-              <Button variant="secondary" className="flex-fill" onClick={() => setIsCreatingDeck(false)}>
-                Cancel
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      )}
-
-      {/* Add Card Modal */}
-      {isEditingCard && selectedDeck && (
-        <div className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50" style={{ zIndex: 1050 }}>
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="bg-white rounded-4 p-4 w-100"
-            style={{ maxWidth: '600px' }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="d-flex align-items-center justify-content-between mb-4">
-              <h3 className="h4 fw-bold text-deep-red mb-0">Add Card to {selectedDeck.name}</h3>
-              <Button variant="secondary" onClick={() => setIsEditingCard(false)}>
-                <X size={16} />
-              </Button>
-            </div>
-            
-            <div className="mb-3">
-              <label className="form-label fw-medium text-deep-red">Front (Question/Term)</label>
-              <textarea
-                className="form-control"
-                placeholder="Enter the front of the card"
-                value={newCard.front}
-                onChange={(e) => setNewCard({...newCard, front: e.target.value})}
-                rows={3}
-              />
-            </div>
-            
-            <div className="mb-3">
-              <label className="form-label fw-medium text-deep-red">Back (Answer/Definition)</label>
-              <textarea
-                className="form-control"
-                placeholder="Enter the back of the card"
-                value={newCard.back}
-                onChange={(e) => setNewCard({...newCard, back: e.target.value})}
-                rows={5}
-              />
-            </div>
-            
-            <div className="mb-3">
-              <label className="form-label fw-medium text-deep-red">Tags</label>
-              <div className="d-flex gap-2 mb-2">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Add tag"
-                  value={tagInput}
-                  onChange={(e) => setTagInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && addTag()}
-                />
-                <Button variant="secondary" onClick={addTag}>
-                  <Plus size={16} />
-                </Button>
-              </div>
-              <div className="d-flex flex-wrap gap-2">
-                {newCard.tags?.map((tag, index) => (
-                  <span key={index} className="badge bg-light-bg text-deep-red d-flex align-items-center gap-1">
-                    {tag}
-                    <X size={12} className="cursor-pointer" onClick={() => removeTag(tag)} />
-                  </span>
-                ))}
-              </div>
-            </div>
-            
-            <div className="mb-4">
-              <label className="form-label fw-medium text-deep-red">Difficulty</label>
-              <select
-                className="form-select"
-                value={newCard.difficulty}
-                onChange={(e) => setNewCard({...newCard, difficulty: e.target.value as 'easy' | 'medium' | 'hard'})}
-              >
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-              </select>
-            </div>
-            
-            <div className="d-flex gap-2">
-              <Button 
-                className="flex-fill" 
-                onClick={addCardToDeck} 
-                disabled={!newCard.front || !newCard.back}
-              >
-                Add Card
-              </Button>
-              <Button variant="secondary" className="flex-fill" onClick={() => setIsEditingCard(false)}>
-                Cancel
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      )}
-
-      {/* Footer */}
-      <footer className="bg-deep-red text-white py-5">
-        <div className="container-lg">
-          <div className="row g-4">
-            <div className="col-lg-3">
-              <button 
-                onClick={() => onNavigate('home')}
-                className="d-flex align-items-center gap-2 mb-4 btn btn-link text-white text-decoration-none p-0"
-              >
-                <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
-                     style={{ width: '32px', height: '32px' }}>
-                  <BookOpen className="text-white" size={20} />
+                
+                <div className="d-flex gap-2">
+                  <Button className="flex-fill" onClick={createNewDeck} disabled={!newDeck.name}>
+                    Create Deck
+                  </Button>
+                  <Button variant="secondary" className="flex-fill" onClick={() => setIsCreatingDeck(false)}>
+                    Cancel
+                  </Button>
                 </div>
-                <span className="fw-bold h5 mb-0">CoreVerse</span>
-              </button>
-              <p className="text-white-50">
-                Transforming education through interactive technology and innovative learning experiences.
-              </p>
+              </motion.div>
             </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Study Tools</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('flashcard')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Flashcards
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('wordbook')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Word Book
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('periodic-table')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Periodic Table
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('physics-formulas')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Physics Formulas
-                  </button>
-                </li>
-              </ul>
+          )}
+
+          {/* Add Card Modal */}
+          {isEditingCard && selectedDeck && (
+            <div className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50" style={{ zIndex: 1050 }}>
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="bg-white rounded-4 p-4 w-100"
+                style={{ maxWidth: '600px' }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="d-flex align-items-center justify-content-between mb-4">
+                  <h3 className="h4 fw-bold text-deep-red mb-0">Add Card to {selectedDeck.name}</h3>
+                  <Button variant="secondary" onClick={() => setIsEditingCard(false)}>
+                    <X size={16} />
+                  </Button>
+                </div>
+                
+                <div className="mb-3">
+                  <label className="form-label fw-medium text-deep-red">Front (Question/Term)</label>
+                  <textarea
+                    className="form-control"
+                    placeholder="Enter the front of the card"
+                    value={newCard.front}
+                    onChange={(e) => setNewCard({...newCard, front: e.target.value})}
+                    rows={3}
+                  />
+                </div>
+                
+                <div className="mb-3">
+                  <label className="form-label fw-medium text-deep-red">Back (Answer/Definition)</label>
+                  <textarea
+                    className="form-control"
+                    placeholder="Enter the back of the card"
+                    value={newCard.back}
+                    onChange={(e) => setNewCard({...newCard, back: e.target.value})}
+                    rows={5}
+                  />
+                </div>
+                
+                <div className="mb-3">
+                  <label className="form-label fw-medium text-deep-red">Tags</label>
+                  <div className="d-flex gap-2 mb-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Add tag"
+                      value={tagInput}
+                      onChange={(e) => setTagInput(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && addTag()}
+                    />
+                    <Button variant="secondary" onClick={addTag}>
+                      <Plus size={16} />
+                    </Button>
+                  </div>
+                  <div className="d-flex flex-wrap gap-2">
+                    {newCard.tags?.map((tag, index) => (
+                      <span key={index} className="badge bg-light-bg text-deep-red d-flex align-items-center gap-1">
+                        {tag}
+                        <X size={12} className="cursor-pointer" onClick={() => removeTag(tag)} />
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="mb-4">
+                  <label className="form-label fw-medium text-deep-red">Difficulty</label>
+                  <select
+                    className="form-select"
+                    value={newCard.difficulty}
+                    onChange={(e) => setNewCard({...newCard, difficulty: e.target.value as 'easy' | 'medium' | 'hard'})}
+                  >
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                  </select>
+                </div>
+                
+                <div className="d-flex gap-2">
+                  <Button 
+                    className="flex-fill" 
+                    onClick={addCardToDeck} 
+                    disabled={!newCard.front || !newCard.back}
+                  >
+                    Add Card
+                  </Button>
+                  <Button variant="secondary" className="flex-fill" onClick={() => setIsEditingCard(false)}>
+                    Cancel
+                  </Button>
+                </div>
+              </motion.div>
             </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Support</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('help-center')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Help Center
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('documentation')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Documentation
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('community')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Community
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Contact Us
-                  </button>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Company</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('about')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    About
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('careers')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Careers
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('privacy')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Privacy
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('terms')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Terms
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-top border-white border-opacity-25 mt-5 pt-4 text-center">
-            <p className="text-white-50 mb-0">&copy; 2024 CoreVerse. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+          )}
+        </main>
+      </div>
     </div>
   );
 }

@@ -2,38 +2,33 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   BookOpen,
-  HelpCircle,
-  CheckCircle,
-  X,
   Plus,
+  Edit,
   Trash2,
   Save,
   Download,
   Share2,
-  Copy,
-  Edit,
+  CheckSquare,
+  Square,
+  AlignLeft,
+  List,
   FileText,
-  Image,
-  Clock,
   Settings,
-  Shuffle,
-  BarChart3,
-  Eye,
-  EyeOff,
-  ChevronDown,
-  ChevronUp,
-  ArrowLeft,
-  ArrowRight,
-  Layers,
-  Tag,
+  X,
+  Copy,
+  CheckCircle,
+  Clock,
   Filter,
   Search,
-  AlertCircle,
-  Info
+  Tag,
+  Eye,
+  EyeOff,
+  HelpCircle
 } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
-import { ThemeToggle } from '../ui/ThemeToggle';
+import { Header } from '../layout/Header';
+import { Sidebar } from '../layout/Sidebar';
 
 interface QuestionMakerPageProps {
   onNavigate: (view: string) => void;
@@ -41,1277 +36,936 @@ interface QuestionMakerPageProps {
 
 interface Question {
   id: string;
-  type: 'multiple-choice' | 'true-false' | 'short-answer' | 'matching' | 'fill-blank';
   text: string;
+  type: 'multiple-choice' | 'true-false' | 'short-answer' | 'essay';
   options?: string[];
-  correctAnswer: string | string[];
-  explanation?: string;
-  difficulty: 'easy' | 'medium' | 'hard';
+  correctAnswer?: string | string[];
   points: number;
-  category: string;
+  difficulty: 'easy' | 'medium' | 'hard';
   tags: string[];
-  image?: string;
-  timeLimit?: number;
+}
+
+interface Quiz {
+  id: string;
+  title: string;
+  description: string;
+  questions: Question[];
+  timeLimit?: number; // in minutes
+  category: string;
+  createdAt: Date;
+  lastEdited?: Date;
 }
 
 export function QuestionMakerPage({ onNavigate }: QuestionMakerPageProps) {
-  const [questions, setQuestions] = useState<Question[]>([
+  const [quizzes, setQuizzes] = useState<Quiz[]>([
     {
       id: '1',
-      type: 'multiple-choice',
-      text: 'What is the chemical symbol for gold?',
-      options: ['Au', 'Ag', 'Fe', 'Cu'],
-      correctAnswer: 'Au',
-      explanation: 'Au is the chemical symbol for gold, derived from the Latin word "aurum".',
-      difficulty: 'easy',
-      points: 5,
-      category: 'chemistry',
-      tags: ['elements', 'periodic-table', 'symbols']
+      title: 'Physics Fundamentals',
+      description: 'Basic concepts in mechanics and energy',
+      category: 'science',
+      createdAt: new Date('2024-01-15'),
+      lastEdited: new Date('2024-02-10'),
+      timeLimit: 30,
+      questions: [
+        {
+          id: '101',
+          text: 'What is Newton\'s First Law of Motion?',
+          type: 'multiple-choice',
+          options: [
+            'An object at rest stays at rest, and an object in motion stays in motion unless acted upon by an external force.',
+            'Force equals mass times acceleration.',
+            'For every action, there is an equal and opposite reaction.',
+            'Energy cannot be created or destroyed, only transformed.'
+          ],
+          correctAnswer: 'An object at rest stays at rest, and an object in motion stays in motion unless acted upon by an external force.',
+          points: 10,
+          difficulty: 'medium',
+          tags: ['physics', 'mechanics', 'newton']
+        },
+        {
+          id: '102',
+          text: 'The formula E = mc² represents:',
+          type: 'multiple-choice',
+          options: [
+            'Kinetic energy',
+            'Mass-energy equivalence',
+            'Gravitational potential energy',
+            'Electrical energy'
+          ],
+          correctAnswer: 'Mass-energy equivalence',
+          points: 10,
+          difficulty: 'hard',
+          tags: ['physics', 'relativity', 'einstein']
+        },
+        {
+          id: '103',
+          text: 'True or False: Energy can be created through nuclear reactions.',
+          type: 'true-false',
+          correctAnswer: 'False',
+          points: 5,
+          difficulty: 'medium',
+          tags: ['physics', 'energy', 'nuclear']
+        }
+      ]
     },
     {
       id: '2',
-      type: 'true-false',
-      text: 'The Earth revolves around the Sun.',
-      correctAnswer: 'true',
-      explanation: 'The Earth orbits around the Sun in an elliptical path, completing one revolution in approximately 365.25 days.',
-      difficulty: 'easy',
-      points: 3,
-      category: 'astronomy',
-      tags: ['solar-system', 'planets', 'basic']
-    },
-    {
-      id: '3',
-      type: 'short-answer',
-      text: 'What is the formula for calculating the area of a circle?',
-      correctAnswer: 'πr²',
-      explanation: 'The area of a circle is calculated using the formula πr², where r is the radius of the circle.',
-      difficulty: 'medium',
-      points: 8,
-      category: 'mathematics',
-      tags: ['geometry', 'formulas', 'circles']
+      title: 'Chemistry Basics',
+      description: 'Fundamental concepts in chemistry',
+      category: 'science',
+      createdAt: new Date('2024-01-20'),
+      lastEdited: new Date('2024-02-12'),
+      timeLimit: 45,
+      questions: [
+        {
+          id: '201',
+          text: 'What is the atomic number of Oxygen?',
+          type: 'short-answer',
+          correctAnswer: '8',
+          points: 5,
+          difficulty: 'easy',
+          tags: ['chemistry', 'elements', 'periodic table']
+        },
+        {
+          id: '202',
+          text: 'Explain the difference between an ionic and covalent bond.',
+          type: 'essay',
+          points: 15,
+          difficulty: 'hard',
+          tags: ['chemistry', 'bonding', 'molecules']
+        }
+      ]
     }
   ]);
-
-  const [currentQuiz, setCurrentQuiz] = useState({
-    title: 'Chemistry Quiz',
-    description: 'Test your knowledge of basic chemistry concepts',
-    timeLimit: 30, // minutes
-    totalPoints: 100,
-    passingScore: 70,
-    randomizeQuestions: true,
-    showFeedback: true
+  
+  const [selectedQuiz, setSelectedQuiz] = useState<Quiz | null>(null);
+  const [editMode, setEditMode] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [isCreatingQuiz, setIsCreatingQuiz] = useState(false);
+  const [isAddingQuestion, setIsAddingQuestion] = useState(false);
+  const [newQuiz, setNewQuiz] = useState<Partial<Quiz>>({
+    title: '',
+    description: '',
+    category: 'science',
+    questions: [],
+    timeLimit: 30
   });
-
-  const [selectedQuestions, setSelectedQuestions] = useState<string[]>(['1', '2']);
-  const [editingQuestion, setEditingQuestion] = useState<Question | null>(null);
   const [newQuestion, setNewQuestion] = useState<Partial<Question>>({
-    type: 'multiple-choice',
     text: '',
+    type: 'multiple-choice',
     options: ['', '', '', ''],
     correctAnswer: '',
+    points: 10,
     difficulty: 'medium',
-    points: 5,
-    category: '',
     tags: []
   });
-  const [isAddingQuestion, setIsAddingQuestion] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filterCategory, setFilterCategory] = useState('all');
-  const [filterDifficulty, setFilterDifficulty] = useState('all');
-  const [showPreview, setShowPreview] = useState(false);
-  const [currentPreviewQuestion, setCurrentPreviewQuestion] = useState(0);
-  const [previewAnswers, setPreviewAnswers] = useState<{[key: string]: any}>({});
-  const [showResults, setShowResults] = useState(false);
-  const [newTag, setNewTag] = useState('');
+  const [tagInput, setTagInput] = useState('');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const categories = [
     { id: 'all', label: 'All Categories' },
-    { id: 'chemistry', label: 'Chemistry' },
-    { id: 'physics', label: 'Physics' },
-    { id: 'biology', label: 'Biology' },
-    { id: 'mathematics', label: 'Mathematics' },
-    { id: 'astronomy', label: 'Astronomy' },
-    { id: 'computer-science', label: 'Computer Science' },
+    { id: 'science', label: 'Science' },
+    { id: 'math', label: 'Mathematics' },
+    { id: 'language', label: 'Languages' },
     { id: 'history', label: 'History' },
-    { id: 'geography', label: 'Geography' }
+    { id: 'arts', label: 'Arts' }
   ];
 
-  const difficulties = [
-    { id: 'all', label: 'All Difficulties' },
-    { id: 'easy', label: 'Easy' },
-    { id: 'medium', label: 'Medium' },
-    { id: 'hard', label: 'Hard' }
+  const questionTypes = [
+    { id: 'multiple-choice', label: 'Multiple Choice', icon: CheckSquare },
+    { id: 'true-false', label: 'True/False', icon: Square },
+    { id: 'short-answer', label: 'Short Answer', icon: AlignLeft },
+    { id: 'essay', label: 'Essay', icon: FileText }
   ];
 
-  const filteredQuestions = questions.filter(question => {
-    const matchesSearch = question.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         question.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         question.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    const matchesCategory = filterCategory === 'all' || question.category === filterCategory;
-    const matchesDifficulty = filterDifficulty === 'all' || question.difficulty === filterDifficulty;
-    return matchesSearch && matchesCategory && matchesDifficulty;
+  const filteredQuizzes = quizzes.filter(quiz => {
+    const matchesSearch = quiz.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         quiz.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === 'all' || quiz.category === selectedCategory;
+    return matchesSearch && matchesCategory;
   });
 
-  const selectedQuestionsList = questions.filter(q => selectedQuestions.includes(q.id));
-
-  const handleAddQuestion = () => {
-    if (!newQuestion.text || !newQuestion.category) {
-      alert('Please fill in all required fields');
-      return;
-    }
-
-    const id = (questions.length + 1).toString();
-    const questionToAdd: Question = {
-      id,
-      type: newQuestion.type as 'multiple-choice',
-      text: newQuestion.text,
-      options: newQuestion.options,
-      correctAnswer: newQuestion.correctAnswer || '',
-      explanation: newQuestion.explanation,
-      difficulty: newQuestion.difficulty as 'easy',
-      points: newQuestion.points || 5,
-      category: newQuestion.category,
-      tags: newQuestion.tags || [],
-      image: newQuestion.image,
-      timeLimit: newQuestion.timeLimit
+  const createNewQuiz = () => {
+    if (!newQuiz.title) return;
+    
+    const quiz: Quiz = {
+      id: `quiz-${Date.now()}`,
+      title: newQuiz.title || 'Untitled Quiz',
+      description: newQuiz.description || '',
+      category: newQuiz.category || 'science',
+      questions: [],
+      timeLimit: newQuiz.timeLimit || 30,
+      createdAt: new Date()
     };
-
-    setQuestions([...questions, questionToAdd]);
-    setIsAddingQuestion(false);
-    setNewQuestion({
-      type: 'multiple-choice',
-      text: '',
-      options: ['', '', '', ''],
-      correctAnswer: '',
-      difficulty: 'medium',
-      points: 5,
-      category: '',
-      tags: []
+    
+    setQuizzes([...quizzes, quiz]);
+    setNewQuiz({
+      title: '',
+      description: '',
+      category: 'science',
+      questions: [],
+      timeLimit: 30
     });
+    setIsCreatingQuiz(false);
   };
 
-  const handleUpdateQuestion = () => {
-    if (!editingQuestion) return;
-
-    const updatedQuestions = questions.map(q => 
-      q.id === editingQuestion.id ? editingQuestion : q
-    );
+  const addQuestionToQuiz = () => {
+    if (!selectedQuiz || !newQuestion.text) return;
     
-    setQuestions(updatedQuestions);
-    setEditingQuestion(null);
-  };
-
-  const handleDeleteQuestion = (id: string) => {
-    const updatedQuestions = questions.filter(q => q.id !== id);
-    setQuestions(updatedQuestions);
+    const question: Question = {
+      id: `question-${Date.now()}`,
+      text: newQuestion.text || '',
+      type: newQuestion.type || 'multiple-choice',
+      options: newQuestion.options,
+      correctAnswer: newQuestion.correctAnswer,
+      points: newQuestion.points || 10,
+      difficulty: newQuestion.difficulty || 'medium',
+      tags: newQuestion.tags || []
+    };
     
-    // Also remove from selected questions if present
-    if (selectedQuestions.includes(id)) {
-      setSelectedQuestions(selectedQuestions.filter(qId => qId !== id));
-    }
-  };
-
-  const toggleQuestionSelection = (id: string) => {
-    if (selectedQuestions.includes(id)) {
-      setSelectedQuestions(selectedQuestions.filter(qId => qId !== id));
-    } else {
-      setSelectedQuestions([...selectedQuestions, id]);
-    }
-  };
-
-  const handleOptionChange = (index: number, value: string) => {
-    if (editingQuestion && editingQuestion.options) {
-      const newOptions = [...editingQuestion.options];
-      newOptions[index] = value;
-      setEditingQuestion({...editingQuestion, options: newOptions});
-    } else if (newQuestion.options) {
-      const newOptions = [...newQuestion.options];
-      newOptions[index] = value;
-      setNewQuestion({...newQuestion, options: newOptions});
-    }
-  };
-
-  const addOption = () => {
-    if (editingQuestion && editingQuestion.options) {
-      setEditingQuestion({...editingQuestion, options: [...editingQuestion.options, '']});
-    } else if (newQuestion.options) {
-      setNewQuestion({...newQuestion, options: [...newQuestion.options, '']});
-    }
-  };
-
-  const removeOption = (index: number) => {
-    if (editingQuestion && editingQuestion.options && editingQuestion.options.length > 2) {
-      const newOptions = [...editingQuestion.options];
-      newOptions.splice(index, 1);
-      setEditingQuestion({...editingQuestion, options: newOptions});
-    } else if (newQuestion.options && newQuestion.options.length > 2) {
-      const newOptions = [...newQuestion.options];
-      newOptions.splice(index, 1);
-      setNewQuestion({...newQuestion, options: newOptions});
+    const updatedQuizzes = [...quizzes];
+    const quizIndex = updatedQuizzes.findIndex(q => q.id === selectedQuiz.id);
+    
+    if (quizIndex !== -1) {
+      updatedQuizzes[quizIndex].questions.push(question);
+      updatedQuizzes[quizIndex].lastEdited = new Date();
+      
+      setQuizzes(updatedQuizzes);
+      setSelectedQuiz({
+        ...selectedQuiz,
+        questions: [...selectedQuiz.questions, question],
+        lastEdited: new Date()
+      });
+      
+      setNewQuestion({
+        text: '',
+        type: 'multiple-choice',
+        options: ['', '', '', ''],
+        correctAnswer: '',
+        points: 10,
+        difficulty: 'medium',
+        tags: []
+      });
+      setTagInput('');
+      setIsAddingQuestion(false);
     }
   };
 
   const addTag = () => {
-    if (!newTag) return;
+    if (!tagInput.trim()) return;
     
-    if (editingQuestion) {
-      const updatedTags = [...editingQuestion.tags, newTag];
-      setEditingQuestion({...editingQuestion, tags: updatedTags});
-    } else {
-      const updatedTags = [...(newQuestion.tags || []), newTag];
-      setNewQuestion({...newQuestion, tags: updatedTags});
-    }
-    
-    setNewTag('');
+    setNewQuestion({
+      ...newQuestion,
+      tags: [...(newQuestion.tags || []), tagInput.trim()]
+    });
+    setTagInput('');
   };
 
   const removeTag = (tag: string) => {
-    if (editingQuestion) {
-      const updatedTags = editingQuestion.tags.filter(t => t !== tag);
-      setEditingQuestion({...editingQuestion, tags: updatedTags});
-    } else if (newQuestion.tags) {
-      const updatedTags = newQuestion.tags.filter(t => t !== tag);
-      setNewQuestion({...newQuestion, tags: updatedTags});
-    }
-  };
-
-  const startPreview = () => {
-    setShowPreview(true);
-    setCurrentPreviewQuestion(0);
-    setPreviewAnswers({});
-    setShowResults(false);
-  };
-
-  const endPreview = () => {
-    setShowPreview(false);
-    setCurrentPreviewQuestion(0);
-    setPreviewAnswers({});
-    setShowResults(false);
-  };
-
-  const nextPreviewQuestion = () => {
-    if (currentPreviewQuestion < selectedQuestionsList.length - 1) {
-      setCurrentPreviewQuestion(currentPreviewQuestion + 1);
-    } else {
-      setShowResults(true);
-    }
-  };
-
-  const prevPreviewQuestion = () => {
-    if (currentPreviewQuestion > 0) {
-      setCurrentPreviewQuestion(currentPreviewQuestion - 1);
-    }
-  };
-
-  const handlePreviewAnswer = (questionId: string, answer: any) => {
-    setPreviewAnswers({...previewAnswers, [questionId]: answer});
-  };
-
-  const calculateScore = () => {
-    let score = 0;
-    let totalPossible = 0;
-    
-    selectedQuestionsList.forEach(question => {
-      totalPossible += question.points;
-      
-      const userAnswer = previewAnswers[question.id];
-      if (!userAnswer) return;
-      
-      if (Array.isArray(question.correctAnswer)) {
-        // For matching or multiple select questions
-        const isCorrect = Array.isArray(userAnswer) && 
-          userAnswer.length === question.correctAnswer.length &&
-          userAnswer.every(a => question.correctAnswer.includes(a));
-        
-        if (isCorrect) score += question.points;
-      } else {
-        // For single answer questions
-        if (userAnswer === question.correctAnswer) {
-          score += question.points;
-        }
-      }
+    setNewQuestion({
+      ...newQuestion,
+      tags: (newQuestion.tags || []).filter(t => t !== tag)
     });
-    
-    return {
-      score,
-      totalPossible,
-      percentage: Math.round((score / totalPossible) * 100)
-    };
   };
 
-  const saveQuiz = () => {
-    // In a real app, this would save to a server or local storage
-    alert('Quiz saved successfully!');
+  const updateOption = (index: number, value: string) => {
+    const updatedOptions = [...(newQuestion.options || [])];
+    updatedOptions[index] = value;
+    setNewQuestion({
+      ...newQuestion,
+      options: updatedOptions
+    });
   };
 
-  const exportQuiz = () => {
-    const quizData = {
-      ...currentQuiz,
-      questions: selectedQuestionsList
-    };
-    
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(quizData));
-    const downloadAnchorNode = document.createElement('a');
-    downloadAnchorNode.setAttribute("href", dataStr);
-    downloadAnchorNode.setAttribute("download", currentQuiz.title.replace(/\s+/g, '-').toLowerCase() + ".json");
-    document.body.appendChild(downloadAnchorNode);
-    downloadAnchorNode.click();
-    downloadAnchorNode.remove();
+  const setCorrectOption = (option: string) => {
+    setNewQuestion({
+      ...newQuestion,
+      correctAnswer: option
+    });
   };
 
-  const renderQuestionForm = () => {
-    const question = editingQuestion || newQuestion;
-    
-    return (
-      <div className="p-4 border rounded-3 bg-white">
-        <h5 className="fw-bold text-deep-red mb-4">
-          {editingQuestion ? 'Edit Question' : 'Add New Question'}
-        </h5>
-        
-        <div className="mb-3">
-          <label className="form-label fw-medium text-deep-red">Question Type</label>
-          <select 
-            className="form-select"
-            value={question.type}
-            onChange={(e) => editingQuestion 
-              ? setEditingQuestion({...editingQuestion, type: e.target.value as any})
-              : setNewQuestion({...newQuestion, type: e.target.value as any})
-            }
-          >
-            <option value="multiple-choice">Multiple Choice</option>
-            <option value="true-false">True/False</option>
-            <option value="short-answer">Short Answer</option>
-            <option value="matching">Matching</option>
-            <option value="fill-blank">Fill in the Blank</option>
-          </select>
-        </div>
-        
-        <div className="mb-3">
-          <label className="form-label fw-medium text-deep-red">Question Text</label>
-          <textarea 
-            className="form-control"
-            rows={3}
-            value={question.text}
-            onChange={(e) => editingQuestion 
-              ? setEditingQuestion({...editingQuestion, text: e.target.value})
-              : setNewQuestion({...newQuestion, text: e.target.value})
-            }
-            placeholder="Enter your question here..."
-          />
-        </div>
-        
-        {(question.type === 'multiple-choice') && (
-          <div className="mb-3">
-            <label className="form-label fw-medium text-deep-red">Options</label>
-            {question.options?.map((option, index) => (
-              <div key={index} className="d-flex align-items-center gap-2 mb-2">
-                <div className="form-check">
-                  <input 
-                    className="form-check-input" 
-                    type="radio" 
-                    name="correctAnswer" 
-                    checked={question.correctAnswer === option}
-                    onChange={() => editingQuestion 
-                      ? setEditingQuestion({...editingQuestion, correctAnswer: option})
-                      : setNewQuestion({...newQuestion, correctAnswer: option})
-                    }
-                  />
-                </div>
-                <input 
-                  type="text" 
-                  className="form-control"
-                  value={option}
-                  onChange={(e) => handleOptionChange(index, e.target.value)}
-                  placeholder={`Option ${index + 1}`}
-                />
-                <Button 
-                  variant="secondary"
-                  onClick={() => removeOption(index)}
-                  disabled={question.options?.length <= 2}
-                  className="p-1"
-                >
-                  <X size={14} />
-                </Button>
-              </div>
-            ))}
-            <Button 
-              variant="secondary" 
-              size="sm" 
-              onClick={addOption}
-              className="mt-2"
-            >
-              <Plus size={14} className="me-1" />
-              Add Option
-            </Button>
-          </div>
-        )}
-        
-        {question.type === 'true-false' && (
-          <div className="mb-3">
-            <label className="form-label fw-medium text-deep-red">Correct Answer</label>
-            <div className="d-flex gap-3">
-              <div className="form-check">
-                <input 
-                  className="form-check-input" 
-                  type="radio" 
-                  name="trueFalse" 
-                  id="answerTrue"
-                  checked={question.correctAnswer === 'true'}
-                  onChange={() => editingQuestion 
-                    ? setEditingQuestion({...editingQuestion, correctAnswer: 'true'})
-                    : setNewQuestion({...newQuestion, correctAnswer: 'true'})
-                  }
-                />
-                <label className="form-check-label" htmlFor="answerTrue">
-                  True
-                </label>
-              </div>
-              <div className="form-check">
-                <input 
-                  className="form-check-input" 
-                  type="radio" 
-                  name="trueFalse" 
-                  id="answerFalse"
-                  checked={question.correctAnswer === 'false'}
-                  onChange={() => editingQuestion 
-                    ? setEditingQuestion({...editingQuestion, correctAnswer: 'false'})
-                    : setNewQuestion({...newQuestion, correctAnswer: 'false'})
-                  }
-                />
-                <label className="form-check-label" htmlFor="answerFalse">
-                  False
-                </label>
-              </div>
-            </div>
-          </div>
-        )}
-        
-        {question.type === 'short-answer' && (
-          <div className="mb-3">
-            <label className="form-label fw-medium text-deep-red">Correct Answer</label>
-            <input 
-              type="text" 
-              className="form-control"
-              value={question.correctAnswer as string}
-              onChange={(e) => editingQuestion 
-                ? setEditingQuestion({...editingQuestion, correctAnswer: e.target.value})
-                : setNewQuestion({...newQuestion, correctAnswer: e.target.value})
-              }
-              placeholder="Enter the correct answer"
-            />
-          </div>
-        )}
-        
-        <div className="mb-3">
-          <label className="form-label fw-medium text-deep-red">Explanation (Optional)</label>
-          <textarea 
-            className="form-control"
-            rows={2}
-            value={question.explanation || ''}
-            onChange={(e) => editingQuestion 
-              ? setEditingQuestion({...editingQuestion, explanation: e.target.value})
-              : setNewQuestion({...newQuestion, explanation: e.target.value})
-            }
-            placeholder="Explain why the answer is correct..."
-          />
-        </div>
-        
-        <div className="row g-3 mb-3">
-          <div className="col-md-6">
-            <label className="form-label fw-medium text-deep-red">Difficulty</label>
-            <select 
-              className="form-select"
-              value={question.difficulty}
-              onChange={(e) => editingQuestion 
-                ? setEditingQuestion({...editingQuestion, difficulty: e.target.value as any})
-                : setNewQuestion({...newQuestion, difficulty: e.target.value as any})
-              }
-            >
-              <option value="easy">Easy</option>
-              <option value="medium">Medium</option>
-              <option value="hard">Hard</option>
-            </select>
-          </div>
-          <div className="col-md-6">
-            <label className="form-label fw-medium text-deep-red">Points</label>
-            <input 
-              type="number" 
-              className="form-control"
-              value={question.points || 5}
-              onChange={(e) => editingQuestion 
-                ? setEditingQuestion({...editingQuestion, points: parseInt(e.target.value)})
-                : setNewQuestion({...newQuestion, points: parseInt(e.target.value)})
-              }
-              min="1"
-              max="100"
-            />
-          </div>
-        </div>
-        
-        <div className="mb-3">
-          <label className="form-label fw-medium text-deep-red">Category</label>
-          <select 
-            className="form-select"
-            value={question.category}
-            onChange={(e) => editingQuestion 
-              ? setEditingQuestion({...editingQuestion, category: e.target.value})
-              : setNewQuestion({...newQuestion, category: e.target.value})
-            }
-          >
-            <option value="">Select a category</option>
-            {categories.filter(c => c.id !== 'all').map(category => (
-              <option key={category.id} value={category.id}>{category.label}</option>
-            ))}
-          </select>
-        </div>
-        
-        <div className="mb-3">
-          <label className="form-label fw-medium text-deep-red">Tags</label>
-          <div className="d-flex gap-2 mb-2">
-            <input 
-              type="text" 
-              className="form-control"
-              value={newTag}
-              onChange={(e) => setNewTag(e.target.value)}
-              placeholder="Add a tag"
-              onKeyPress={(e) => e.key === 'Enter' && addTag()}
-            />
-            <Button 
-              variant="secondary"
-              onClick={addTag}
-            >
-              <Plus size={14} />
-            </Button>
-          </div>
-          <div className="d-flex flex-wrap gap-2">
-            {question.tags?.map((tag, index) => (
-              <span key={index} className="badge bg-light-bg text-deep-red d-flex align-items-center gap-1">
-                {tag}
-                <X 
-                  size={12} 
-                  className="cursor-pointer" 
-                  onClick={() => removeTag(tag)}
-                />
-              </span>
-            ))}
-          </div>
-        </div>
-        
-        <div className="mb-3">
-          <label className="form-label fw-medium text-deep-red">Image URL (Optional)</label>
-          <input 
-            type="text" 
-            className="form-control"
-            value={question.image || ''}
-            onChange={(e) => editingQuestion 
-              ? setEditingQuestion({...editingQuestion, image: e.target.value})
-              : setNewQuestion({...newQuestion, image: e.target.value})
-            }
-            placeholder="Enter image URL"
-          />
-        </div>
-        
-        <div className="d-flex gap-2 justify-content-end">
-          <Button 
-            variant="secondary"
-            onClick={() => {
-              setEditingQuestion(null);
-              setIsAddingQuestion(false);
-            }}
-          >
-            Cancel
-          </Button>
-          <Button 
-            onClick={editingQuestion ? handleUpdateQuestion : handleAddQuestion}
-          >
-            {editingQuestion ? 'Update Question' : 'Add Question'}
-          </Button>
-        </div>
-      </div>
-    );
-  };
-
-  const renderQuestionPreview = () => {
-    if (selectedQuestionsList.length === 0) {
-      return (
-        <div className="text-center p-5">
-          <AlertCircle size={48} className="text-muted mb-3" />
-          <h5 className="text-muted">No questions selected</h5>
-          <p className="text-muted">Select questions from the question bank to preview your quiz.</p>
-        </div>
-      );
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case 'easy': return 'bg-success';
+      case 'medium': return 'bg-warning';
+      case 'hard': return 'bg-danger';
+      default: return 'bg-secondary';
     }
+  };
 
-    if (showResults) {
-      const result = calculateScore();
-      const isPassing = result.percentage >= currentQuiz.passingScore;
-      
-      return (
-        <div className="p-5 text-center">
-          <h4 className="fw-bold text-deep-red mb-4">Quiz Results</h4>
-          
-          <div className="mb-4">
-            <div className="display-1 fw-bold mb-2" style={{ color: isPassing ? '#22c55e' : '#ef4444' }}>
-              {result.percentage}%
-            </div>
-            <p className="text-muted">
-              You scored {result.score} out of {result.totalPossible} points
-            </p>
-            <div className={`badge ${isPassing ? 'bg-success' : 'bg-danger'} text-white px-3 py-2`}>
-              {isPassing ? 'PASSED' : 'FAILED'}
-            </div>
-          </div>
-          
-          <div className="d-flex justify-content-center gap-3 mt-4">
-            <Button variant="secondary" onClick={endPreview}>
-              Exit Preview
-            </Button>
-            <Button onClick={() => {
-              setShowResults(false);
-              setCurrentPreviewQuestion(0);
-              setPreviewAnswers({});
-            }}>
-              Retry Quiz
-            </Button>
-          </div>
-        </div>
-      );
+  const getQuestionTypeIcon = (type: string) => {
+    switch (type) {
+      case 'multiple-choice': return CheckSquare;
+      case 'true-false': return Square;
+      case 'short-answer': return AlignLeft;
+      case 'essay': return FileText;
+      default: return HelpCircle;
     }
+  };
 
-    const currentQuestion = selectedQuestionsList[currentPreviewQuestion];
+  const copyQuiz = (quizId: string) => {
+    const quizToCopy = quizzes.find(q => q.id === quizId);
+    if (!quizToCopy) return;
     
-    return (
-      <div className="p-4">
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <div>
-            <span className="badge bg-primary-red text-white">
-              Question {currentPreviewQuestion + 1} of {selectedQuestionsList.length}
-            </span>
-          </div>
-          <div className="d-flex align-items-center gap-2">
-            <span className="badge bg-light-bg text-deep-red text-capitalize">
-              {currentQuestion.difficulty}
-            </span>
-            <span className="badge bg-success text-white">
-              {currentQuestion.points} pts
-            </span>
-          </div>
-        </div>
-        
-        <div className="mb-4">
-          <h5 className="fw-bold text-deep-red mb-3">{currentQuestion.text}</h5>
-          {currentQuestion.image && (
-            <img 
-              src={currentQuestion.image} 
-              alt="Question" 
-              className="img-fluid rounded-3 mb-3"
-              style={{ maxHeight: '200px' }}
-            />
-          )}
-        </div>
-        
-        {currentQuestion.type === 'multiple-choice' && (
-          <div className="mb-4">
-            {currentQuestion.options?.map((option, index) => (
-              <div key={index} className="form-check mb-2">
-                <input 
-                  className="form-check-input" 
-                  type="radio" 
-                  name={`question-${currentQuestion.id}`}
-                  id={`option-${index}`}
-                  checked={previewAnswers[currentQuestion.id] === option}
-                  onChange={() => handlePreviewAnswer(currentQuestion.id, option)}
-                />
-                <label className="form-check-label" htmlFor={`option-${index}`}>
-                  {option}
-                </label>
-              </div>
-            ))}
-          </div>
-        )}
-        
-        {currentQuestion.type === 'true-false' && (
-          <div className="mb-4">
-            <div className="form-check mb-2">
-              <input 
-                className="form-check-input" 
-                type="radio" 
-                name={`question-${currentQuestion.id}`}
-                id="option-true"
-                checked={previewAnswers[currentQuestion.id] === 'true'}
-                onChange={() => handlePreviewAnswer(currentQuestion.id, 'true')}
-              />
-              <label className="form-check-label" htmlFor="option-true">
-                True
-              </label>
-            </div>
-            <div className="form-check mb-2">
-              <input 
-                className="form-check-input" 
-                type="radio" 
-                name={`question-${currentQuestion.id}`}
-                id="option-false"
-                checked={previewAnswers[currentQuestion.id] === 'false'}
-                onChange={() => handlePreviewAnswer(currentQuestion.id, 'false')}
-              />
-              <label className="form-check-label" htmlFor="option-false">
-                False
-              </label>
-            </div>
-          </div>
-        )}
-        
-        {currentQuestion.type === 'short-answer' && (
-          <div className="mb-4">
-            <textarea 
-              className="form-control"
-              rows={3}
-              value={previewAnswers[currentQuestion.id] || ''}
-              onChange={(e) => handlePreviewAnswer(currentQuestion.id, e.target.value)}
-              placeholder="Enter your answer here..."
-            />
-          </div>
-        )}
-        
-        <div className="d-flex justify-content-between">
-          <Button 
-            variant="secondary"
-            onClick={prevPreviewQuestion}
-            disabled={currentPreviewQuestion === 0}
-          >
-            <ArrowLeft size={16} className="me-1" />
-            Previous
-          </Button>
-          <Button 
-            onClick={nextPreviewQuestion}
-          >
-            {currentPreviewQuestion < selectedQuestionsList.length - 1 ? (
-              <>
-                Next
-                <ArrowRight size={16} className="ms-1" />
-              </>
-            ) : (
-              'Finish Quiz'
-            )}
-          </Button>
-        </div>
-      </div>
-    );
+    const newQuizCopy: Quiz = {
+      ...quizToCopy,
+      id: `quiz-${Date.now()}`,
+      title: `${quizToCopy.title} (Copy)`,
+      createdAt: new Date(),
+      lastEdited: new Date()
+    };
+    
+    setQuizzes([...quizzes, newQuizCopy]);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const deleteQuiz = (quizId: string) => {
+    if (confirm('Are you sure you want to delete this quiz?')) {
+      setQuizzes(quizzes.filter(q => q.id !== quizId));
+      if (selectedQuiz?.id === quizId) {
+        setSelectedQuiz(null);
+        setEditMode(false);
+      }
+    }
   };
 
   return (
-    <div className="min-vh-100 bg-light-bg">
-      {/* Navigation */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
-        <div className="container-lg">
-          <motion.button
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="navbar-brand d-flex align-items-center gap-2 btn btn-link text-decoration-none"
-            onClick={() => onNavigate('home')}
-          >
-            <div className="bg-primary-red rounded-4 d-flex align-items-center justify-content-center"
-                 style={{ width: '40px', height: '40px' }}>
-              <BookOpen className="text-white" size={24} />
+    <div className="min-vh-100 bg-light-bg d-flex">
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        activeView="question-maker"
+        onViewChange={onNavigate}
+      />
+      
+      <div className="flex-fill d-flex flex-column overflow-hidden">
+        <Header
+          onMenuToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+          isSidebarOpen={isSidebarOpen}
+          onNavigate={onNavigate}
+        />
+        
+        <main className="flex-fill overflow-auto">
+          {/* Hero Section */}
+          <section className="position-relative overflow-hidden bg-gradient-primary text-white py-5">
+            <div className="container-lg py-5">
+              <div className="text-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
+                       style={{ width: '80px', height: '80px' }}>
+                    <HelpCircle className="text-white" size={40} />
+                  </div>
+                  <h1 className="display-3 fw-bold mb-4">Question Maker</h1>
+                  <p className="lead mb-5 mx-auto" style={{ maxWidth: '600px' }}>
+                    Create custom quizzes, tests, and assessments with multiple question types. 
+                    Perfect for teachers, students, and self-assessment.
+                  </p>
+                  <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                    <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white" onClick={() => setIsCreatingQuiz(true)}>
+                      <Plus size={20} className="me-2" />
+                      Create New Quiz
+                    </Button>
+                    <Button variant="outline-secondary" size="lg" className="border-white text-white">
+                      <Download size={20} className="me-2" />
+                      Import Questions
+                    </Button>
+                  </div>
+                </motion.div>
+              </div>
             </div>
-            <span className="fw-bold h3 text-deep-red mb-0">CoreVerse</span>
-          </motion.button>
-          
-          <div className="d-none d-md-flex align-items-center gap-4">
-            <button 
-              onClick={() => onNavigate('features')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              Features
-            </button>
-            <button 
-              onClick={() => onNavigate('about')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              About
-            </button>
-            <button 
-              onClick={() => onNavigate('contact')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              Contact
-            </button>
-            <ThemeToggle />
-            <Button variant="secondary" className="me-2" onClick={() => onNavigate('dashboard')}>
-              Sign In
-            </Button>
-            <Button onClick={() => onNavigate('dashboard')}>Get Started</Button>
-          </div>
-        </div>
-      </nav>
+          </section>
 
-      {/* Hero Section */}
-      <section className="position-relative overflow-hidden bg-gradient-primary text-white py-5">
-        <div className="container-lg py-5">
-          <div className="text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
-                   style={{ width: '80px', height: '80px' }}>
-                <HelpCircle className="text-white" size={40} />
-              </div>
-              <h1 className="display-3 fw-bold mb-4">Question Maker</h1>
-              <p className="lead mb-5 mx-auto" style={{ maxWidth: '600px' }}>
-                Create, organize, and share interactive quizzes and assessments. 
-                Build your question bank and generate customized tests for your students.
-              </p>
-              <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-                <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white" onClick={saveQuiz}>
-                  <Save size={20} className="me-2" />
-                  Save Quiz
-                </Button>
-                <Button variant="outline-secondary" size="lg" className="border-white text-white" onClick={startPreview}>
-                  <Eye size={20} className="me-2" />
-                  Preview Quiz
-                </Button>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+          {/* Main Content */}
+          {editMode && selectedQuiz ? (
+            // Quiz Editor Mode
+            <section className="py-5 bg-white">
+              <div className="container-lg">
+                <div className="d-flex align-items-center justify-content-between mb-4">
+                  <div className="d-flex align-items-center gap-3">
+                    <Button variant="secondary" onClick={() => {
+                      setEditMode(false);
+                      setSelectedQuiz(null);
+                    }}>
+                      <X size={16} className="me-1" />
+                      Close Editor
+                    </Button>
+                    <h2 className="h4 fw-bold text-deep-red mb-0">Editing: {selectedQuiz.title}</h2>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <Button variant="secondary">
+                      <Settings size={16} className="me-1" />
+                      Quiz Settings
+                    </Button>
+                    <Button>
+                      <Save size={16} className="me-1" />
+                      Save Quiz
+                    </Button>
+                  </div>
+                </div>
 
-      {/* Main Content */}
-      <section className="py-5">
-        <div className="container-lg">
-          {showPreview ? (
-            <div className="row justify-content-center">
-              <div className="col-lg-8">
-                <Card>
-                  <div className="card-body p-0">
-                    <div className="bg-primary-red text-white p-4 rounded-top">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <h3 className="h4 fw-bold mb-0">{currentQuiz.title}</h3>
-                        <Button variant="outline-light" size="sm" onClick={endPreview}>
-                          Exit Preview
+                {/* Questions List */}
+                <div className="mb-4">
+                  <Card>
+                    <div className="card-body p-4">
+                      <div className="d-flex align-items-center justify-content-between mb-4">
+                        <h3 className="h5 fw-bold text-deep-red mb-0">Questions ({selectedQuiz.questions.length})</h3>
+                        <Button onClick={() => setIsAddingQuestion(true)}>
+                          <Plus size={16} className="me-1" />
+                          Add Question
                         </Button>
                       </div>
-                      <p className="mb-0 opacity-75">{currentQuiz.description}</p>
+
+                      {selectedQuiz.questions.length === 0 ? (
+                        <div className="text-center py-4">
+                          <HelpCircle size={48} className="text-muted mb-3" />
+                          <h5 className="text-muted">No questions yet</h5>
+                          <p className="text-muted">Click "Add Question" to create your first question</p>
+                        </div>
+                      ) : (
+                        <div className="d-flex flex-column gap-3">
+                          {selectedQuiz.questions.map((question, index) => {
+                            const QuestionIcon = getQuestionTypeIcon(question.type);
+                            return (
+                              <div key={question.id} className="border rounded-3 p-3">
+                                <div className="d-flex align-items-start">
+                                  <div className="bg-primary-red bg-opacity-10 rounded-3 d-flex align-items-center justify-content-center me-3 flex-shrink-0"
+                                       style={{ width: '40px', height: '40px' }}>
+                                    <QuestionIcon className="text-primary-red" size={20} />
+                                  </div>
+                                  <div className="flex-fill">
+                                    <div className="d-flex align-items-center justify-content-between mb-2">
+                                      <div className="d-flex align-items-center gap-2">
+                                        <h5 className="fw-semibold text-deep-red mb-0">Question {index + 1}</h5>
+                                        <span className={`badge ${getDifficultyColor(question.difficulty)} text-white`}>
+                                          {question.difficulty}
+                                        </span>
+                                        <span className="badge bg-info text-white">
+                                          {question.points} pts
+                                        </span>
+                                      </div>
+                                      <div className="d-flex gap-2">
+                                        <Button size="sm" variant="secondary">
+                                          <Edit size={14} />
+                                        </Button>
+                                        <Button size="sm" variant="danger">
+                                          <Trash2 size={14} />
+                                        </Button>
+                                      </div>
+                                    </div>
+                                    <p className="text-muted mb-2">{question.text}</p>
+                                    
+                                    {question.type === 'multiple-choice' && question.options && (
+                                      <div className="mb-2">
+                                        <div className="d-flex flex-column gap-1">
+                                          {question.options.map((option, idx) => (
+                                            <div key={idx} className={`d-flex align-items-center p-2 rounded-3 ${
+                                              option === question.correctAnswer ? 'bg-success bg-opacity-10' : ''
+                                            }`}>
+                                              <div className="me-2">
+                                                {option === question.correctAnswer ? (
+                                                  <CheckCircle size={16} className="text-success" />
+                                                ) : (
+                                                  <Circle size={16} className="text-muted" />
+                                                )}
+                                              </div>
+                                              <span className={option === question.correctAnswer ? 'fw-medium' : ''}>
+                                                {option}
+                                              </span>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    )}
+                                    
+                                    {question.type === 'true-false' && (
+                                      <div className="mb-2">
+                                        <span className="fw-medium">Correct answer: </span>
+                                        <span className="text-success">{question.correctAnswer}</span>
+                                      </div>
+                                    )}
+                                    
+                                    {question.type === 'short-answer' && (
+                                      <div className="mb-2">
+                                        <span className="fw-medium">Correct answer: </span>
+                                        <span className="text-success">{question.correctAnswer}</span>
+                                      </div>
+                                    )}
+                                    
+                                    {question.tags && question.tags.length > 0 && (
+                                      <div className="d-flex flex-wrap gap-2">
+                                        {question.tags.map((tag, idx) => (
+                                          <span key={idx} className="badge bg-light-bg text-deep-red">
+                                            {tag}
+                                          </span>
+                                        ))}
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
-                    {renderQuestionPreview()}
+                  </Card>
+                </div>
+
+                {/* Quiz Preview */}
+                <Card>
+                  <div className="card-body p-4">
+                    <h3 className="h5 fw-bold text-deep-red mb-3">Quiz Preview</h3>
+                    <div className="row mb-3">
+                      <div className="col-md-8">
+                        <div className="mb-3">
+                          <h4 className="h2 fw-bold text-deep-red">{selectedQuiz.title}</h4>
+                          <p className="text-muted">{selectedQuiz.description}</p>
+                        </div>
+                        <div className="d-flex flex-wrap gap-3">
+                          <div className="d-flex align-items-center gap-2">
+                            <HelpCircle size={16} className="text-muted" />
+                            <span className="text-muted">{selectedQuiz.questions.length} questions</span>
+                          </div>
+                          {selectedQuiz.timeLimit && (
+                            <div className="d-flex align-items-center gap-2">
+                              <Clock size={16} className="text-muted" />
+                              <span className="text-muted">{selectedQuiz.timeLimit} minutes</span>
+                            </div>
+                          )}
+                          <div className="d-flex align-items-center gap-2">
+                            <Tag size={16} className="text-muted" />
+                            <span className="text-muted">{selectedQuiz.category}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-4 text-md-end">
+                        <div className="d-flex flex-column gap-2">
+                          <Button>
+                            <Eye size={16} className="me-1" />
+                            Preview
+                          </Button>
+                          <Button variant="secondary">
+                            <Download size={16} className="me-1" />
+                            Export
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </Card>
               </div>
-            </div>
+            </section>
           ) : (
-            <div className="row g-4">
-              {/* Left Column - Question Bank */}
-              <div className="col-lg-4">
-                <Card>
-                  <div className="card-body p-4">
-                    <div className="d-flex align-items-center justify-content-between mb-4">
-                      <h4 className="fw-bold text-deep-red mb-0">Question Bank</h4>
-                      <Button onClick={() => setIsAddingQuestion(true)}>
-                        <Plus size={16} className="me-1" />
-                        New Question
-                      </Button>
+            // Quiz List Mode
+            <section className="py-5 bg-white">
+              <div className="container-lg">
+                {/* Search and Filters */}
+                <div className="row g-3 mb-4">
+                  <div className="col-md-6">
+                    <div className="position-relative">
+                      <Search className="position-absolute text-muted" 
+                              style={{ left: '12px', top: '50%', transform: 'translateY(-50%)', width: '16px', height: '16px' }} />
+                      <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Search quizzes..."
+                        className="form-control ps-5"
+                        style={{ paddingLeft: '2.5rem' }}
+                      />
                     </div>
-                    
-                    <div className="mb-3">
-                      <div className="position-relative">
-                        <Search className="position-absolute text-muted" 
-                                style={{ left: '12px', top: '50%', transform: 'translateY(-50%)', width: '16px', height: '16px' }} />
-                        <input
-                          type="text"
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          placeholder="Search questions..."
-                          className="form-control ps-5"
-                          style={{ paddingLeft: '2.5rem' }}
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className="mb-3">
-                      <div className="row g-2">
-                        <div className="col-6">
-                          <select 
-                            className="form-select form-select-sm"
-                            value={filterCategory}
-                            onChange={(e) => setFilterCategory(e.target.value)}
-                          >
-                            {categories.map(category => (
-                              <option key={category.id} value={category.id}>{category.label}</option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="col-6">
-                          <select 
-                            className="form-select form-select-sm"
-                            value={filterDifficulty}
-                            onChange={(e) => setFilterDifficulty(e.target.value)}
-                          >
-                            {difficulties.map(difficulty => (
-                              <option key={difficulty.id} value={difficulty.id}>{difficulty.label}</option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="d-flex flex-column gap-3" style={{ maxHeight: '500px', overflowY: 'auto' }}>
-                      {filteredQuestions.length === 0 ? (
-                        <div className="text-center p-4">
-                          <p className="text-muted mb-0">No questions found</p>
-                        </div>
-                      ) : (
-                        filteredQuestions.map((question) => (
-                          <div 
-                            key={question.id} 
-                            className="border rounded-3 p-3 position-relative"
-                          >
-                            <div className="form-check position-absolute top-0 end-0 m-2">
-                              <input 
-                                className="form-check-input" 
-                                type="checkbox" 
-                                checked={selectedQuestions.includes(question.id)}
-                                onChange={() => toggleQuestionSelection(question.id)}
-                              />
+                  </div>
+                  <div className="col-md-4">
+                    <select 
+                      className="form-select"
+                      value={selectedCategory}
+                      onChange={(e) => setSelectedCategory(e.target.value)}
+                    >
+                      {categories.map(category => (
+                        <option key={category.id} value={category.id}>{category.label}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="col-md-2">
+                    <Button className="w-100" onClick={() => setIsCreatingQuiz(true)}>
+                      <Plus size={16} className="me-1" />
+                      New Quiz
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Quizzes Grid */}
+                <div className="row g-4">
+                  {filteredQuizzes.map((quiz, index) => (
+                    <div key={quiz.id} className="col-md-6 col-lg-4">
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <Card hover className="h-100">
+                          <div className="card-body p-4">
+                            <div className="d-flex align-items-start justify-content-between mb-3">
+                              <div className="bg-primary-red bg-opacity-10 rounded-3 d-flex align-items-center justify-content-center"
+                                   style={{ width: '48px', height: '48px' }}>
+                                <HelpCircle className="text-primary-red" size={24} />
+                              </div>
+                              <span className="badge bg-accent-red text-white">
+                                {quiz.category}
+                              </span>
                             </div>
-                            <div className="d-flex align-items-start gap-2 mb-2">
-                              <div className={`badge ${
-                                question.difficulty === 'easy' ? 'bg-success' : 
-                                question.difficulty === 'medium' ? 'bg-warning' : 'bg-danger'
-                              } text-white text-capitalize`}>
-                                {question.difficulty}
-                              </div>
-                              <div className="badge bg-primary-red text-white">
-                                {question.points} pts
-                              </div>
-                              <div className="badge bg-light-bg text-deep-red text-capitalize">
-                                {question.type.replace('-', ' ')}
-                              </div>
-                            </div>
-                            <p className="mb-2 fw-medium">{question.text}</p>
-                            <div className="d-flex flex-wrap gap-1 mb-2">
-                              {question.tags.map((tag, index) => (
-                                <span key={index} className="badge bg-light-bg text-muted small">
-                                  #{tag}
+                            
+                            <h4 className="fw-bold text-deep-red mb-2">{quiz.title}</h4>
+                            <p className="text-muted small mb-3">{quiz.description}</p>
+                            
+                            <div className="d-flex align-items-center justify-content-between mb-3">
+                              <span className="text-muted small">
+                                {quiz.questions.length} questions
+                              </span>
+                              <div className="d-flex align-items-center gap-2 text-muted small">
+                                <Clock size={14} />
+                                <span>
+                                  {quiz.timeLimit ? `${quiz.timeLimit} min` : 'No time limit'}
                                 </span>
-                              ))}
+                              </div>
                             </div>
-                            <div className="d-flex justify-content-between align-items-center">
-                              <span className="text-muted small text-capitalize">{question.category}</span>
-                              <div className="d-flex gap-1">
-                                <Button 
-                                  size="sm" 
-                                  variant="secondary"
-                                  onClick={() => setEditingQuestion(question)}
-                                  className="p-1"
-                                >
-                                  <Edit size={14} />
+                            
+                            <div className="d-flex align-items-center justify-content-between">
+                              <div className="d-flex gap-2">
+                                <Button size="sm" variant="secondary" onClick={() => copyQuiz(quiz.id)}>
+                                  {copied ? <CheckCircle size={14} /> : <Copy size={14} />}
                                 </Button>
-                                <Button 
-                                  size="sm" 
-                                  variant="danger"
-                                  onClick={() => handleDeleteQuestion(question.id)}
-                                  className="p-1"
-                                >
+                                <Button size="sm" variant="danger" onClick={() => deleteQuiz(quiz.id)}>
                                   <Trash2 size={14} />
                                 </Button>
                               </div>
-                            </div>
-                          </div>
-                        ))
-                      )}
-                    </div>
-                  </div>
-                </Card>
-              </div>
-
-              {/* Middle Column - Question Editor */}
-              <div className="col-lg-4">
-                {isAddingQuestion || editingQuestion ? (
-                  renderQuestionForm()
-                ) : (
-                  <Card>
-                    <div className="card-body p-4">
-                      <h4 className="fw-bold text-deep-red mb-4">Quiz Settings</h4>
-                      
-                      <div className="mb-3">
-                        <label className="form-label fw-medium text-deep-red">Quiz Title</label>
-                        <input 
-                          type="text" 
-                          className="form-control"
-                          value={currentQuiz.title}
-                          onChange={(e) => setCurrentQuiz({...currentQuiz, title: e.target.value})}
-                          placeholder="Enter quiz title"
-                        />
-                      </div>
-                      
-                      <div className="mb-3">
-                        <label className="form-label fw-medium text-deep-red">Description</label>
-                        <textarea 
-                          className="form-control"
-                          rows={3}
-                          value={currentQuiz.description}
-                          onChange={(e) => setCurrentQuiz({...currentQuiz, description: e.target.value})}
-                          placeholder="Enter quiz description"
-                        />
-                      </div>
-                      
-                      <div className="row g-3 mb-3">
-                        <div className="col-md-6">
-                          <label className="form-label fw-medium text-deep-red">Time Limit (minutes)</label>
-                          <input 
-                            type="number" 
-                            className="form-control"
-                            value={currentQuiz.timeLimit}
-                            onChange={(e) => setCurrentQuiz({...currentQuiz, timeLimit: parseInt(e.target.value)})}
-                            min="1"
-                            max="180"
-                          />
-                        </div>
-                        <div className="col-md-6">
-                          <label className="form-label fw-medium text-deep-red">Passing Score (%)</label>
-                          <input 
-                            type="number" 
-                            className="form-control"
-                            value={currentQuiz.passingScore}
-                            onChange={(e) => setCurrentQuiz({...currentQuiz, passingScore: parseInt(e.target.value)})}
-                            min="0"
-                            max="100"
-                          />
-                        </div>
-                      </div>
-                      
-                      <div className="mb-3">
-                        <div className="form-check form-switch">
-                          <input 
-                            className="form-check-input" 
-                            type="checkbox" 
-                            id="randomizeQuestions"
-                            checked={currentQuiz.randomizeQuestions}
-                            onChange={(e) => setCurrentQuiz({...currentQuiz, randomizeQuestions: e.target.checked})}
-                          />
-                          <label className="form-check-label" htmlFor="randomizeQuestions">
-                            Randomize Question Order
-                          </label>
-                        </div>
-                      </div>
-                      
-                      <div className="mb-4">
-                        <div className="form-check form-switch">
-                          <input 
-                            className="form-check-input" 
-                            type="checkbox" 
-                            id="showFeedback"
-                            checked={currentQuiz.showFeedback}
-                            onChange={(e) => setCurrentQuiz({...currentQuiz, showFeedback: e.target.checked})}
-                          />
-                          <label className="form-check-label" htmlFor="showFeedback">
-                            Show Feedback After Each Question
-                          </label>
-                        </div>
-                      </div>
-                      
-                      <div className="d-grid gap-2">
-                        <Button onClick={saveQuiz}>
-                          <Save size={16} className="me-1" />
-                          Save Quiz
-                        </Button>
-                        <Button variant="secondary" onClick={exportQuiz}>
-                          <Download size={16} className="me-1" />
-                          Export Quiz
-                        </Button>
-                        <Button variant="secondary" onClick={startPreview}>
-                          <Eye size={16} className="me-1" />
-                          Preview Quiz
-                        </Button>
-                      </div>
-                    </div>
-                  </Card>
-                )}
-              </div>
-
-              {/* Right Column - Selected Questions */}
-              <div className="col-lg-4">
-                <Card>
-                  <div className="card-body p-4">
-                    <div className="d-flex align-items-center justify-content-between mb-4">
-                      <h4 className="fw-bold text-deep-red mb-0">Selected Questions</h4>
-                      <span className="badge bg-primary-red text-white">
-                        {selectedQuestions.length} Questions
-                      </span>
-                    </div>
-                    
-                    {selectedQuestions.length === 0 ? (
-                      <div className="text-center p-4">
-                        <HelpCircle size={48} className="text-muted mb-3" />
-                        <p className="text-muted mb-0">No questions selected yet</p>
-                        <p className="text-muted small">Select questions from the question bank</p>
-                      </div>
-                    ) : (
-                      <div className="d-flex flex-column gap-3" style={{ maxHeight: '500px', overflowY: 'auto' }}>
-                        {selectedQuestionsList.map((question, index) => (
-                          <div 
-                            key={question.id} 
-                            className="border rounded-3 p-3"
-                          >
-                            <div className="d-flex justify-content-between align-items-start mb-2">
-                              <span className="badge bg-primary-red text-white">Q{index + 1}</span>
-                              <div className="d-flex gap-1">
-                                <span className={`badge ${
-                                  question.difficulty === 'easy' ? 'bg-success' : 
-                                  question.difficulty === 'medium' ? 'bg-warning' : 'bg-danger'
-                                } text-white text-capitalize`}>
-                                  {question.difficulty}
-                                </span>
-                                <span className="badge bg-light-bg text-deep-red">
-                                  {question.points} pts
-                                </span>
-                              </div>
-                            </div>
-                            <p className="mb-2 small fw-medium">{question.text}</p>
-                            <div className="d-flex justify-content-between align-items-center">
-                              <span className="text-muted small text-capitalize">{question.type.replace('-', ' ')}</span>
-                              <Button 
-                                size="sm" 
-                                variant="secondary"
-                                onClick={() => toggleQuestionSelection(question.id)}
-                                className="p-1"
-                              >
-                                <X size={14} />
+                              <Button onClick={() => {
+                                setSelectedQuiz(quiz);
+                                setEditMode(true);
+                              }}>
+                                <Edit size={16} className="me-1" />
+                                Edit Quiz
                               </Button>
                             </div>
                           </div>
-                        ))}
+                        </Card>
+                      </motion.div>
+                    </div>
+                  ))}
+                </div>
+
+                {filteredQuizzes.length === 0 && (
+                  <div className="text-center py-5">
+                    <h3 className="text-muted">No quizzes found</h3>
+                    <p className="text-muted">Try adjusting your search or create a new quiz</p>
+                    <Button className="mt-3" onClick={() => setIsCreatingQuiz(true)}>
+                      <Plus size={16} className="me-1" />
+                      Create New Quiz
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
+
+          {/* Create Quiz Modal */}
+          {isCreatingQuiz && (
+            <div className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50" style={{ zIndex: 1050 }}>
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="bg-white rounded-4 p-4 w-100"
+                style={{ maxWidth: '500px' }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="d-flex align-items-center justify-content-between mb-4">
+                  <h3 className="h4 fw-bold text-deep-red mb-0">Create New Quiz</h3>
+                  <Button variant="secondary" onClick={() => setIsCreatingQuiz(false)}>
+                    <X size={16} />
+                  </Button>
+                </div>
+                
+                <div className="mb-3">
+                  <label className="form-label fw-medium text-deep-red">Quiz Title</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter quiz title"
+                    value={newQuiz.title}
+                    onChange={(e) => setNewQuiz({...newQuiz, title: e.target.value})}
+                  />
+                </div>
+                
+                <div className="mb-3">
+                  <label className="form-label fw-medium text-deep-red">Description</label>
+                  <textarea
+                    className="form-control"
+                    placeholder="Enter quiz description"
+                    value={newQuiz.description}
+                    onChange={(e) => setNewQuiz({...newQuiz, description: e.target.value})}
+                    rows={3}
+                  />
+                </div>
+                
+                <div className="row g-3 mb-4">
+                  <div className="col-md-6">
+                    <label className="form-label fw-medium text-deep-red">Category</label>
+                    <select
+                      className="form-select"
+                      value={newQuiz.category}
+                      onChange={(e) => setNewQuiz({...newQuiz, category: e.target.value})}
+                    >
+                      {categories.filter(c => c.id !== 'all').map(category => (
+                        <option key={category.id} value={category.id}>{category.label}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label fw-medium text-deep-red">Time Limit (minutes)</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      placeholder="Enter time limit"
+                      value={newQuiz.timeLimit}
+                      onChange={(e) => setNewQuiz({...newQuiz, timeLimit: parseInt(e.target.value)})}
+                      min="0"
+                    />
+                    <small className="text-muted">Leave empty for no time limit</small>
+                  </div>
+                </div>
+                
+                <div className="d-flex gap-2">
+                  <Button className="flex-fill" onClick={createNewQuiz} disabled={!newQuiz.title}>
+                    Create Quiz
+                  </Button>
+                  <Button variant="secondary" className="flex-fill" onClick={() => setIsCreatingQuiz(false)}>
+                    Cancel
+                  </Button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+
+          {/* Add Question Modal */}
+          {isAddingQuestion && selectedQuiz && (
+            <div className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50" style={{ zIndex: 1050 }}>
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="bg-white rounded-4 p-4 w-100"
+                style={{ maxWidth: '700px', maxHeight: '90vh', overflowY: 'auto' }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="d-flex align-items-center justify-content-between mb-4">
+                  <h3 className="h4 fw-bold text-deep-red mb-0">Add Question to {selectedQuiz.title}</h3>
+                  <Button variant="secondary" onClick={() => setIsAddingQuestion(false)}>
+                    <X size={16} />
+                  </Button>
+                </div>
+                
+                <div className="mb-3">
+                  <label className="form-label fw-medium text-deep-red">Question Type</label>
+                  <div className="d-flex flex-wrap gap-2">
+                    {questionTypes.map(type => (
+                      <Button
+                        key={type.id}
+                        variant={newQuestion.type === type.id ? 'primary' : 'secondary'}
+                        onClick={() => setNewQuestion({...newQuestion, type: type.id as any})}
+                        className="d-flex align-items-center gap-2"
+                      >
+                        <type.icon size={16} />
+                        {type.label}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="mb-3">
+                  <label className="form-label fw-medium text-deep-red">Question Text</label>
+                  <textarea
+                    className="form-control"
+                    placeholder="Enter your question"
+                    value={newQuestion.text}
+                    onChange={(e) => setNewQuestion({...newQuestion, text: e.target.value})}
+                    rows={3}
+                  />
+                </div>
+                
+                {/* Multiple Choice Options */}
+                {newQuestion.type === 'multiple-choice' && (
+                  <div className="mb-3">
+                    <label className="form-label fw-medium text-deep-red">Answer Options</label>
+                    {newQuestion.options?.map((option, index) => (
+                      <div key={index} className="d-flex gap-2 mb-2">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="correctOption"
+                            id={`option${index}`}
+                            checked={option === newQuestion.correctAnswer}
+                            onChange={() => setCorrectOption(option)}
+                          />
+                          <label className="form-check-label" htmlFor={`option${index}`}>
+                            Correct
+                          </label>
+                        </div>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder={`Option ${index + 1}`}
+                          value={option}
+                          onChange={(e) => updateOption(index, e.target.value)}
+                        />
                       </div>
-                    )}
-                    
-                    <div className="mt-4 p-3 bg-light-bg rounded-3">
-                      <div className="d-flex justify-content-between align-items-center mb-2">
-                        <span className="fw-medium text-deep-red">Total Points:</span>
-                        <span className="fw-bold">{selectedQuestionsList.reduce((sum, q) => sum + q.points, 0)}</span>
+                    ))}
+                  </div>
+                )}
+                
+                {/* True/False Options */}
+                {newQuestion.type === 'true-false' && (
+                  <div className="mb-3">
+                    <label className="form-label fw-medium text-deep-red">Correct Answer</label>
+                    <div className="d-flex gap-3">
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="trueFalse"
+                          id="optionTrue"
+                          checked={newQuestion.correctAnswer === 'True'}
+                          onChange={() => setNewQuestion({...newQuestion, correctAnswer: 'True'})}
+                        />
+                        <label className="form-check-label" htmlFor="optionTrue">
+                          True
+                        </label>
                       </div>
-                      <div className="d-flex justify-content-between align-items-center mb-2">
-                        <span className="fw-medium text-deep-red">Estimated Time:</span>
-                        <span className="fw-bold">{Math.max(5, selectedQuestionsList.length * 2)} minutes</span>
-                      </div>
-                      <div className="d-flex justify-content-between align-items-center">
-                        <span className="fw-medium text-deep-red">Categories:</span>
-                        <span className="fw-bold">{Array.from(new Set(selectedQuestionsList.map(q => q.category))).length}</span>
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="trueFalse"
+                          id="optionFalse"
+                          checked={newQuestion.correctAnswer === 'False'}
+                          onChange={() => setNewQuestion({...newQuestion, correctAnswer: 'False'})}
+                        />
+                        <label className="form-check-label" htmlFor="optionFalse">
+                          False
+                        </label>
                       </div>
                     </div>
                   </div>
-                </Card>
-              </div>
+                )}
+                
+                {/* Short Answer */}
+                {newQuestion.type === 'short-answer' && (
+                  <div className="mb-3">
+                    <label className="form-label fw-medium text-deep-red">Correct Answer</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Enter the correct answer"
+                      value={newQuestion.correctAnswer as string || ''}
+                      onChange={(e) => setNewQuestion({...newQuestion, correctAnswer: e.target.value})}
+                    />
+                  </div>
+                )}
+                
+                <div className="row g-3 mb-3">
+                  <div className="col-md-6">
+                    <label className="form-label fw-medium text-deep-red">Points</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      placeholder="Points"
+                      value={newQuestion.points}
+                      onChange={(e) => setNewQuestion({...newQuestion, points: parseInt(e.target.value)})}
+                      min="1"
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label fw-medium text-deep-red">Difficulty</label>
+                    <select
+                      className="form-select"
+                      value={newQuestion.difficulty}
+                      onChange={(e) => setNewQuestion({...newQuestion, difficulty: e.target.value as 'easy' | 'medium' | 'hard'})}
+                    >
+                      <option value="easy">Easy</option>
+                      <option value="medium">Medium</option>
+                      <option value="hard">Hard</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div className="mb-4">
+                  <label className="form-label fw-medium text-deep-red">Tags</label>
+                  <div className="d-flex gap-2 mb-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Add tag"
+                      value={tagInput}
+                      onChange={(e) => setTagInput(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && addTag()}
+                    />
+                    <Button variant="secondary" onClick={addTag}>
+                      <Plus size={16} />
+                    </Button>
+                  </div>
+                  <div className="d-flex flex-wrap gap-2">
+                    {newQuestion.tags?.map((tag, index) => (
+                      <span key={index} className="badge bg-light-bg text-deep-red d-flex align-items-center gap-1">
+                        {tag}
+                        <X size={12} className="cursor-pointer" onClick={() => removeTag(tag)} />
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="d-flex gap-2">
+                  <Button 
+                    className="flex-fill" 
+                    onClick={addQuestionToQuiz} 
+                    disabled={!newQuestion.text || (newQuestion.type === 'multiple-choice' && !newQuestion.correctAnswer)}
+                  >
+                    Add Question
+                  </Button>
+                  <Button variant="secondary" className="flex-fill" onClick={() => setIsAddingQuestion(false)}>
+                    Cancel
+                  </Button>
+                </div>
+              </motion.div>
             </div>
           )}
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-deep-red text-white py-5">
-        <div className="container-lg">
-          <div className="row g-4">
-            <div className="col-lg-3">
-              <button 
-                onClick={() => onNavigate('home')}
-                className="d-flex align-items-center gap-2 mb-4 btn btn-link text-white text-decoration-none p-0"
-              >
-                <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
-                     style={{ width: '32px', height: '32px' }}>
-                  <BookOpen className="text-white" size={20} />
-                </div>
-                <span className="fw-bold h5 mb-0">CoreVerse</span>
-              </button>
-              <p className="text-white-50">
-                Transforming education through interactive technology and innovative learning experiences.
-              </p>
-            </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Educational Tools</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('live-classroom')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Live Classroom
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('drawing-tool')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Drawing Tool
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('question-maker')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Question Maker
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('interactive-globe')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Interactive Globe
-                  </button>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Support</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('help-center')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Help Center
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('documentation')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Documentation
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('community')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Community
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Contact Us
-                  </button>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Company</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('about')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    About
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('careers')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Careers
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('privacy')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Privacy
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('terms')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Terms
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-top border-white border-opacity-25 mt-5 pt-4 text-center">
-            <p className="text-white-50 mb-0">&copy; 2024 CoreVerse. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+        </main>
+      </div>
     </div>
+  );
+}
+
+// Helper component for Circle icon since it's not imported
+function Circle({ size, className }: { size: number, className: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <circle cx="12" cy="12" r="10"></circle>
+    </svg>
   );
 }

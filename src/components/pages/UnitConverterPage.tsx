@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   BookOpen,
@@ -16,7 +16,8 @@ import {
 } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
-import { ThemeToggle } from '../ui/ThemeToggle';
+import { Header } from '../layout/Header';
+import { Sidebar } from '../layout/Sidebar';
 
 interface UnitConverterPageProps {
   onNavigate: (view: string) => void;
@@ -36,6 +37,7 @@ export function UnitConverterPage({ onNavigate }: UnitConverterPageProps) {
   const [inputValue, setInputValue] = useState('1');
   const [result, setResult] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const categories: ConversionCategory[] = [
     {
@@ -206,13 +208,13 @@ export function UnitConverterPage({ onNavigate }: UnitConverterPageProps) {
     setResult(convertedValue.toFixed(6).replace(/\.?0+$/, ''));
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (inputValue && fromUnit && toUnit) {
       performConversion();
     }
   }, [inputValue, fromUnit, toUnit, selectedCategory]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Reset units when category changes
     const units = Object.keys(currentCategory.units);
     setFromUnit(units[0]);
@@ -237,388 +239,361 @@ export function UnitConverterPage({ onNavigate }: UnitConverterPageProps) {
   };
 
   return (
-    <div className="min-vh-100 bg-light-bg">
-      {/* Navigation */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom">
-        <div className="container-lg">
-          <motion.button
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="navbar-brand d-flex align-items-center gap-2 btn btn-link text-decoration-none"
-            onClick={() => onNavigate('home')}
-          >
-            <div className="bg-primary-red rounded-4 d-flex align-items-center justify-content-center"
-                 style={{ width: '40px', height: '40px' }}>
-              <BookOpen className="text-white" size={24} />
-            </div>
-            <span className="fw-bold h3 text-deep-red mb-0">CoreVerse</span>
-          </motion.button>
-          
-          <div className="d-none d-md-flex align-items-center gap-4">
-            <button 
-              onClick={() => onNavigate('features')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              Features
-            </button>
-            <button 
-              onClick={() => onNavigate('about')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              About
-            </button>
-            <button 
-              onClick={() => onNavigate('contact')} 
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
-            >
-              Contact
-            </button>
-            <ThemeToggle />
-            <Button variant="secondary" className="me-2" onClick={() => onNavigate('dashboard')}>
-              Sign In
-            </Button>
-            <Button onClick={() => onNavigate('dashboard')}>Get Started</Button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <section className="position-relative overflow-hidden bg-gradient-primary text-white py-5">
-        <div className="container-lg py-5">
-          <div className="text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
-                   style={{ width: '80px', height: '80px' }}>
-                <ArrowLeftRight className="text-white" size={40} />
-              </div>
-              <h1 className="display-3 fw-bold mb-4">Universal Unit Converter</h1>
-              <p className="lead mb-5 mx-auto" style={{ maxWidth: '600px' }}>
-                Convert between different units of measurement with precision and ease. 
-                Support for length, weight, temperature, area, volume, speed, time, and energy.
-              </p>
-              <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-                <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white">
-                  <Download size={20} className="me-2" />
-                  Download App
-                </Button>
-                <Button variant="outline-secondary" size="lg" className="border-white text-white">
-                  <Share2 size={20} className="me-2" />
-                  Share Converter
-                </Button>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Category Selection */}
-      <section className="py-4 bg-white border-bottom">
-        <div className="container-lg">
-          <div className="d-flex flex-wrap gap-2 justify-content-center">
-            {categories.map((category) => {
-              const IconComponent = category.icon;
-              return (
-                <Button
-                  key={category.id}
-                  variant={selectedCategory === category.id ? 'primary' : 'secondary'}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className="d-flex align-items-center gap-2"
+    <div className="min-vh-100 bg-light-bg d-flex">
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        activeView="unit-converter"
+        onViewChange={onNavigate}
+      />
+      
+      <div className="flex-fill d-flex flex-column overflow-hidden">
+        <Header
+          onMenuToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+          isSidebarOpen={isSidebarOpen}
+          onNavigate={onNavigate}
+        />
+        
+        <main className="flex-fill overflow-auto">
+          {/* Hero Section */}
+          <section className="position-relative overflow-hidden bg-gradient-primary text-white py-5">
+            <div className="container-lg py-5">
+              <div className="text-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
                 >
-                  <IconComponent size={16} />
-                  {category.name}
-                </Button>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+                  <div className="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
+                       style={{ width: '80px', height: '80px' }}>
+                    <ArrowLeftRight className="text-white" size={40} />
+                  </div>
+                  <h1 className="display-3 fw-bold mb-4">Universal Unit Converter</h1>
+                  <p className="lead mb-5 mx-auto" style={{ maxWidth: '600px' }}>
+                    Convert between different units of measurement with precision and ease. 
+                    Support for length, weight, temperature, area, volume, speed, time, and energy.
+                  </p>
+                  <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                    <Button variant="secondary" size="lg" className="bg-white text-primary-red border-white">
+                      <Download size={20} className="me-2" />
+                      Download App
+                    </Button>
+                    <Button variant="outline-secondary" size="lg" className="border-white text-white">
+                      <Share2 size={20} className="me-2" />
+                      Share Converter
+                    </Button>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </section>
 
-      {/* Converter Interface */}
-      <section className="py-5 bg-light-bg">
-        <div className="container-lg">
-          <div className="row justify-content-center">
-            <div className="col-lg-8">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
-                <Card>
-                  <div className="card-body p-5">
-                    <div className="text-center mb-4">
-                      <h2 className="h3 fw-bold text-deep-red mb-2">{currentCategory.name} Converter</h2>
-                      <p className="text-muted">Convert between different {currentCategory.name.toLowerCase()} units</p>
-                    </div>
+          {/* Category Selection */}
+          <section className="py-4 bg-white border-bottom">
+            <div className="container-lg">
+              <div className="d-flex flex-wrap gap-2 justify-content-center">
+                {categories.map((category) => {
+                  const IconComponent = category.icon;
+                  return (
+                    <Button
+                      key={category.id}
+                      variant={selectedCategory === category.id ? 'primary' : 'secondary'}
+                      onClick={() => setSelectedCategory(category.id)}
+                      className="d-flex align-items-center gap-2"
+                    >
+                      <IconComponent size={16} />
+                      {category.name}
+                    </Button>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
 
-                    <div className="row g-4 align-items-center">
-                      {/* From Unit */}
-                      <div className="col-md-5">
-                        <label className="form-label fw-medium text-deep-red">From</label>
-                        <div className="mb-3">
-                          <select 
-                            className="form-select form-select-lg"
-                            value={fromUnit}
-                            onChange={(e) => setFromUnit(e.target.value)}
-                          >
-                            {Object.entries(currentCategory.units).map(([key, unit]) => (
-                              <option key={key} value={key}>
-                                {unit.name} ({unit.symbol})
-                              </option>
-                            ))}
-                          </select>
+          {/* Converter Interface */}
+          <section className="py-5 bg-light-bg">
+            <div className="container-lg">
+              <div className="row justify-content-center">
+                <div className="col-lg-8">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    <Card>
+                      <div className="card-body p-5">
+                        <div className="text-center mb-4">
+                          <h2 className="h3 fw-bold text-deep-red mb-2">{currentCategory.name} Converter</h2>
+                          <p className="text-muted">Convert between different {currentCategory.name.toLowerCase()} units</p>
                         </div>
-                        <input
-                          type="number"
-                          className="form-control form-control-lg text-center"
-                          value={inputValue}
-                          onChange={(e) => setInputValue(e.target.value)}
-                          placeholder="Enter value"
-                          style={{ fontSize: '1.5rem' }}
-                        />
-                      </div>
 
-                      {/* Swap Button */}
-                      <div className="col-md-2 text-center">
-                        <Button 
-                          variant="secondary" 
-                          onClick={swapUnits}
-                          className="rounded-circle p-3"
-                          style={{ width: '60px', height: '60px' }}
-                        >
-                          <ArrowLeftRight size={24} />
-                        </Button>
-                      </div>
+                        <div className="row g-4 align-items-center">
+                          {/* From Unit */}
+                          <div className="col-md-5">
+                            <label className="form-label fw-medium text-deep-red">From</label>
+                            <div className="mb-3">
+                              <select 
+                                className="form-select form-select-lg"
+                                value={fromUnit}
+                                onChange={(e) => setFromUnit(e.target.value)}
+                              >
+                                {Object.entries(currentCategory.units).map(([key, unit]) => (
+                                  <option key={key} value={key}>
+                                    {unit.name} ({unit.symbol})
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            <input
+                              type="number"
+                              className="form-control form-control-lg text-center"
+                              value={inputValue}
+                              onChange={(e) => setInputValue(e.target.value)}
+                              placeholder="Enter value"
+                              style={{ fontSize: '1.5rem' }}
+                            />
+                          </div>
 
-                      {/* To Unit */}
-                      <div className="col-md-5">
-                        <label className="form-label fw-medium text-deep-red">To</label>
-                        <div className="mb-3">
-                          <select 
-                            className="form-select form-select-lg"
-                            value={toUnit}
-                            onChange={(e) => setToUnit(e.target.value)}
-                          >
-                            {Object.entries(currentCategory.units).map(([key, unit]) => (
-                              <option key={key} value={key}>
-                                {unit.name} ({unit.symbol})
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="position-relative">
-                          <input
-                            type="text"
-                            className="form-control form-control-lg text-center bg-light"
-                            value={result}
-                            readOnly
-                            placeholder="Result"
-                            style={{ fontSize: '1.5rem' }}
-                          />
-                          {result && (
+                          {/* Swap Button */}
+                          <div className="col-md-2 text-center">
                             <Button 
-                              size="sm" 
-                              variant="secondary"
-                              onClick={copyResult}
-                              className="position-absolute top-50 end-0 translate-middle-y me-2"
+                              variant="secondary" 
+                              onClick={swapUnits}
+                              className="rounded-circle p-3"
+                              style={{ width: '60px', height: '60px' }}
                             >
-                              {copied ? <CheckCircle size={16} className="text-success" /> : <Copy size={16} />}
+                              <ArrowLeftRight size={24} />
+                            </Button>
+                          </div>
+
+                          {/* To Unit */}
+                          <div className="col-md-5">
+                            <label className="form-label fw-medium text-deep-red">To</label>
+                            <div className="mb-3">
+                              <select 
+                                className="form-select form-select-lg"
+                                value={toUnit}
+                                onChange={(e) => setToUnit(e.target.value)}
+                              >
+                                {Object.entries(currentCategory.units).map(([key, unit]) => (
+                                  <option key={key} value={key}>
+                                    {unit.name} ({unit.symbol})
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            <div className="position-relative">
+                              <input
+                                type="text"
+                                className="form-control form-control-lg text-center bg-light"
+                                value={result}
+                                readOnly
+                                placeholder="Result"
+                                style={{ fontSize: '1.5rem' }}
+                              />
+                              {result && (
+                                <Button 
+                                  size="sm" 
+                                  variant="secondary"
+                                  onClick={copyResult}
+                                  className="position-absolute top-50 end-0 translate-middle-y me-2"
+                                >
+                                  {copied ? <CheckCircle size={16} className="text-success" /> : <Copy size={16} />}
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Result Display */}
+                        {result && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="mt-4 p-4 bg-success bg-opacity-10 rounded-3 text-center"
+                          >
+                            <h4 className="fw-bold text-success mb-2">
+                              {inputValue} {currentCategory.units[fromUnit].symbol} = {result} {currentCategory.units[toUnit].symbol}
+                            </h4>
+                            <p className="text-muted mb-0">
+                              {inputValue} {currentCategory.units[fromUnit].name} equals {result} {currentCategory.units[toUnit].name}
+                            </p>
+                          </motion.div>
+                        )}
+
+                        {/* Action Buttons */}
+                        <div className="d-flex gap-2 justify-content-center mt-4">
+                          <Button variant="secondary" onClick={reset}>
+                            <RotateCcw size={16} className="me-2" />
+                            Reset
+                          </Button>
+                          {result && (
+                            <Button onClick={copyResult}>
+                              <Copy size={16} className="me-2" />
+                              Copy Result
                             </Button>
                           )}
                         </div>
                       </div>
-                    </div>
-
-                    {/* Result Display */}
-                    {result && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="mt-4 p-4 bg-success bg-opacity-10 rounded-3 text-center"
-                      >
-                        <h4 className="fw-bold text-success mb-2">
-                          {inputValue} {currentCategory.units[fromUnit].symbol} = {result} {currentCategory.units[toUnit].symbol}
-                        </h4>
-                        <p className="text-muted mb-0">
-                          {inputValue} {currentCategory.units[fromUnit].name} equals {result} {currentCategory.units[toUnit].name}
-                        </p>
-                      </motion.div>
-                    )}
-
-                    {/* Action Buttons */}
-                    <div className="d-flex gap-2 justify-content-center mt-4">
-                      <Button variant="secondary" onClick={reset}>
-                        <RotateCcw size={16} className="me-2" />
-                        Reset
-                      </Button>
-                      {result && (
-                        <Button onClick={copyResult}>
-                          <Copy size={16} className="me-2" />
-                          Copy Result
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Conversions */}
-      <section className="py-5 bg-white">
-        <div className="container-lg">
-          <div className="text-center mb-5">
-            <h2 className="display-4 fw-bold text-deep-red mb-4">Quick Conversions</h2>
-            <p className="lead text-muted">
-              Common conversion examples for {currentCategory.name.toLowerCase()}
-            </p>
-          </div>
-
-          <div className="row g-4">
-            {Object.entries(currentCategory.units).slice(0, 4).map(([key, unit], index) => (
-              <div key={key} className="col-md-6 col-lg-3">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Card className="text-center h-100">
-                    <div className="card-body p-4">
-                      <div className="bg-primary-red bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                           style={{ width: '64px', height: '64px' }}>
-                        <span className="text-primary-red fw-bold">{unit.symbol}</span>
-                      </div>
-                      <h5 className="fw-bold text-deep-red mb-2">{unit.name}</h5>
-                      <p className="text-muted small mb-3">
-                        1 {unit.name} = {unit.factor !== 1 ? `${unit.factor} base units` : 'base unit'}
-                      </p>
-                      <Button 
-                        size="sm" 
-                        variant="secondary"
-                        onClick={() => {
-                          setFromUnit(key);
-                          setInputValue('1');
-                        }}
-                      >
-                        Use as From
-                      </Button>
-                    </div>
-                  </Card>
-                </motion.div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-deep-red text-white py-5">
-        <div className="container-lg">
-          <div className="row g-4">
-            <div className="col-lg-3">
-              <button 
-                onClick={() => onNavigate('home')}
-                className="d-flex align-items-center gap-2 mb-4 btn btn-link text-white text-decoration-none p-0"
-              >
-                <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
-                     style={{ width: '32px', height: '32px' }}>
-                  <BookOpen className="text-white" size={20} />
+                    </Card>
+                  </motion.div>
                 </div>
-                <span className="fw-bold h5 mb-0">CoreVerse</span>
-              </button>
-              <p className="text-white-50">
-                Transforming education through interactive technology and innovative learning experiences.
-              </p>
+              </div>
             </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Study Tools</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('interactive-globe')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Interactive Globe
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('scientific-calculator')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Scientific Calculator
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('unit-converter')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Unit Converter
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('discussion-forum')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Discussion Forum
-                  </button>
-                </li>
-              </ul>
+          </section>
+
+          {/* Quick Conversions */}
+          <section className="py-5 bg-white">
+            <div className="container-lg">
+              <div className="text-center mb-5">
+                <h2 className="display-4 fw-bold text-deep-red mb-4">Quick Conversions</h2>
+                <p className="lead text-muted">
+                  Common conversion examples for {currentCategory.name.toLowerCase()}
+                </p>
+              </div>
+
+              <div className="row g-4">
+                {Object.entries(currentCategory.units).slice(0, 4).map(([key, unit], index) => (
+                  <div key={key} className="col-md-6 col-lg-3">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <Card className="text-center h-100">
+                        <div className="card-body p-4">
+                          <div className="bg-primary-red bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                               style={{ width: '64px', height: '64px' }}>
+                            <span className="text-primary-red fw-bold">{unit.symbol}</span>
+                          </div>
+                          <h5 className="fw-bold text-deep-red mb-2">{unit.name}</h5>
+                          <p className="text-muted small mb-3">
+                            1 {unit.name} = {unit.factor !== 1 ? `${unit.factor} base units` : 'base unit'}
+                          </p>
+                          <Button 
+                            size="sm" 
+                            variant="secondary"
+                            onClick={() => {
+                              setFromUnit(key);
+                              setInputValue('1');
+                            }}
+                          >
+                            Use as From
+                          </Button>
+                        </div>
+                      </Card>
+                    </motion.div>
+                  </div>
+                ))}
+              </div>
             </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Support</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('help-center')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Help Center
+          </section>
+
+          {/* Footer */}
+          <footer className="bg-deep-red text-white py-5">
+            <div className="container-lg">
+              <div className="row g-4">
+                <div className="col-lg-3">
+                  <button 
+                    onClick={() => onNavigate('home')}
+                    className="d-flex align-items-center gap-2 mb-4 btn btn-link text-white text-decoration-none p-0"
+                  >
+                    <div className="bg-primary-red rounded-3 d-flex align-items-center justify-content-center"
+                         style={{ width: '32px', height: '32px' }}>
+                      <BookOpen className="text-white" size={20} />
+                    </div>
+                    <span className="fw-bold h5 mb-0">CoreVerse</span>
                   </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('documentation')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Documentation
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('community')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Community
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Contact Us
-                  </button>
-                </li>
-              </ul>
+                  <p className="text-white-50">
+                    Transforming education through interactive technology and innovative learning experiences.
+                  </p>
+                </div>
+                
+                <div className="col-lg-3">
+                  <h6 className="fw-semibold mb-3">Study Tools</h6>
+                  <ul className="list-unstyled">
+                    <li className="mb-2">
+                      <button onClick={() => onNavigate('interactive-globe')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                        Interactive Globe
+                      </button>
+                    </li>
+                    <li className="mb-2">
+                      <button onClick={() => onNavigate('scientific-calculator')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                        Scientific Calculator
+                      </button>
+                    </li>
+                    <li className="mb-2">
+                      <button onClick={() => onNavigate('unit-converter')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                        Unit Converter
+                      </button>
+                    </li>
+                    <li className="mb-2">
+                      <button onClick={() => onNavigate('discussion-forum')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                        Discussion Forum
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div className="col-lg-3">
+                  <h6 className="fw-semibold mb-3">Support</h6>
+                  <ul className="list-unstyled">
+                    <li className="mb-2">
+                      <button onClick={() => onNavigate('help-center')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                        Help Center
+                      </button>
+                    </li>
+                    <li className="mb-2">
+                      <button onClick={() => onNavigate('documentation')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                        Documentation
+                      </button>
+                    </li>
+                    <li className="mb-2">
+                      <button onClick={() => onNavigate('community')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                        Community
+                      </button>
+                    </li>
+                    <li className="mb-2">
+                      <button onClick={() => onNavigate('contact')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                        Contact Us
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div className="col-lg-3">
+                  <h6 className="fw-semibold mb-3">Company</h6>
+                  <ul className="list-unstyled">
+                    <li className="mb-2">
+                      <button onClick={() => onNavigate('about')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                        About
+                      </button>
+                    </li>
+                    <li className="mb-2">
+                      <button onClick={() => onNavigate('careers')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                        Careers
+                      </button>
+                    </li>
+                    <li className="mb-2">
+                      <button onClick={() => onNavigate('privacy')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                        Privacy
+                      </button>
+                    </li>
+                    <li className="mb-2">
+                      <button onClick={() => onNavigate('terms')} className="btn btn-link text-white-50 text-decoration-none p-0">
+                        Terms
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="border-top border-white border-opacity-25 mt-5 pt-4 text-center">
+                <p className="text-white-50 mb-0">&copy; 2024 CoreVerse. All rights reserved.</p>
+              </div>
             </div>
-            
-            <div className="col-lg-3">
-              <h6 className="fw-semibold mb-3">Company</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('about')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    About
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('careers')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Careers
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('privacy')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Privacy
-                  </button>
-                </li>
-                <li className="mb-2">
-                  <button onClick={() => onNavigate('terms')} className="btn btn-link text-white-50 text-decoration-none p-0">
-                    Terms
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-top border-white border-opacity-25 mt-5 pt-4 text-center">
-            <p className="text-white-50 mb-0">&copy; 2024 CoreVerse. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+          </footer>
+        </main>
+      </div>
     </div>
   );
 }
