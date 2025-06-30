@@ -245,8 +245,8 @@ export function FeaturesPage({ onNavigate }: FeaturesPageProps) {
         className="bg-gradient-secondary"
         title="Ready to Experience CoreVerse?"
         subtitle="Start your free trial today and discover how our features can transform your educational experience."
-        buttonText="Start Experience"
-        buttonLink="dashboard"
+        primaryButtonText="Start Experience"
+        primaryButtonLink="dashboard"
         onNavigate={onNavigate}
       />
 

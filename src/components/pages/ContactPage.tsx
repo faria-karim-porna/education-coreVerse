@@ -167,8 +167,8 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
         className="bg-gradient-secondary"
         title="Still Have Questions?"
         subtitle="Our support team is here to help you succeed with CoreVerse. Don't hesitate to reach out!"
-        buttonText="Join Community Forum"
-        buttonLink="community"
+        primaryButtonText="Join Community Forum"
+        primaryButtonLink="community"
         onNavigate={onNavigate}
       />
 
