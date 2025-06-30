@@ -451,6 +451,14 @@ $btn-border-radius-lg: 0.75rem;
   width: 100%;
   max-width: 500px;
   z-index: 1;
+  
+  // Make book responsive on mobile
+  @media (max-width: 768px) {
+    transform: scale(1);
+    width: 90vw;
+    max-width: 90vw;
+    height: 300px;
+  }
 }
 
 .page {
@@ -465,6 +473,12 @@ $btn-border-radius-lg: 0.75rem;
   background-size: 420px 300px;
   background-position: center;
   transform-style: preserve-3d;
+  
+  @media (max-width: 768px) {
+    width: 180px;
+    height: 260px;
+    background-size: 360px 260px;
+  }
 }
 
 .cover {
@@ -478,6 +492,12 @@ $btn-border-radius-lg: 0.75rem;
   background-size: 420px 300px;
   background-position: center;
   transform-style: preserve-3d;
+  
+  @media (max-width: 768px) {
+    width: 192px;
+    height: 268px;
+    background-size: 360px 260px;
+  }
 }
 
 .outer-cover {
@@ -491,6 +511,12 @@ $btn-border-radius-lg: 0.75rem;
   background-size: 420px 300px;
   background-position: center;
   transform-style: preserve-3d;
+  
+  @media (max-width: 768px) {
+    width: 192px;
+    height: 268px;
+    background-size: 360px 260px;
+  }
 }
 
 .outer-cover:nth-child(1) {
@@ -615,6 +641,12 @@ $btn-border-radius-lg: 0.75rem;
   animation: nextPage 25s -20s infinite steps(1);
   background-size: 420px 300px;
   background-position: 100% -2px;
+  
+  @media (max-width: 768px) {
+    width: 180px;
+    height: 260px;
+    background-size: 360px 260px;
+  }
 }
 
 @keyframes nextPage {
@@ -644,6 +676,10 @@ $btn-border-radius-lg: 0.75rem;
   position: absolute;
   top: 0px;
   left: calc(50% - 5px);
+  
+  @media (max-width: 768px) {
+    height: 260px;
+  }
 }
 
 .gap::after {
@@ -679,6 +715,12 @@ $btn-border-radius-lg: 0.75rem;
   perspective-origin: center;
   transform-style: preserve-3d;
   background-size: 420px 300px;
+  
+  @media (max-width: 768px) {
+    width: 28px;
+    height: 260px;
+    background-size: 360px 260px;
+  }
 }
 
 .flip::after {
@@ -690,6 +732,10 @@ $btn-border-radius-lg: 0.75rem;
   height: 100%;
   transform-origin: center;
   background-size: 420px 300px;
+  
+  @media (max-width: 768px) {
+    background-size: 360px 260px;
+  }
 }
 
 .flip.flip1 {
@@ -770,6 +816,10 @@ $btn-border-radius-lg: 0.75rem;
 .flip.flip12 {
   width: 30px;
   border-width: 2px 2px 2px 0;
+  
+  @media (max-width: 768px) {
+    width: 26px;
+  }
 }
 
 @keyframes flip1 {
