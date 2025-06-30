@@ -7,10 +7,11 @@ interface CTASectionProps {
   title?: string;
   subtitle?: string;
   buttonText?: string;
+  buttonLink?: string;
   onNavigate: (view: string) => void;
 }
 
-export function CTASection({ className, title, subtitle, buttonText, onNavigate }: CTASectionProps) {
+export function CTASection({ className, title, subtitle, buttonText, buttonLink, onNavigate }: CTASectionProps) {
   return (
     <section className={`py-5 text-white ${className ?? ""}`}>
       <div className="container-lg text-center">
@@ -18,7 +19,7 @@ export function CTASection({ className, title, subtitle, buttonText, onNavigate 
           <h2 className="display-4 fw-bold mb-4">{title}</h2>
           <p className="lead mb-5 opacity-75">{subtitle}</p>
           <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-            <Button variant="secondary" size="lg" className="btn-custom-white" onClick={() => onNavigate("dashboard")}>
+            <Button variant="secondary" size="lg" className="btn-custom-white" onClick={() => onNavigate(buttonLink || "dashboard")}>
               {buttonText}
             </Button>
           </div>

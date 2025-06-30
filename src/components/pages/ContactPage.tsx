@@ -168,6 +168,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
         title="Still Have Questions?"
         subtitle="Our support team is here to help you succeed with CoreVerse. Don't hesitate to reach out!"
         buttonText="Join Community Forum"
+        buttonLink="community"
         onNavigate={onNavigate}
       />
 

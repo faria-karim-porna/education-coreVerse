@@ -246,6 +246,7 @@ export function FeaturesPage({ onNavigate }: FeaturesPageProps) {
         title="Ready to Experience CoreVerse?"
         subtitle="Start your free trial today and discover how our features can transform your educational experience."
         buttonText="Start Experience"
+        buttonLink="dashboard"
         onNavigate={onNavigate}
       />
 
