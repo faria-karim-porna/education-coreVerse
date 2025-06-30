@@ -4,12 +4,14 @@ import * as Icons from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { mockLabSimulators } from '../../data/mockData';
-import { useNavigate } from 'react-router-dom';
 
-export function LabSimulators() {
+interface LabSimulatorsProps {
+  onNavigate: (view: string) => void;
+}
+
+export function LabSimulators({ onNavigate }: LabSimulatorsProps) {
   const [selectedType, setSelectedType] = useState<string>('all');
   const [selectedSim, setSelectedSim] = useState<string | null>(null);
-  const navigate = useNavigate();
 
   const filteredSims = selectedType === 'all' 
     ? mockLabSimulators 
@@ -35,11 +37,11 @@ export function LabSimulators() {
 
   const handleLaunchClick = (type: string) => {
     if (type === 'chemistry') {
-      navigate('/chemistry-simulation');
+      onNavigate('chemistry-simulation');
     } else if (type === 'physics') {
-      navigate('/physics-simulation');
+      onNavigate('physics-simulation');
     } else if (type === 'biology') {
-      navigate('/biology-simulation');
+      onNavigate('biology-simulation');
     }
   };
 
