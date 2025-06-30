@@ -9,7 +9,7 @@ import { MissionVisionValues } from "../about/MissionVisionValues";
 import { ImpactStats } from "../about/ImpactStats";
 import { CompanyTimeline } from "../about/CompanyTimeline";
 import { TeamSection } from "../about/TeamSection";
-import { JoinCTA } from "../about/JoinCTA";
+import { CTASection } from "../common/CTASection";
 import { Navbar } from "../common/Navbar";
 
 interface AboutPageProps {
@@ -38,7 +38,18 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
       <TeamSection />
 
       {/* CTA Section */}
-      <JoinCTA onNavigate={onNavigate} />
+      <CTASection
+        className="bg-gradient-secondary"
+        title="Join Our Mission"
+        subtitle="Be part of the educational revolution. Whether you're an educator, student, or passionate about learning, there's a place for you at CoreVerse."
+        primaryButtonText="Join Our Community"
+        primaryButtonLink="community"
+        primaryButtonIcon={Users}
+        secondaryButtonText="Career Opportunities"
+        secondaryButtonLink="careers"
+        secondaryButtonIcon={BookOpen}
+        onNavigate={onNavigate}
+      />
 
       {/* Footer */}
       <Footer onNavigate={onNavigate} />

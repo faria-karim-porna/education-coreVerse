@@ -13,6 +13,9 @@ interface CTASectionProps {
   primaryButtonIcon?: React.ComponentType<{ size?: number; className?: string }>;
   secondaryButtonIcon?: React.ComponentType<{ size?: number; className?: string }>;
   onNavigate: (view: string) => void;
+  bgColor?: string;
+  textColor?: string;
+  buttonVariant?: string;
 }
 
 export function CTASection({ 
@@ -25,17 +28,20 @@ export function CTASection({
   secondaryButtonLink,
   primaryButtonIcon,
   secondaryButtonIcon,
-  onNavigate 
+  onNavigate,
+  bgColor = "bg-gradient-primary",
+  textColor = "text-white",
+  buttonVariant = "secondary"
 }: CTASectionProps) {
   return (
-    <section className={`py-5 text-white ${className ?? ""}`}>
+    <section className={`py-5 ${textColor} ${className || bgColor}`}>
       <div className="container-lg text-center">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <h2 className="display-4 fw-bold mb-4">{title}</h2>
           <p className="lead mb-5 opacity-75">{subtitle}</p>
           <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
             <Button 
-              variant="secondary" 
+              variant={buttonVariant} 
               size="lg" 
               className="btn-custom-white" 
               onClick={() => onNavigate(primaryButtonLink)}

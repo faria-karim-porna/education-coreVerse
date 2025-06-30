@@ -8,7 +8,7 @@ import { Footer } from "../common/Footer";
 import { CompanyValues } from "../careers/CompanyValues";
 import { BenefitsSection } from "../careers/BenefitsSection";
 import { JobListings } from "../careers/JobListings";
-import { CareersCTA } from "../careers/CareersCTA";
+import { CTASection } from "../common/CTASection";
 import { Navbar } from "../common/Navbar";
 
 interface CareersPageProps {
@@ -36,7 +36,18 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
       <JobListings onNavigate={onNavigate} />
 
       {/* CTA Section */}
-      <CareersCTA onNavigate={onNavigate} />
+      <CTASection
+        className="bg-gradient-secondary"
+        title="Ready to Make an Impact?"
+        subtitle="Don't see the perfect role? We're always looking for talented individuals who share our passion for education."
+        primaryButtonText="Get in Touch"
+        primaryButtonLink="contact"
+        primaryButtonIcon={Users}
+        secondaryButtonText="Learn More About Us"
+        secondaryButtonLink="about"
+        secondaryButtonIcon={BookOpen}
+        onNavigate={onNavigate}
+      />
 
       {/* Footer */}
       <Footer onNavigate={onNavigate} />
