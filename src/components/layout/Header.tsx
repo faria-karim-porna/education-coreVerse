@@ -24,7 +24,7 @@ export function Header({ onMenuToggle, isSidebarOpen, onNavigate }: HeaderProps)
           <div className="d-flex align-items-center gap-3">
             <button
               onClick={onMenuToggle}
-              className="btn btn-link p-2"
+              className="btn btn-link p-2 d-lg-none"
             >
               <Menu size={20} />
             </button>

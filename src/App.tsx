@@ -130,7 +130,7 @@ function MainApp() {
       case 'dashboard':
         return user?.role === 'teacher' ? <TeacherDashboard /> : <StudentDashboard />;
       case 'labs':
-        return <LabSimulators onNavigate={handleNavigate} />;
+        return <LabSimulators />;
       case 'progress':
         return <ProgressTracker />;
       case 'classes':
