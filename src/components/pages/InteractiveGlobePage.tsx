@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Globe,
@@ -14,12 +14,17 @@ import {
   Thermometer,
   Info,
   Compass,
-  Navigation
+  Navigation,
+  ZoomIn,
+  ZoomOut,
+  RotateCcw,
+  Layers
 } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Header } from '../layout/Header';
 import { Sidebar } from '../layout/Sidebar';
+import * as THREE from 'three';
 
 interface InteractiveGlobePageProps {
   onNavigate: (view: string) => void;
@@ -47,6 +52,19 @@ export function InteractiveGlobePage({ onNavigate }: InteractiveGlobePageProps) 
   const [selectedType, setSelectedType] = useState('all');
   const [viewMode, setViewMode] = useState('satellite');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isGlobeLoaded, setIsGlobeLoaded] = useState(false);
+  const [isRotating, setIsRotating] = useState(true);
+  const [zoom, setZoom] = useState(1);
+
+  const globeContainerRef = useRef<HTMLDivElement>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const globeRef = useRef<THREE.Mesh | null>(null);
+  const frameIdRef = useRef<number | null>(null);
+  const isDraggingRef = useRef(false);
+  const previousMousePositionRef = useRef({ x: 0, y: 0 });
+  const rotationSpeedRef = useRef(0.001);
 
   const locations: Location[] = [
     {
@@ -226,6 +244,238 @@ export function InteractiveGlobePage({ onNavigate }: InteractiveGlobePageProps) 
     return typeData?.icon || Globe;
   };
 
+  // Initialize Three.js scene
+  useEffect(() => {
+    if (!globeContainerRef.current) return;
+
+    // Create scene
+    const scene = new THREE.Scene();
+    sceneRef.current = scene;
+
+    // Create camera
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      globeContainerRef.current.clientWidth / globeContainerRef.current.clientHeight,
+      0.1,
+      1000
+    );
+    camera.position.z = 2;
+    cameraRef.current = camera;
+
+    // Create renderer
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(globeContainerRef.current.clientWidth, globeContainerRef.current.clientHeight);
+    renderer.setClearColor(0x000000, 0);
+    globeContainerRef.current.appendChild(renderer.domElement);
+    rendererRef.current = renderer;
+
+    // Add ambient light
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+
+    // Add directional light
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(5, 3, 5);
+    scene.add(directionalLight);
+
+    // Create globe
+    const textureLoader = new THREE.TextureLoader();
+    
+    // Use different textures based on view mode
+    let textureUrl = 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg';
+    if (viewMode === 'terrain') {
+      textureUrl = 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg';
+    } else if (viewMode === 'political') {
+      textureUrl = 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg';
+    } else if (viewMode === 'climate') {
+      textureUrl = 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg';
+    }
+
+    textureLoader.load(
+      textureUrl,
+      (texture) => {
+        const geometry = new THREE.SphereGeometry(1, 64, 64);
+        const material = new THREE.MeshPhongMaterial({
+          map: texture,
+          bumpScale: 0.05,
+        });
+        
+        const globe = new THREE.Mesh(geometry, material);
+        scene.add(globe);
+        globeRef.current = globe;
+        setIsGlobeLoaded(true);
+      },
+      undefined,
+      (error) => {
+        console.error('Error loading texture:', error);
+      }
+    );
+
+    // Add stars background
+    const starsGeometry = new THREE.BufferGeometry();
+    const starsMaterial = new THREE.PointsMaterial({
+      color: 0xffffff,
+      size: 0.02,
+    });
+
+    const starsVertices = [];
+    for (let i = 0; i < 1000; i++) {
+      const x = THREE.MathUtils.randFloatSpread(100);
+      const y = THREE.MathUtils.randFloatSpread(100);
+      const z = THREE.MathUtils.randFloatSpread(100);
+      starsVertices.push(x, y, z);
+    }
+
+    starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
+    const stars = new THREE.Points(starsGeometry, starsMaterial);
+    scene.add(stars);
+
+    // Animation loop
+    const animate = () => {
+      frameIdRef.current = requestAnimationFrame(animate);
+
+      if (globeRef.current && isRotating && !isDraggingRef.current) {
+        globeRef.current.rotation.y += rotationSpeedRef.current;
+      }
+
+      renderer.render(scene, camera);
+    };
+
+    animate();
+
+    // Handle window resize
+    const handleResize = () => {
+      if (!globeContainerRef.current || !cameraRef.current || !rendererRef.current) return;
+      
+      cameraRef.current.aspect = globeContainerRef.current.clientWidth / globeContainerRef.current.clientHeight;
+      cameraRef.current.updateProjectionMatrix();
+      rendererRef.current.setSize(globeContainerRef.current.clientWidth, globeContainerRef.current.clientHeight);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Mouse events for dragging
+    const handleMouseDown = (event: MouseEvent) => {
+      isDraggingRef.current = true;
+      previousMousePositionRef.current = {
+        x: event.clientX,
+        y: event.clientY
+      };
+    };
+
+    const handleMouseMove = (event: MouseEvent) => {
+      if (!isDraggingRef.current || !globeRef.current) return;
+
+      const deltaMove = {
+        x: event.clientX - previousMousePositionRef.current.x,
+        y: event.clientY - previousMousePositionRef.current.y
+      };
+
+      globeRef.current.rotation.y += deltaMove.x * 0.005;
+      
+      previousMousePositionRef.current = {
+        x: event.clientX,
+        y: event.clientY
+      };
+    };
+
+    const handleMouseUp = () => {
+      isDraggingRef.current = false;
+    };
+
+    // Touch events for mobile
+    const handleTouchStart = (event: TouchEvent) => {
+      if (event.touches.length === 1) {
+        isDraggingRef.current = true;
+        previousMousePositionRef.current = {
+          x: event.touches[0].clientX,
+          y: event.touches[0].clientY
+        };
+      }
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      if (!isDraggingRef.current || !globeRef.current || event.touches.length !== 1) return;
+
+      const deltaMove = {
+        x: event.touches[0].clientX - previousMousePositionRef.current.x,
+        y: event.touches[0].clientY - previousMousePositionRef.current.y
+      };
+
+      globeRef.current.rotation.y += deltaMove.x * 0.005;
+      
+      previousMousePositionRef.current = {
+        x: event.touches[0].clientX,
+        y: event.touches[0].clientY
+      };
+    };
+
+    const handleTouchEnd = () => {
+      isDraggingRef.current = false;
+    };
+
+    // Add event listeners
+    if (globeContainerRef.current) {
+      globeContainerRef.current.addEventListener('mousedown', handleMouseDown);
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      
+      globeContainerRef.current.addEventListener('touchstart', handleTouchStart);
+      window.addEventListener('touchmove', handleTouchMove);
+      window.addEventListener('touchend', handleTouchEnd);
+    }
+
+    // Cleanup
+    return () => {
+      if (globeContainerRef.current && rendererRef.current) {
+        globeContainerRef.current.removeChild(rendererRef.current.domElement);
+      }
+      
+      if (frameIdRef.current !== null) {
+        cancelAnimationFrame(frameIdRef.current);
+      }
+      
+      window.removeEventListener('resize', handleResize);
+      
+      if (globeContainerRef.current) {
+        globeContainerRef.current.removeEventListener('mousedown', handleMouseDown);
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
+        
+        globeContainerRef.current.removeEventListener('touchstart', handleTouchStart);
+        window.removeEventListener('touchmove', handleTouchMove);
+        window.removeEventListener('touchend', handleTouchEnd);
+      }
+    };
+  }, [viewMode, isRotating]);
+
+  // Update camera position when zoom changes
+  useEffect(() => {
+    if (cameraRef.current) {
+      cameraRef.current.position.z = 3 - zoom;
+    }
+  }, [zoom]);
+
+  const handleZoomIn = () => {
+    setZoom(Math.min(zoom + 0.2, 1.8));
+  };
+
+  const handleZoomOut = () => {
+    setZoom(Math.max(zoom - 0.2, 0.2));
+  };
+
+  const handleResetView = () => {
+    setZoom(1);
+    if (globeRef.current) {
+      globeRef.current.rotation.x = 0;
+      globeRef.current.rotation.y = 0;
+    }
+  };
+
+  const toggleRotation = () => {
+    setIsRotating(!isRotating);
+  };
+
   return (
     <div className="min-vh-100 bg-light-bg d-flex">
       <Sidebar
@@ -338,46 +588,92 @@ export function InteractiveGlobePage({ onNavigate }: InteractiveGlobePageProps) 
                   >
                     <Card>
                       <div className="card-body p-0">
-                        <div className="bg-gradient-to-br from-blue-500 to-green-600 rounded-top-3 p-5 text-white text-center position-relative"
-                             style={{ height: '500px', background: 'linear-gradient(135deg, #3b82f6, #22c55e)' }}>
-                          <div className="position-absolute top-50 start-50 translate-middle">
-                            <motion.div
-                              animate={{ rotate: 360 }}
-                              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                              className="bg-white bg-opacity-20 rounded-circle d-flex align-items-center justify-content-center"
-                              style={{ width: '200px', height: '200px' }}
-                            >
-                              <Globe size={100} className="text-white" />
-                            </motion.div>
+                        <div className="position-relative" style={{ height: '500px', background: 'linear-gradient(135deg, #121212, #1e3a5f)' }}>
+                          {/* Globe Container */}
+                          <div 
+                            ref={globeContainerRef} 
+                            className="w-100 h-100 position-relative"
+                            style={{ cursor: 'grab' }}
+                          >
+                            {!isGlobeLoaded && (
+                              <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                                <div className="spinner-border text-white" role="status">
+                                  <span className="visually-hidden">Loading...</span>
+                                </div>
+                              </div>
+                            )}
                           </div>
-                          <div className="position-absolute top-0 start-0 p-3">
-                            <div className="d-flex align-items-center gap-2">
-                              <Compass className="text-white" size={20} />
-                              <span className="fw-medium">Interactive Globe</span>
+
+                          {/* Globe Controls */}
+                          <div className="position-absolute top-0 end-0 p-3">
+                            <div className="d-flex flex-column gap-2">
+                              <Button 
+                                size="sm" 
+                                variant="secondary"
+                                onClick={handleZoomIn}
+                                className="p-2"
+                              >
+                                <ZoomIn size={16} />
+                              </Button>
+                              <Button 
+                                size="sm" 
+                                variant="secondary"
+                                onClick={handleZoomOut}
+                                className="p-2"
+                              >
+                                <ZoomOut size={16} />
+                              </Button>
+                              <Button 
+                                size="sm" 
+                                variant="secondary"
+                                onClick={handleResetView}
+                                className="p-2"
+                              >
+                                <RotateCcw size={16} />
+                              </Button>
+                              <Button 
+                                size="sm" 
+                                variant={isRotating ? "primary" : "secondary"}
+                                onClick={toggleRotation}
+                                className="p-2"
+                              >
+                                <Compass size={16} />
+                              </Button>
                             </div>
                           </div>
+
+                          {/* Globe Info */}
+                          <div className="position-absolute bottom-0 start-0 p-3">
+                            <div className="d-flex align-items-center gap-2 text-white">
+                              <Navigation size={16} />
+                              <span className="small">Drag to rotate the globe</span>
+                            </div>
+                          </div>
+
+                          {/* View Mode */}
                           <div className="position-absolute bottom-0 end-0 p-3">
-                            <div className="d-flex align-items-center gap-2">
-                              <Navigation className="text-white" size={16} />
-                              <span className="small">Click locations to explore</span>
+                            <div className="d-flex align-items-center gap-2 text-white">
+                              <Layers size={16} />
+                              <span className="small">{viewModes.find(m => m.id === viewMode)?.label} View</span>
                             </div>
                           </div>
                         </div>
                         <div className="p-4">
-                          <h4 className="fw-bold text-deep-red mb-2">Globe Controls</h4>
-                          <div className="row g-3">
-                            <div className="col-6">
-                              <Button size="sm" className="w-100">
-                                <Eye size={14} className="me-1" />
-                                Zoom In
+                          <h4 className="fw-bold text-deep-red mb-3">Interactive Globe</h4>
+                          <p className="text-muted mb-3">
+                            Explore our planet by dragging to rotate the globe. Click on locations to learn more about them.
+                          </p>
+                          <div className="d-flex flex-wrap gap-2">
+                            {viewModes.map(mode => (
+                              <Button 
+                                key={mode.id}
+                                size="sm" 
+                                variant={viewMode === mode.id ? "primary" : "secondary"}
+                                onClick={() => setViewMode(mode.id)}
+                              >
+                                {mode.label} View
                               </Button>
-                            </div>
-                            <div className="col-6">
-                              <Button size="sm" variant="secondary" className="w-100">
-                                <Globe size={14} className="me-1" />
-                                Reset View
-                              </Button>
-                            </div>
+                            ))}
                           </div>
                         </div>
                       </div>
