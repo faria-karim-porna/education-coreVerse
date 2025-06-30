@@ -63,16 +63,6 @@ export function Header({ onMenuToggle, isSidebarOpen, onNavigate }: HeaderProps)
               <Home size={20} />
             </motion.button>
 
-            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="btn btn-link p-2 position-relative">
-              <Bell size={20} />
-              <span
-                className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                style={{ fontSize: "0.6rem" }}
-              >
-                3
-              </span>
-            </motion.button>
-
             <div className="d-flex align-items-center gap-3 ps-3 border-start">
               <div className="d-none d-sm-block text-end">
                 <p className="small fw-medium text-deep-red mb-0">{user?.name}</p>
