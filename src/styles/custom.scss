@@ -183,7 +183,12 @@ $btn-border-radius-lg: 0.75rem;
   background-color: $light-bg !important;
   color: $dark !important;
 
-  .subject-wise-icon, .hero-section-with-icon {
+  svg {
+    color: $primary-red !important;
+  }
+
+  .subject-wise-icon,
+  .hero-section-with-icon {
     svg {
       color: $primary-red !important;
     }
@@ -451,7 +456,7 @@ $btn-border-radius-lg: 0.75rem;
   width: 100%;
   max-width: 500px;
   z-index: 1;
-  
+
   // Make book responsive on mobile
   @media (max-width: 768px) {
     transform: scale(1);
@@ -473,7 +478,7 @@ $btn-border-radius-lg: 0.75rem;
   background-size: 420px 300px;
   background-position: center;
   transform-style: preserve-3d;
-  
+
   @media (max-width: 768px) {
     width: 180px;
     height: 260px;
@@ -492,7 +497,7 @@ $btn-border-radius-lg: 0.75rem;
   background-size: 420px 300px;
   background-position: center;
   transform-style: preserve-3d;
-  
+
   @media (max-width: 768px) {
     width: 192px;
     height: 268px;
@@ -511,7 +516,7 @@ $btn-border-radius-lg: 0.75rem;
   background-size: 420px 300px;
   background-position: center;
   transform-style: preserve-3d;
-  
+
   @media (max-width: 768px) {
     width: 192px;
     height: 268px;
@@ -641,7 +646,7 @@ $btn-border-radius-lg: 0.75rem;
   animation: nextPage 25s -20s infinite steps(1);
   background-size: 420px 300px;
   background-position: 100% -2px;
-  
+
   @media (max-width: 768px) {
     width: 180px;
     height: 260px;
@@ -676,7 +681,7 @@ $btn-border-radius-lg: 0.75rem;
   position: absolute;
   top: 0px;
   left: calc(50% - 5px);
-  
+
   @media (max-width: 768px) {
     height: 260px;
   }
@@ -715,7 +720,7 @@ $btn-border-radius-lg: 0.75rem;
   perspective-origin: center;
   transform-style: preserve-3d;
   background-size: 420px 300px;
-  
+
   @media (max-width: 768px) {
     width: 28px;
     height: 260px;
@@ -732,7 +737,7 @@ $btn-border-radius-lg: 0.75rem;
   height: 100%;
   transform-origin: center;
   background-size: 420px 300px;
-  
+
   @media (max-width: 768px) {
     background-size: 360px 260px;
   }
@@ -816,7 +821,7 @@ $btn-border-radius-lg: 0.75rem;
 .flip.flip12 {
   width: 30px;
   border-width: 2px 2px 2px 0;
-  
+
   @media (max-width: 768px) {
     width: 26px;
   }
