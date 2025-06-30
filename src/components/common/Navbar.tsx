@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { BookOpen, Menu, X } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ThemeToggle } from '../ui/ThemeToggle';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 interface NavbarProps {
   onNavigate: (view: string) => void;
@@ -11,6 +11,10 @@ interface NavbarProps {
 
 export function Navbar({ onNavigate }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  
+  // Get current path without leading slash
+  const currentPath = location.pathname.substring(1) || 'home';
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -32,9 +36,9 @@ export function Navbar({ onNavigate }: NavbarProps) {
           <span className="fw-bold h3 text-deep-red mb-0">CoreVerse</span>
         </motion.button>
         
-        {/* Mobile menu toggle button */}
+        {/* Mobile menu toggle button - removed border */}
         <button 
-          className="navbar-toggler border-0" 
+          className="navbar-toggler border-0 shadow-none" 
           type="button" 
           onClick={toggleMenu}
         >
@@ -49,7 +53,7 @@ export function Navbar({ onNavigate }: NavbarProps) {
                 onNavigate('features');
                 setIsMenuOpen(false);
               }}
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
+              className={`nav-link btn btn-link ${currentPath === 'features' ? 'text-primary-red fw-medium' : 'text-deep-red'} text-decoration-none`}
             >
               Features
             </button>
@@ -58,7 +62,7 @@ export function Navbar({ onNavigate }: NavbarProps) {
                 onNavigate('about');
                 setIsMenuOpen(false);
               }}
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
+              className={`nav-link btn btn-link ${currentPath === 'about' ? 'text-primary-red fw-medium' : 'text-deep-red'} text-decoration-none`}
             >
               About
             </button>
@@ -67,7 +71,7 @@ export function Navbar({ onNavigate }: NavbarProps) {
                 onNavigate('contact');
                 setIsMenuOpen(false);
               }}
-              className="nav-link btn btn-link text-deep-red text-decoration-none"
+              className={`nav-link btn btn-link ${currentPath === 'contact' ? 'text-primary-red fw-medium' : 'text-deep-red'} text-decoration-none`}
             >
               Contact
             </button>
