@@ -1,9 +1,5 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,8 +9,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      'three/tsl': path.resolve(__dirname, 'node_modules/three/examples/jsm/nodes/Nodes.js'),
-      'three/webgpu': path.resolve(__dirname, 'node_modules/three/examples/jsm/renderers/webgpu/WebGPURenderer.js'),
+      'three/tsl': 'three/examples/jsm/nodes/Nodes.js',
+      'three/webgpu': 'three/examples/jsm/renderers/webgpu/WebGPURenderer.js',
     },
   },
 });

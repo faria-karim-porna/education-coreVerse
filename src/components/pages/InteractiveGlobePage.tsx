@@ -493,6 +493,7 @@ export function InteractiveGlobePage({ onNavigate }: InteractiveGlobePageProps) 
                         pointsMerge={true}
                         onPointClick={handlePointClick}
                         polygonsData={countries}
+                        polygonCapColor={() => 'rgba(200, 200, 200, 0.1)'}
                         polygonSideColor={() => 'rgba(150, 150, 150, 0.3)'}
                         polygonStrokeColor={() => '#111'}
                         polygonLabel={({ properties: d }: any) => `
