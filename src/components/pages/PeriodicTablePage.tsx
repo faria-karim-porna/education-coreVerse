@@ -6,7 +6,6 @@ import {
   Share2
 } from 'lucide-react';
 import { Button } from '../ui/Button';
-import { Card } from '../ui/Card';
 import { SearchAndFilters } from '../periodic-table/SearchAndFilters';
 import { CategoryLegend } from '../periodic-table/CategoryLegend';
 import { ElementDetails } from '../periodic-table/ElementDetails';
