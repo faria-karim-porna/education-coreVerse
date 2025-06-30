@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { BookOpen, Menu, X } from 'lucide-react';
-import { Button } from '../../ui/Button';
-import { ThemeToggle } from '../../ui/ThemeToggle';
+import { Button } from '../ui/Button';
+import { ThemeToggle } from '../ui/ThemeToggle';
 import { Link } from 'react-router-dom';
 
 interface NavbarProps {
