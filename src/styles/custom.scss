@@ -451,22 +451,6 @@ $btn-border-radius-lg: 0.75rem;
   width: 100%;
   max-width: 500px;
   z-index: 1;
-  
-  // Responsive adjustments for the book
-  @media (max-width: 768px) {
-    transform: scale(1);
-    height: 250px;
-  }
-  
-  @media (max-width: 576px) {
-    transform: scale(0.8);
-    height: 200px;
-  }
-  
-  @media (max-width: 400px) {
-    transform: scale(0.6);
-    height: 180px;
-  }
 }
 
 .page {
@@ -481,21 +465,6 @@ $btn-border-radius-lg: 0.75rem;
   background-size: 420px 300px;
   background-position: center;
   transform-style: preserve-3d;
-  
-  @media (max-width: 768px) {
-    width: 180px;
-    height: 260px;
-  }
-  
-  @media (max-width: 576px) {
-    width: 150px;
-    height: 220px;
-  }
-  
-  @media (max-width: 400px) {
-    width: 120px;
-    height: 180px;
-  }
 }
 
 .cover {
@@ -509,21 +478,6 @@ $btn-border-radius-lg: 0.75rem;
   background-size: 420px 300px;
   background-position: center;
   transform-style: preserve-3d;
-  
-  @media (max-width: 768px) {
-    width: 192px;
-    height: 268px;
-  }
-  
-  @media (max-width: 576px) {
-    width: 162px;
-    height: 228px;
-  }
-  
-  @media (max-width: 400px) {
-    width: 132px;
-    height: 188px;
-  }
 }
 
 .outer-cover {
@@ -537,21 +491,6 @@ $btn-border-radius-lg: 0.75rem;
   background-size: 420px 300px;
   background-position: center;
   transform-style: preserve-3d;
-  
-  @media (max-width: 768px) {
-    width: 192px;
-    height: 268px;
-  }
-  
-  @media (max-width: 576px) {
-    width: 162px;
-    height: 228px;
-  }
-  
-  @media (max-width: 400px) {
-    width: 132px;
-    height: 188px;
-  }
 }
 
 .outer-cover:nth-child(1) {
@@ -676,21 +615,6 @@ $btn-border-radius-lg: 0.75rem;
   animation: nextPage 25s -20s infinite steps(1);
   background-size: 420px 300px;
   background-position: 100% -2px;
-  
-  @media (max-width: 768px) {
-    width: 180px;
-    height: 260px;
-  }
-  
-  @media (max-width: 576px) {
-    width: 150px;
-    height: 220px;
-  }
-  
-  @media (max-width: 400px) {
-    width: 120px;
-    height: 180px;
-  }
 }
 
 @keyframes nextPage {
@@ -720,18 +644,6 @@ $btn-border-radius-lg: 0.75rem;
   position: absolute;
   top: 0px;
   left: calc(50% - 5px);
-  
-  @media (max-width: 768px) {
-    height: 260px;
-  }
-  
-  @media (max-width: 576px) {
-    height: 220px;
-  }
-  
-  @media (max-width: 400px) {
-    height: 180px;
-  }
 }
 
 .gap::after {
@@ -767,21 +679,6 @@ $btn-border-radius-lg: 0.75rem;
   perspective-origin: center;
   transform-style: preserve-3d;
   background-size: 420px 300px;
-  
-  @media (max-width: 768px) {
-    width: 28px;
-    height: 260px;
-  }
-  
-  @media (max-width: 576px) {
-    width: 24px;
-    height: 220px;
-  }
-  
-  @media (max-width: 400px) {
-    width: 20px;
-    height: 180px;
-  }
 }
 
 .flip::after {
@@ -873,18 +770,6 @@ $btn-border-radius-lg: 0.75rem;
 .flip.flip12 {
   width: 30px;
   border-width: 2px 2px 2px 0;
-  
-  @media (max-width: 768px) {
-    width: 26px;
-  }
-  
-  @media (max-width: 576px) {
-    width: 22px;
-  }
-  
-  @media (max-width: 400px) {
-    width: 18px;
-  }
 }
 
 @keyframes flip1 {
