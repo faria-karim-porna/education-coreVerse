@@ -11,7 +11,7 @@ interface PageHeroProps {
 
 export function PageHero({ title, subtitle, icon: Icon, lastUpdated }: PageHeroProps) {
   return (
-    <section className="position-relative overflow-hidden bg-gradient-primary text-white py-5">
+    <section className="position-relative overflow-hidden bg-gradient-primary text-white py-5 hero-section-with-icon">
       <div className="container-lg py-5">
         <div className="text-center">
           <motion.div

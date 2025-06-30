@@ -4,11 +4,7 @@ import { MessageCircle, FileText, Users, Video } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 
-interface SupportOptionsProps {
-  onNavigate: (view: string) => void;
-}
-
-export function SupportOptions({ onNavigate }: SupportOptionsProps) {
+export function SupportOptions() {
   const supportOptions = [
     {
       icon: MessageCircle,
@@ -75,9 +71,6 @@ export function SupportOptions({ onNavigate }: SupportOptionsProps) {
                     <h4 className="fw-bold text-deep-red mb-2">{option.title}</h4>
                     <p className="text-muted mb-3">{option.description}</p>
                     <small className="text-muted d-block mb-3">{option.availability}</small>
-                    <Button size="sm" className="w-100" onClick={() => onNavigate('contact')}>
-                      {option.action}
-                    </Button>
                   </div>
                 </Card>
               </motion.div>
