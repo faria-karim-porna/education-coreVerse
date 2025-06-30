@@ -1160,7 +1160,7 @@ export function ChemistrySimulationPage({ onNavigate }: ChemistrySimulationPageP
                               <p className="text-muted small mb-0">
                                 This simulation demonstrates the neutralization of hydrochloric acid (HCl) with sodium 
                                 hydroxide (NaOH). The phenolphthalein indicator changes from colorless to pink when the 
-                                solution becomes basic (pH > 8.2), signaling the endpoint of the titration.
+                                solution becomes basic (pH {"> 8.2"}), signaling the endpoint of the titration.
                               </p>
                             </div>
                           )}
