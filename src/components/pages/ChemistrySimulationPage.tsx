@@ -1,29 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  BookOpen, 
-  Beaker, 
-  Flask, 
-  Thermometer, 
-  Play, 
-  Pause, 
-  RotateCcw, 
-  Download, 
-  Share2, 
-  Info, 
-  Plus, 
-  Minus, 
-  X, 
-  Settings, 
-  HelpCircle, 
-  Save, 
-  Eye, 
-  Layers, 
-  Zap,
-  Droplet,
-  Flame,
-  ArrowDown
-} from 'lucide-react';
+import { BookOpen, Beaker, FlaskRound as Flask, Thermometer, Play, Pause, RotateCcw, Download, Share2, Info, Plus, Minus, X, Settings, HelpCircle, Save, Eye, Layers, Zap, Droplet, Flame, ArrowDown } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Header } from '../layout/Header';
