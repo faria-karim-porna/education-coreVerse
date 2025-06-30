@@ -3,20 +3,17 @@ import { motion } from 'framer-motion';
 import { 
   BookOpen,
   Search,
-  Info,
   Atom,
-  Zap,
-  Thermometer,
-  Weight,
-  Eye,
-  X,
-  Filter,
   Download,
   Share2
 } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { ThemeToggle } from '../ui/ThemeToggle';
+import { ElementGrid } from '../periodic-table/ElementGrid';
+import { CategoryLegend } from '../periodic-table/CategoryLegend';
+import { SearchAndFilters } from '../periodic-table/SearchAndFilters';
+import { ElementDetails } from '../periodic-table/ElementDetails';
 
 interface PeriodicTablePageProps {
   onNavigate: (view: string) => void;
@@ -319,169 +316,41 @@ export function PeriodicTablePage({ onNavigate }: PeriodicTablePageProps) {
       {/* Search and Filters */}
       <section className="py-4 bg-white border-bottom">
         <div className="container-lg">
-          <div className="row align-items-center">
-            <div className="col-md-6">
-              <div className="position-relative">
-                <Search className="position-absolute text-muted" 
-                        style={{ left: '12px', top: '50%', transform: 'translateY(-50%)', width: '16px', height: '16px' }} />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search elements by name or symbol..."
-                  className="form-control ps-5"
-                  style={{ paddingLeft: '2.5rem' }}
-                />
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="d-flex align-items-center gap-3 justify-content-md-end">
-                <span className="fw-medium text-deep-red">Category:</span>
-                <select 
-                  className="form-select"
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  style={{ maxWidth: '200px' }}
-                >
-                  {categories.map(category => (
-                    <option key={category.id} value={category.id}>{category.label}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
+          <SearchAndFilters 
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            categories={categories}
+          />
         </div>
       </section>
 
       {/* Category Legend */}
       <section className="py-4 bg-light-bg">
         <div className="container-lg">
-          <div className="d-flex flex-wrap gap-3 justify-content-center">
-            {categories.slice(1).map((category) => (
-              <div key={category.id} className="d-flex align-items-center gap-2">
-                <div className={`${category.color} rounded`} style={{ width: '16px', height: '16px' }}></div>
-                <span className="small text-muted">{category.label}</span>
-              </div>
-            ))}
-          </div>
+          <CategoryLegend categories={categories} />
         </div>
       </section>
 
       {/* Periodic Table Grid */}
       <section className="py-5 bg-white">
         <div className="container-lg">
-          <div className="row g-2">
-            {filteredElements.map((element, index) => (
-              <div key={element.symbol} className="col-6 col-sm-4 col-md-3 col-lg-2">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.05 }}
-                >
-                  <Card 
-                    hover 
-                    className="h-100 cursor-pointer"
-                    onClick={() => setSelectedElement(element)}
-                  >
-                    <div className={`card-body p-3 text-center ${getCategoryColor(element.category)} bg-opacity-10`}>
-                      <div className="small text-muted mb-1">{element.atomicNumber}</div>
-                      <div className="h4 fw-bold text-deep-red mb-1">{element.symbol}</div>
-                      <div className="small text-muted">{element.name}</div>
-                      <div className="small text-muted">{element.atomicMass}</div>
-                    </div>
-                  </Card>
-                </motion.div>
-              </div>
-            ))}
-          </div>
+          <ElementGrid 
+            elements={filteredElements} 
+            onElementClick={setSelectedElement} 
+            getCategoryColor={getCategoryColor} 
+          />
         </div>
       </section>
 
       {/* Element Details Modal */}
       {selectedElement && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-4"
-          style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}
-          onClick={() => setSelectedElement(null)}
-        >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="bg-white rounded-4 p-5 w-100"
-            style={{ maxWidth: '600px', maxHeight: '90vh', overflowY: 'auto' }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="d-flex align-items-center justify-content-between mb-4">
-              <div className="d-flex align-items-center gap-3">
-                <div className={`p-3 rounded-3 ${getCategoryColor(selectedElement.category)}`}>
-                  <Atom className="text-white" size={32} />
-                </div>
-                <div>
-                  <h2 className="h3 fw-bold text-deep-red mb-0">{selectedElement.name}</h2>
-                  <p className="text-muted mb-0">Symbol: {selectedElement.symbol}</p>
-                </div>
-              </div>
-              <Button variant="secondary" onClick={() => setSelectedElement(null)}>
-                <X size={16} />
-              </Button>
-            </div>
-
-            <div className="row g-4 mb-4">
-              <div className="col-6">
-                <div className="bg-light-bg rounded-3 p-3">
-                  <div className="small text-muted">Atomic Number</div>
-                  <div className="fw-bold text-deep-red">{selectedElement.atomicNumber}</div>
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="bg-light-bg rounded-3 p-3">
-                  <div className="small text-muted">Atomic Mass</div>
-                  <div className="fw-bold text-deep-red">{selectedElement.atomicMass}</div>
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="bg-light-bg rounded-3 p-3">
-                  <div className="small text-muted">Period</div>
-                  <div className="fw-bold text-deep-red">{selectedElement.period}</div>
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="bg-light-bg rounded-3 p-3">
-                  <div className="small text-muted">Group</div>
-                  <div className="fw-bold text-deep-red">{selectedElement.group}</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mb-4">
-              <h5 className="fw-bold text-deep-red mb-2">Electron Configuration</h5>
-              <code className="bg-light-bg p-2 rounded">{selectedElement.electronConfiguration}</code>
-            </div>
-
-            <div className="mb-4">
-              <h5 className="fw-bold text-deep-red mb-2">Description</h5>
-              <p className="text-muted">{selectedElement.description}</p>
-            </div>
-
-            <div className="mb-4">
-              <h5 className="fw-bold text-deep-red mb-2">Common Uses</h5>
-              <div className="d-flex flex-wrap gap-2">
-                {selectedElement.uses.map((use, idx) => (
-                  <span key={idx} className="badge bg-primary-red text-white">{use}</span>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-light-bg rounded-3 p-3">
-              <h6 className="fw-bold text-deep-red mb-2">Discovery</h6>
-              <p className="text-muted small mb-0">
-                Discovered by <strong>{selectedElement.discoveredBy}</strong> in {selectedElement.yearDiscovered}
-              </p>
-            </div>
-          </motion.div>
-        </motion.div>
+        <ElementDetails 
+          element={selectedElement} 
+          onClose={() => setSelectedElement(null)} 
+          getCategoryColor={getCategoryColor} 
+        />
       )}
 
       {/* Footer */}

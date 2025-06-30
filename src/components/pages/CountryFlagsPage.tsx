@@ -2,20 +2,15 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   BookOpen,
-  Search,
   Flag,
-  Eye,
-  X,
-  Filter,
   Download,
-  Share2,
-  MapPin,
-  Users,
-  Globe
+  Share2
 } from 'lucide-react';
-import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { ThemeToggle } from '../ui/ThemeToggle';
+import { SearchAndFilters } from '../country-flags/SearchAndFilters';
+import { CountryGrid } from '../country-flags/CountryGrid';
+import { CountryDetails } from '../country-flags/CountryDetails';
 
 interface CountryFlagsPageProps {
   onNavigate: (view: string) => void;
@@ -243,6 +238,16 @@ export function CountryFlagsPage({ onNavigate }: CountryFlagsPageProps) {
     return matchesSearch && matchesContinent;
   });
 
+  const getConservationColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'least concern': return 'bg-success';
+      case 'vulnerable': return 'bg-warning';
+      case 'endangered': return 'bg-danger';
+      case 'critically endangered': return 'bg-dark';
+      default: return 'bg-secondary';
+    }
+  };
+
   return (
     <div className="min-vh-100 bg-light-bg">
       {/* Navigation */}
@@ -325,167 +330,33 @@ export function CountryFlagsPage({ onNavigate }: CountryFlagsPageProps) {
       {/* Search and Filters */}
       <section className="py-4 bg-white border-bottom">
         <div className="container-lg">
-          <div className="row align-items-center">
-            <div className="col-md-6">
-              <div className="position-relative">
-                <Search className="position-absolute text-muted" 
-                        style={{ left: '12px', top: '50%', transform: 'translateY(-50%)', width: '16px', height: '16px' }} />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search by country name, capital, or continent..."
-                  className="form-control ps-5"
-                  style={{ paddingLeft: '2.5rem' }}
-                />
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="d-flex align-items-center gap-3 justify-content-md-end">
-                <span className="fw-medium text-deep-red">Continent:</span>
-                <select 
-                  className="form-select"
-                  value={selectedContinent}
-                  onChange={(e) => setSelectedContinent(e.target.value)}
-                  style={{ maxWidth: '200px' }}
-                >
-                  {continents.map(continent => (
-                    <option key={continent.id} value={continent.id}>{continent.label}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
+          <SearchAndFilters 
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            selectedContinent={selectedContinent}
+            setSelectedContinent={setSelectedContinent}
+            continents={continents}
+          />
         </div>
       </section>
 
       {/* Countries Grid */}
       <section className="py-5 bg-light-bg">
         <div className="container-lg">
-          <div className="row g-4">
-            {filteredCountries.map((country, index) => (
-              <div key={country.id} className="col-md-6 col-lg-4">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Card hover className="h-100" onClick={() => setSelectedCountry(country)}>
-                    <div className="card-body p-4">
-                      <div className="d-flex align-items-center justify-content-between mb-3">
-                        <div className="d-flex align-items-center gap-3">
-                          <div className="display-4">{country.flagEmoji}</div>
-                          <div>
-                            <h4 className="fw-bold text-deep-red mb-0">{country.name}</h4>
-                            <p className="text-muted small mb-0">{country.capital}</p>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="mb-3">
-                        <div className="d-flex align-items-center gap-2 mb-2">
-                          <Globe className="text-muted" size={16} />
-                          <span className="small text-muted">{country.continent}</span>
-                        </div>
-                        <div className="d-flex align-items-center gap-2 mb-2">
-                          <Users className="text-muted" size={16} />
-                          <span className="small text-muted">{country.population}</span>
-                        </div>
-                        <div className="d-flex align-items-center gap-2">
-                          <MapPin className="text-muted" size={16} />
-                          <span className="small text-muted">{country.area}</span>
-                        </div>
-                      </div>
-                      
-                      <div className="d-flex align-items-center justify-content-between">
-                        <span className="badge bg-primary-red text-white">
-                          {country.continent}
-                        </span>
-                        <Button size="sm">
-                          <Eye size={14} className="me-1" />
-                          Details
-                        </Button>
-                      </div>
-                    </div>
-                  </Card>
-                </motion.div>
-              </div>
-            ))}
-          </div>
+          <CountryGrid 
+            countries={filteredCountries} 
+            onCountryClick={setSelectedCountry} 
+          />
         </div>
       </section>
 
       {/* Country Details Modal */}
       {selectedCountry && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-4"
-          style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}
-          onClick={() => setSelectedCountry(null)}
-        >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="bg-white rounded-4 p-5 w-100"
-            style={{ maxWidth: '800px', maxHeight: '90vh', overflowY: 'auto' }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="d-flex align-items-center justify-content-between mb-4">
-              <div className="d-flex align-items-center gap-3">
-                <div className="display-3">{selectedCountry.flagEmoji}</div>
-                <div>
-                  <h2 className="h3 fw-bold text-deep-red mb-0">{selectedCountry.name}</h2>
-                  <p className="text-muted mb-0">Capital: {selectedCountry.capital}</p>
-                </div>
-              </div>
-              <Button variant="secondary" onClick={() => setSelectedCountry(null)}>
-                <X size={16} />
-              </Button>
-            </div>
-
-            <div className="row g-4 mb-4">
-              <div className="col-md-6">
-                <h5 className="fw-bold text-deep-red mb-3">Basic Information</h5>
-                <div className="d-flex flex-column gap-2">
-                  {[
-                    { label: 'Continent', value: selectedCountry.continent, icon: Globe },
-                    { label: 'Population', value: selectedCountry.population, icon: Users },
-                    { label: 'Area', value: selectedCountry.area, icon: MapPin },
-                    { label: 'Currency', value: selectedCountry.currency, icon: null },
-                    { label: 'Independence', value: selectedCountry.independence, icon: null }
-                  ].map((item, idx) => (
-                    <div key={idx} className="d-flex align-items-center gap-2 p-2 bg-light-bg rounded">
-                      {item.icon && <item.icon className="text-primary-red" size={16} />}
-                      <span className="fw-medium text-deep-red">{item.label}:</span>
-                      <span className="text-muted">{item.value}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="col-md-6">
-                <h5 className="fw-bold text-deep-red mb-3">Languages</h5>
-                <div className="d-flex flex-wrap gap-2 mb-4">
-                  {selectedCountry.languages.map((lang, idx) => (
-                    <span key={idx} className="badge bg-accent-red text-white">{lang}</span>
-                  ))}
-                </div>
-                <h5 className="fw-bold text-deep-red mb-3">Region</h5>
-                <span className="badge bg-success text-white">{selectedCountry.region}</span>
-              </div>
-            </div>
-
-            <div className="mb-4">
-              <h5 className="fw-bold text-deep-red mb-2">Flag Description</h5>
-              <p className="text-muted">{selectedCountry.flagDescription}</p>
-            </div>
-
-            <div className="bg-light-bg rounded-3 p-4">
-              <h5 className="fw-bold text-deep-red mb-2">Flag Meaning & Symbolism</h5>
-              <p className="text-muted mb-0">{selectedCountry.flagMeaning}</p>
-            </div>
-          </motion.div>
-        </motion.div>
+        <CountryDetails 
+          country={selectedCountry} 
+          onClose={() => setSelectedCountry(null)} 
+          getConservationColor={getConservationColor} 
+        />
       )}
 
       {/* Footer */}
