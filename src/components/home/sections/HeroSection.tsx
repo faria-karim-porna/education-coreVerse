@@ -21,7 +21,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
               Experience interactive STEM education with virtual labs, scientific tools, and collaborative classrooms designed for modern
               learners.
             </p>
-            
+
             {/* Animated Book */}
             <div className="d-flex justify-content-center mb-5 position-relative" style={{ height: "350px" }}>
               <div className="book">
@@ -65,8 +65,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
                         <div className="flip flip4">
                           <div className="flip flip5">
                             <div className="flip flip6">
-                              <div className="flip flip7">
-                              </div>
+                              <div className="flip flip7"></div>
                             </div>
                           </div>
                         </div>
@@ -76,8 +75,8 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
                 </div>
               </div>
             </div>
-            
-            <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+
+            <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center position-relative" style={{ zIndex: 1000 }}>
               <Button size="lg" className="justify-content-center" onClick={() => onNavigate("dashboard")}>
                 Start Learning Today
                 <ArrowRight size={20} className="ms-2" />
