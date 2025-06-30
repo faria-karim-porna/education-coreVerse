@@ -4,7 +4,11 @@ import { Clock, Star, ArrowRight } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 
-export function PopularArticles() {
+interface PopularArticlesProps {
+  onNavigate?: (view: string) => void;
+}
+
+export function PopularArticles({ onNavigate }: PopularArticlesProps) {
   const popularArticles = [
     {
       id: '1',
@@ -62,6 +66,12 @@ export function PopularArticles() {
     }
   ];
 
+  const handleReadArticle = () => {
+    if (onNavigate) {
+      onNavigate('404');
+    }
+  };
+
   return (
     <div className="mb-5">
       <h3 className="h4 fw-bold text-deep-red mb-4">Popular Articles</h3>
@@ -92,7 +102,7 @@ export function PopularArticles() {
                     </div>
                   </div>
 
-                  <Button size="sm" className="w-100">
+                  <Button size="sm" className="w-100" onClick={handleReadArticle}>
                     Read Article
                     <ArrowRight size={14} className="ms-1" />
                   </Button>

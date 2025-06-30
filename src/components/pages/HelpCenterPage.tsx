@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  BookOpen,
   Search,
   HelpCircle,
   Play,
   MessageCircle,
   Users
 } from 'lucide-react';
-import { ThemeToggle } from '../ui/ThemeToggle';
 import { Navbar } from '../common/Navbar';
 import { CTASection } from '../common/CTASection';
 import { Footer } from '../common/Footer';
@@ -104,7 +102,7 @@ export function HelpCenterPage({ onNavigate }: HelpCenterPageProps) {
           </div>
 
           {/* Popular Articles */}
-          <PopularArticles />
+          <PopularArticles onNavigate={onNavigate} />
         </div>
       </section>
 
