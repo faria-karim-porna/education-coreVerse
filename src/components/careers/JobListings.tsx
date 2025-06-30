@@ -112,6 +112,11 @@ export function JobListings({ onNavigate }: JobListingsProps) {
     return departmentMatch && locationMatch;
   });
 
+  const handleApply = (jobId: string) => {
+    // In a real application, this would navigate to a job application page
+    window.open(`/careers/apply/${jobId}`, '_blank');
+  };
+
   return (
     <section className="py-5 bg-white">
       <div className="container-lg">
@@ -200,7 +205,7 @@ export function JobListings({ onNavigate }: JobListingsProps) {
                         <div className="fw-semibold text-success">{job.salary}</div>
                         <small className="text-muted">Posted {job.posted}</small>
                       </div>
-                      <Button size="sm">
+                      <Button size="sm" onClick={() => handleApply(job.id)}>
                         Apply Now
                         <ArrowRight size={14} className="ms-1" />
                       </Button>
